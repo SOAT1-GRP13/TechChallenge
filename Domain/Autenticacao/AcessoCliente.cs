@@ -1,0 +1,70 @@
+﻿using Domain.Base.DomainObjects;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Autenticacao
+{
+    [Table("acesso_cliente")]
+    public class AcessoCliente : Entity, IAggregateRoot
+    {
+        #region construtores
+        public AcessoCliente()
+        {
+            CPF = string.Empty;
+            Senha = string.Empty;
+            Nome = string.Empty;
+            Email = string.Empty;
+        }
+
+        public AcessoCliente(string cPF, string senha)
+        {
+            CPF = cPF;
+            Senha = senha;
+            Email = string.Empty;
+            Nome= string.Empty;
+
+            ValidarAutenticacao();
+        }
+
+        public AcessoCliente(string cPF, string senha, string email, string nome)
+        {
+            CPF = cPF;
+            Senha = senha;
+            Email = email;
+            Nome = nome;
+
+            ValidarCadastro();
+        }
+
+        #endregion
+
+        [Column("cpf")]
+        public string CPF { get; private set; }
+
+        [Column("senha")]
+        public string Senha { get; private set; }
+
+        [Column("nome")]
+        public string Nome { get; private set; }
+
+        [Column("email")]
+        public string Email { get; private set; }
+
+
+        public void ValidarAutenticacao()
+        {
+            Validacoes.ValidarSeVazio(CPF, "O campo CPF não pode estar vazio");
+            Validacoes.ValidarCPF(CPF, "CPF inválido");
+            Validacoes.ValidarSeVazio(Senha, "O campo Senha não pode estar vazio");
+        }
+
+        public void ValidarCadastro()
+        {
+            Validacoes.ValidarSeVazio(CPF, "O campo CPF não pode estar vazio");
+            Validacoes.ValidarCPF(CPF, "CPF inválido");
+            Validacoes.ValidarSeVazio(Senha, "O campo Senha não pode estar vazio");
+            Validacoes.ValidarSeVazio(Nome, "O campo Nome não pode estar vazio");
+            Validacoes.ValidarSeVazio(Email, "O campo Email não pode estar vazio");
+            Validacoes.ValidarEmail(Email, "Email inválido");
+        }
+    }
+}

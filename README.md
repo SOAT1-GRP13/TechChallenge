@@ -3,7 +3,7 @@
 ![GitHub](https://img.shields.io/github/license/dropbox/dropbox-sdk-java)
 
 # Resumo do projeto
-Este projeto foi desenvolvido em C# com .NET 6, seguindo os princípios da arquitetura hexagonal. É um trabalho em andamento realizado durante nossa pós-graduação, com o objetivo de aplicar as melhores práticas de arquitetura de software.
+Este projeto foi desenvolvido em C# com .NET 6, seguindo os princípios da arquitetura hexagonal. É um trabalho em andamento que esté sendo realizado durante nossa pós-graduação, com o objetivo de aplicar as melhores práticas de arquitetura de software.
 
 O propósito principal do projeto é criar uma API REST para atender as necessidades de uma rede fictícia de fast food. Essa API permitirá a realização de operações relacionadas a pedidos, gerenciamento de produtos, autenticação de usuários, entre outras funcionalidades essenciais para o funcionamento de uma rede de fast food.
 
@@ -47,17 +47,12 @@ Essa API pode ser testada via Postman ou via swagger que está configurado no pr
 Para acessar o swagger do projeto, utilize o link abaixo:
 - http://localhost/swagger/index.html
 
-Para testar as chamadas da API, precisa passar um Bearer token de autenticacao.
-Esse token pode obtido através do seguinte endpoint:
-- http://localhost/Autenticacao/LogInUsuario
+As chamadas que exigem autenticação estão informadas na documentação
 
-Também é necessário passar o seguinte Json no corpo da chamada:
-```shell
-{
-  "nomeUsuario": "fiapUser",
-  "senha": "Teste@123"
-}
-```
+O token do gestor pode ser obtido através do seguinte endpoint:
+- http://localhost/Autenticacao/LogInUsuario - O usuario do exemplo do swagger ja se autentica
+
+O swagger ja possui exemplos de chamadas com dados reais
 
 Caso esteja testando via Swagger, é necessário adicionar o token obtido na resposta da chamada no menu "Authorize" 
 

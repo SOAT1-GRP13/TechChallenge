@@ -1,0 +1,39 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13:latest
+    restart: on-failure
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres-db
+    # networks:
+    #   tech-challenge-soat1-grp13-network:
+    #     ipv4_address: 172.23.0.10
+
+  postgres-db:  
+    hostname: postgres-compose
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "30r2OEb^p*T0"
+      POSTGRES_USER: fiap
+      POSTGRES_DB: techchallengedb
+    ports:
+      - "15432:5432"
+    volumes:
+      - tech-challenge-soat1-grp13-db-data:/var/lib/postgresql/data
+    # networks:
+    #   tech-challenge-soat1-grp13-network:
+    #     ipv4_address: 172.23.0.20
+
+# networks:
+#   tech-challenge-soat1-grp13-network:
+#     ipam:
+#       config:
+#         - subnet: 172.23.0.0/16
+
+volumes:
+  tech-challenge-soat1-grp13-db-data:
