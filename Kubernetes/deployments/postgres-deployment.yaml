@@ -37,13 +37,13 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
+                secretKeyRef:
+                  name: postgres-secrets
                   key: POSTGRES_USER
             - name: POSTGRES_DB
               valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
+                secretKeyRef:
+                  name: postgres-secrets
                   key: POSTGRES_DB
           ports:
             - containerPort: 5432
