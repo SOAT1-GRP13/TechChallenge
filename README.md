@@ -26,7 +26,7 @@ O event storm do nosso projeto ser acessado pelo seguinte link:
 Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13/archive/refs/heads/main.zip), ou Clonando o projeto.
 
 
-# 🛠️ Abrir e rodar o projeto
+# 🛠️ Abrir e rodar o projeto utilizando o docker
 
 Para o correto funcionamento precisa do docker instalado.
 
@@ -39,6 +39,43 @@ docker-compose up
 O docker-compose.yaml do projeto, está configurado para buildar a solution projeto, subir um container da imagem projeto, um container do banco de dados e executar as migrations no banco.
 Esses containers compartilham de uma mesma rede e será criado um volume no docker para utilização do container banco.
 O container do projeto está mapeado para ficar exposto na porta 80 da máquina local e o banco na porta 15432.
+
+# Abrir e rodar o projeto utilizando o Kubernetes
+
+Antes de prosseguir, certifique-se de estar dentro da pasta "Kubernetes" localizada na raiz do projeto.
+
+**Importante:** A ordem de execução dos comandos é fundamental para a correta criação dos recursos. Execute-os na mesma ordem em que estão listados abaixo.
+
+## Passo 1: Configuração do PostgreSQL
+
+1. Crie o ConfigMap e os Secrets do PostgreSQL:
+   ```bash
+   kubectl apply -f configmaps/postgres-configmap.yaml
+   kubectl apply -f secrets/postgres-secrets.yaml
+   ```
+
+2. Crie o Volume do PostgreSQL:
+   ```bash
+   kubectl apply -f volumes/postgres-pv.yaml
+   kubectl apply -f volumes/postgres-pvc.yaml
+   ```
+
+3. Crie o Deployment e o Service do PostgreSQL:
+   ```bash
+   kubectl apply -f deployments/postgres-deployment.yaml
+   kubectl apply -f services/postgres-service.yaml
+   ```
+
+## Passo 2: API Deployment, Service e Horizontal Pod Autoscaler
+
+4. Crie o Deployment, o Service e o Horizontal Pod Autoscaler da API:
+   ```bash
+   kubectl apply -f deployments/api-deployment.yaml
+   kubectl apply -f services/api-service.yaml
+   kubectl apply -f hpa/api-hpa.yaml
+   ```
+
+Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubernetes configurado corretamente. Acompanhe as saídas dos comandos para garantir que os recursos estejam sendo criados sem erros. Após a execução, você terá suas aplicações implantadas e prontas para uso.
 
 
 # ⌨️ Testando a API
