@@ -1,10 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap-generico
+  name: postgres-configmap
 data:
   POSTGRES_HOST: postgres-service
   POSTGRES_PORT: "5432"
   POSTGRES_DB: techchallengedb
-  POSTGRES_USER: fiap
-  POSTGRES_PASSWORD: 30r2OEb^p*T0
