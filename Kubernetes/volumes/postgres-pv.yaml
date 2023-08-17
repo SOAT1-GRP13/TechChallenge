@@ -6,10 +6,10 @@ metadata:
     name: postgres-pv
 spec:
   capacity:
-    storage: 500Mi
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   storageClassName: local-storage  
   persistentVolumeReclaimPolicy: Retain 
   hostPath:
-    path: \\c\\techchallengedb\\soat1_grp13
+    path: "C:\\Users\\chris\\OneDrive\\Documentos\\techchallenge"

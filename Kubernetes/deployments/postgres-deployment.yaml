@@ -20,11 +20,6 @@ spec:
         - name: postgres
           image: postgres:latest
           env:
-            - name: POSTGRES_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-configmap
-                  key: POSTGRES_HOST
             - name: POSTGRES_PORT
               valueFrom:
                 configMapKeyRef:
@@ -37,13 +32,13 @@ spec:
                   key: POSTGRES_DB
             - name: POSTGRES_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: postgres-secrets
+                configMapKeyRef:
+                  name: postgres-configmap
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               valueFrom:
-                secretKeyRef:
-                  name: postgres-secrets
+                configMapKeyRef:
+                  name: postgres-configmap
                   key: POSTGRES_USER
           ports:
             - containerPort: 5432
