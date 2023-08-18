@@ -5,7 +5,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: postgres-deployment
+    app: postgres-compose
   ports:
     - protocol: TCP
       port: 5432
