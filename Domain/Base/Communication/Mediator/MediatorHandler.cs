@@ -18,9 +18,9 @@ namespace Domain.Base.Communication.Mediator
             //_eventSourcingRepository = eventSourcingRepository;
         }
 
-        public async Task<bool> EnviarComando<T>(T comando) where T : Command
+        public async Task<TResponse> EnviarComando<TCommand, TResponse>(TCommand command) where TCommand : Command<TResponse>
         {
-            return await _mediator.Send(comando);
+            return await _mediator.Send(command);
         }
 
         public async Task PublicarEvento<T>(T evento) where T : Event

@@ -12,72 +12,47 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Application.Autenticacao.Services
+namespace Application.Autenticacao.UseCases
 {
-    public class AutenticacaoService : IAutenticacaoService
+    public class AutenticacaoUseCase : IAutenticacaoUseCase
     {
         private readonly IAutenticacaoRepository _autenticacaoRepository;
         private readonly ConfiguracaoToken _settings;
 
-        public AutenticacaoService(IAutenticacaoRepository autenticacaoRepository, IOptions<ConfiguracaoToken> options)
+        public AutenticacaoUseCase(IAutenticacaoRepository autenticacaoRepository, IOptions<ConfiguracaoToken> options)
         {
             _autenticacaoRepository = autenticacaoRepository;
             _settings = options.Value;
         }
 
-        public async Task<LogInUsuarioOutput> AutenticaUsuario(LogInUsuarioInput input)
+        public async Task<LogInUsuarioOutput> AutenticaUsuario(LoginUsuarioDto input)
         {
-            var loginDto = new LoginUsuarioDto(input.NomeUsuario, EncryptPassword(input.Senha));
-
-            var usuario = new AcessoUsuario(loginDto.NomeUsuario, loginDto.Senha);
+            var usuario = new AcessoUsuario(input.NomeUsuario, input.Senha);
 
             var autenticado = await _autenticacaoRepository.AutenticaUsuario(usuario);
 
             if (!string.IsNullOrEmpty(autenticado.NomeUsuario))
             {
-                var token = GenerateToken(input.NomeUsuario, autenticado.Role.ToString(), autenticado.Id);
+                var token = GenerateToken(autenticado.NomeUsuario, autenticado.Role.ToString(), autenticado.Id);
                 return new LogInUsuarioOutput(input.NomeUsuario, token);
             }
 
-            return new LogInUsuarioOutput(false, "Usuario ou senha invalidos");
+            return new LogInUsuarioOutput();
         }
 
-        public async Task<IdentificaOutput> AutenticaCliente(IdentificaInput input)
+        public async Task<AutenticaClienteOutput> AutenticaCliente(IdentificaDto input)
         {
-            var identificaDto = new IdentificaDto(input.CPF, EncryptPassword(input.Senha));
-
-            var usuario = new AcessoCliente(identificaDto.CPF, identificaDto.Senha);
+            var usuario = new AcessoCliente(input.CPF, input.Senha);
 
             var autenticado = await _autenticacaoRepository.AutenticaCliente(usuario);
 
             if (!string.IsNullOrEmpty(autenticado.CPF))
             {
                 var token = GenerateToken(autenticado.Nome, Roles.Cliente.ToString(), autenticado.Id);
-                return new IdentificaOutput(autenticado.Nome, token);
+                return new AutenticaClienteOutput(autenticado.Nome, token);
             }
 
-            return new IdentificaOutput(false, "Usuario ou senha invalidos");
-        }
-
-        public async Task<IdentificaOutput> CadastraCliente(CadastraClienteInput input)
-        {
-            var clienteDto = new CadastraClienteDto(EncryptPassword(input.Senha), input);
-
-            var usuario = new AcessoCliente(clienteDto.CPF, clienteDto.Senha, clienteDto.Email, clienteDto.Nome);
-
-            if (await _autenticacaoRepository.ClienteJaExiste(usuario))
-            {
-                return new IdentificaOutput(false, "CPF ou e-mail já cadastrados");
-            }
-
-            _autenticacaoRepository.CadastraCliente(usuario);
-
-            await _autenticacaoRepository.UnitOfWork.Commit();
-
-            var autenticado = await _autenticacaoRepository.AutenticaCliente(usuario);
-
-            var token = GenerateToken(clienteDto.Nome, Roles.Cliente.ToString(), autenticado.Id);
-            return new IdentificaOutput(clienteDto.Nome, token);
+            return new AutenticaClienteOutput();
         }
 
         public void Dispose()
@@ -112,7 +87,7 @@ namespace Application.Autenticacao.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private string EncryptPassword(string dataToEncrypt)
+        public string EncryptPassword(string dataToEncrypt)
         {
             string encryptedData;
             var bytes = Encoding.UTF8.GetBytes($"{_settings.PreSalt}{dataToEncrypt}{_settings.PosSalt}");

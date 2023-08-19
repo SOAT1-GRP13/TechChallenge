@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Pedidos.Commands
 {
-    public class AdicionarItemPedidoCommand : Command
+    public class AdicionarItemPedidoCommand : Command<bool>
     {
         //Um comando representa uma intenção de mudança do estado da entidade no banco e na aplicação.
         public Guid ClienteId { get; private set; }

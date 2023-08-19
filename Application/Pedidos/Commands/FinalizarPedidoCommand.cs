@@ -3,7 +3,7 @@ using Domain.Base.Messages;
 
 namespace Application.Pedidos.Commands
 {
-    public class FinalizarPedidoCommand : Command
+    public class FinalizarPedidoCommand : Command<bool>
     {
         public Guid PedidoId { get; private set; }
         public Guid ClienteId { get; private set; }
