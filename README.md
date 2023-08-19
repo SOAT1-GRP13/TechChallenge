@@ -66,7 +66,7 @@ Antes de prosseguir, certifique-se de estar dentro da pasta "Kubernetes" localiz
    kubectl apply -f services/postgres-service.yaml
    ```
 
-## Passo 2: API Deployment, Service e Horizontal Pod Autoscaler
+## Passo 2: API Deployment, Service e HPA (Horizontal Pod Autoscaler)
 
 4. Crie o Deployment, o Service e o Horizontal Pod Autoscaler da API:
    ```bash
@@ -76,7 +76,16 @@ Antes de prosseguir, certifique-se de estar dentro da pasta "Kubernetes" localiz
    ```
 
 Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubernetes configurado corretamente. Acompanhe as saídas dos comandos para garantir que os recursos estejam sendo criados sem erros. Após a execução, você terá suas aplicações implantadas e prontas para uso.
+**Importante:** Para que o hpa funcione corretamente, sua máquina tem que ter o metrics configurado corretamente. voce pode verificar se está configurado utilizando o comando:
+   ```bash
+   kubectl top pods
+   ```
 
+Para realizar um stress teste, dentro da pasta kubernetes voce pode executar o comando abaixo para linux:
+   ```bash
+   sh stress-linux.sh 0.0001 > out.txt
+   ```
+Para windows execute o bach stress-windows.bat
 
 # ⌨️ Testando a API
 
@@ -111,5 +120,5 @@ No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
 
 # Autores
 
-| [<img src="https://avatars.githubusercontent.com/u/28829303?s=400&v=4" width=115><br><sub>Christian Melo</sub>](https://github.com/christiandmelo) |  [<img src="https://avatars.githubusercontent.com/u/89987201?v=4" width=115><br><sub>Luiz Soh</sub>](https://github.com/luiz-soh) |  [<img src="https://avatars.githubusercontent.com/u/21027037?v=4" width=115><br><sub>Wagner Neves</sub>](https://github.com/nevesw) |  [<img src="https://avatars.githubusercontent.com/u/5776353?v=4" width=115><br><sub>Luiz Bento</sub>](https://github.com/luizbento) |  [<img src="https://avatars.githubusercontent.com/u/34692183?v=4" width=115><br><sub>Mateus Bernardi Marcato</sub>](https://github.com/xXMateus97Xx) |
-| :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/28829303?s=400&v=4" width=115><br><sub>Christian Melo</sub>](https://github.com/christiandmelo) |  [<img src="https://avatars.githubusercontent.com/u/89987201?v=4" width=115><br><sub>Luiz Soh</sub>](https://github.com/luiz-soh) |  [<img src="https://avatars.githubusercontent.com/u/21027037?v=4" width=115><br><sub>Wagner Neves</sub>](https://github.com/nevesw) |  [<img src="https://avatars.githubusercontent.com/u/34692183?v=4" width=115><br><sub>Mateus Bernardi Marcato</sub>](https://github.com/xXMateus97Xx) |
+| :---: | :---: | :---: | :---: |

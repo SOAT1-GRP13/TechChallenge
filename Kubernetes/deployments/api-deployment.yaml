@@ -19,3 +19,6 @@ spec:
           image: christiandmelo/tech-challenge-soat1-grp13:latest
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: 250m
