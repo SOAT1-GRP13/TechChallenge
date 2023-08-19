@@ -83,6 +83,8 @@ Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubern
 Essa API pode ser testada via Postman ou via swagger que está configurado no projeto.
 Para acessar o swagger do projeto, utilize o link abaixo:
 - http://localhost/swagger/index.html
+Caso esteja utilizando o kubernetes, utilize o link abaixo:
+http://localhost:31116/swagger/index.html
 
 As chamadas que exigem autenticação estão informadas na documentação
 
