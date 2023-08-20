@@ -26,7 +26,7 @@ O event storm do nosso projeto ser acessado pelo seguinte link:
 Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13/archive/refs/heads/main.zip), ou Clonando o projeto.
 
 
-# 🛠️ Abrir e rodar o projeto
+# 🛠️ Abrir e rodar o projeto utilizando o docker
 
 Para o correto funcionamento precisa do docker instalado.
 
@@ -40,12 +40,61 @@ O docker-compose.yaml do projeto, está configurado para buildar a solution proj
 Esses containers compartilham de uma mesma rede e será criado um volume no docker para utilização do container banco.
 O container do projeto está mapeado para ficar exposto na porta 80 da máquina local e o banco na porta 15432.
 
+# Abrir e rodar o projeto utilizando o Kubernetes
+
+Antes de prosseguir, certifique-se de estar dentro da pasta "Kubernetes" localizada na raiz do projeto.
+
+**Importante:** A ordem de execução dos comandos é fundamental para a correta criação dos recursos. Execute-os na mesma ordem em que estão listados abaixo.
+
+## Passo 1: Configuração do PostgreSQL
+
+1. Crie o ConfigMap e os Secrets do PostgreSQL:
+   ```bash
+   kubectl apply -f configmaps/postgres-configmap.yaml
+   kubectl apply -f secrets/postgres-secrets.yaml
+   ```
+
+2. Crie o Volume do PostgreSQL:
+   ```bash
+   kubectl apply -f volumes/postgres-pv.yaml
+   kubectl apply -f volumes/postgres-pvc.yaml
+   ```
+
+3. Crie o Deployment e o Service do PostgreSQL:
+   ```bash
+   kubectl apply -f deployments/postgres-deployment.yaml
+   kubectl apply -f services/postgres-service.yaml
+   ```
+
+## Passo 2: API Deployment, Service e HPA (Horizontal Pod Autoscaler)
+
+4. Crie o Deployment, o Service e o Horizontal Pod Autoscaler da API:
+   ```bash
+   kubectl apply -f deployments/api-deployment.yaml
+   kubectl apply -f services/api-service.yaml
+   kubectl apply -f hpa/api-hpa.yaml
+   ```
+
+Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubernetes configurado corretamente. Acompanhe as saídas dos comandos para garantir que os recursos estejam sendo criados sem erros. Após a execução, você terá suas aplicações implantadas e prontas para uso.
+**Importante:** Para que o hpa funcione corretamente, sua máquina tem que ter o metrics configurado corretamente. voce pode verificar se está configurado utilizando o comando:
+   ```bash
+   kubectl top pods
+   ```
+
+Para realizar um stress teste, dentro da pasta kubernetes voce pode executar o comando abaixo para linux:
+   ```bash
+   sh stress-linux.sh 0.0001 > out.txt
+   ```
+Para windows execute o arquivo stress-test.exe dentro da pasta stress-windows.
+Lembrando que o HPA demora alguns instantes para entender que precisa escalar o pod, então é necessário aguardar alguns minutos para que o pod seja escalado. e também é necessário aguardar alguns minutos para que o pod volte ao estado normal.
 
 # ⌨️ Testando a API
 
 Essa API pode ser testada via Postman ou via swagger que está configurado no projeto.
 Para acessar o swagger do projeto, utilize o link abaixo:
 - http://localhost/swagger/index.html
+Caso esteja utilizando o kubernetes, utilize o link abaixo:
+http://localhost:31116/swagger/index.html
 
 As chamadas que exigem autenticação estão informadas na documentação
 
@@ -72,5 +121,5 @@ No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
 
 # Autores
 
-| [<img src="https://avatars.githubusercontent.com/u/28829303?s=400&v=4" width=115><br><sub>Christian Melo</sub>](https://github.com/christiandmelo) |  [<img src="https://avatars.githubusercontent.com/u/89987201?v=4" width=115><br><sub>Luiz Soh</sub>](https://github.com/luiz-soh) |  [<img src="https://avatars.githubusercontent.com/u/21027037?v=4" width=115><br><sub>Wagner Neves</sub>](https://github.com/nevesw) |  [<img src="https://avatars.githubusercontent.com/u/5776353?v=4" width=115><br><sub>Luiz Bento</sub>](https://github.com/luizbento) |  [<img src="https://avatars.githubusercontent.com/u/34692183?v=4" width=115><br><sub>Mateus Bernardi Marcato</sub>](https://github.com/xXMateus97Xx) |
-| :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/28829303?s=400&v=4" width=115><br><sub>Christian Melo</sub>](https://github.com/christiandmelo) |  [<img src="https://avatars.githubusercontent.com/u/89987201?v=4" width=115><br><sub>Luiz Soh</sub>](https://github.com/luiz-soh) |  [<img src="https://avatars.githubusercontent.com/u/21027037?v=4" width=115><br><sub>Wagner Neves</sub>](https://github.com/nevesw) |  [<img src="https://avatars.githubusercontent.com/u/34692183?v=4" width=115><br><sub>Mateus Bernardi Marcato</sub>](https://github.com/xXMateus97Xx) |
+| :---: | :---: | :---: | :---: |
