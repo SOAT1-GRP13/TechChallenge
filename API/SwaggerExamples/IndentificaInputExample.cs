@@ -3,11 +3,11 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace API.SwaggerExamples
 {
-    public class IndentificaInputExample : IExamplesProvider<IdentificaInput>
+    public class IndentificaInputExample : IExamplesProvider<AutenticaClienteInput>
     {
-        public IdentificaInput GetExamples()
+        public AutenticaClienteInput GetExamples()
         {
-            return new IdentificaInput("01438749007", "Teste@123");
+            return new AutenticaClienteInput("01438749007", "Teste@123");
         }
     }
 }

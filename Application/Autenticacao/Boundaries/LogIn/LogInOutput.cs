@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Application.Autenticacao.Boundaries.LogIn
 {
-    public class LogInUsuarioOutput : ServiceResultBase
+    public class LogInUsuarioOutput
     {
         #region construtores
         public LogInUsuarioOutput()
@@ -16,16 +16,6 @@ namespace Application.Autenticacao.Boundaries.LogIn
         {
             TokenAcesso = tokenAcesso;
             NomeUsuario = nomeUsuario;
-            Sucesso = true;
-            Mensagem = string.Empty;
-        }
-
-        public LogInUsuarioOutput(bool sucesso, string mensagem)
-        {
-            TokenAcesso = string.Empty;
-            NomeUsuario = string.Empty;
-            Sucesso = sucesso;
-            Mensagem = mensagem;
         }
 
         #endregion

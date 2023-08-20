@@ -32,7 +32,7 @@ namespace Application.Pedidos.Commands
 
         public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(message)) return false;          
+            if (!ValidarComando<AdicionarItemPedidoCommand, bool>(message)) return false;
 
             var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
             var pedidoItem = new PedidoItem(message.ProdutoId, message.Nome, message.Quantidade, message.ValorUnitario);
@@ -67,7 +67,7 @@ namespace Application.Pedidos.Commands
 
         public async Task<bool> Handle(AtualizarItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(message)) return false;
+            if (!ValidarComando<AtualizarItemPedidoCommand, bool>(message)) return false;
 
             var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
 
@@ -96,7 +96,7 @@ namespace Application.Pedidos.Commands
 
         public async Task<bool> Handle(RemoverItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(message)) return false;
+            if (!ValidarComando<RemoverItemPedidoCommand, bool>(message)) return false;
 
             var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
 
@@ -126,7 +126,7 @@ namespace Application.Pedidos.Commands
 
         public async Task<bool> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(message)) return false;
+            if (!ValidarComando<IniciarPedidoCommand, bool>(message)) return false;
 
             var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
             pedido.IniciarPedido();
@@ -134,7 +134,7 @@ namespace Application.Pedidos.Commands
             var itensList = new List<Item>();
             pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
             var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
-            
+
             //Evento que dispara a retirada de itens do estoque no catalogo em ProdutoEventHandler.cs
             pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido, pedido.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
 
@@ -194,7 +194,7 @@ namespace Application.Pedidos.Commands
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
-        private bool ValidarComando(Command message)
+        private bool ValidarComando<TCommand, TResponse>(TCommand message) where TCommand : Command<TResponse>
         {
             if (message.EhValido()) return true;
 
