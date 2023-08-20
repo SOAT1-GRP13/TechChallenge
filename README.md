@@ -85,7 +85,8 @@ Para realizar um stress teste, dentro da pasta kubernetes voce pode executar o c
    ```bash
    sh stress-linux.sh 0.0001 > out.txt
    ```
-Para windows execute o bach stress-windows.bat
+Para windows execute o arquivo stress-test.exe dentro da pasta stress-windows.
+Lembrando que o HPA demora alguns instantes para entender que precisa escalar o pod, então é necessário aguardar alguns minutos para que o pod seja escalado. e também é necessário aguardar alguns minutos para que o pod volte ao estado normal.
 
 # ⌨️ Testando a API
 
