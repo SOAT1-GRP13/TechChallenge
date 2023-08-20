@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Pedidos.Commands
 {
-    public class CancelarProcessamentoPedidoEstornarEstoqueCommand : Command
+    public class CancelarProcessamentoPedidoEstornarEstoqueCommand : Command<bool>
     {
         public Guid PedidoId { get; private set; }
         public Guid ClienteId { get; private set; }

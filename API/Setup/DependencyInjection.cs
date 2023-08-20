@@ -1,5 +1,4 @@
-﻿using Application.Autenticacao.Services;
-using Application.Catalogo.Services;
+﻿using Application.Catalogo.Services;
 using Application.Pedidos.Commands;
 using Domain.Autenticacao;
 using Domain.Catalogo;
@@ -23,6 +22,12 @@ using Infra.Pagamentos.Repository;
 using Infra.Pagamentos;
 using Domain.Pagamentos.Events;
 using Domain.Catalogo.Events;
+using Application.Autenticacao.UseCases;
+using Application.Autenticacao.Commands;
+using Application.Autenticacao.Boundaries.LogIn;
+using Application.Autenticacao.Handlers;
+using Application.Autenticacao.Boundaries.Cliente;
+using Application.Autenticacao.Queries;
 
 namespace API.Setup
 {
@@ -37,8 +42,12 @@ namespace API.Setup
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             //Autenticacao
+            services.AddTransient<IRequestHandler<AdminAutenticaCommand, LogInUsuarioOutput>, AdminAutenticacaoCommandHandler>();
+            services.AddTransient<IRequestHandler<AutenticaClienteCommand, AutenticaClienteOutput>, AutenticaClienteCommandHandler>();
             services.AddTransient<IAutenticacaoRepository, AutenticacaoRepository>();
-            services.AddScoped<IAutenticacaoService, AutenticacaoService>();
+            services.AddTransient<IRequestHandler<CadastraClienteCommand,AutenticaClienteOutput>,  CadastraClienteCommandHandler>();
+            services.AddScoped<IAutenticacaoUseCase, AutenticacaoUseCase>();
+            services.AddScoped<IAutenticacaoQuery, AutenticacaoQuery>();
             services.AddScoped<AutenticacaoContext>();
 
             // Catalogo

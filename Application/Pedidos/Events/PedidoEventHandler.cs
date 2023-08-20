@@ -33,18 +33,18 @@ namespace Application.Pedidos.Events
         public async Task Handle(PedidoEstoqueRejeitadoEvent message, CancellationToken cancellationToken)
         {
             //cancelar o processamento do pedido e retornar para rascunho ou outra lógica que o negócio decidir
-            await _mediatorHandler.EnviarComando(new CancelarProcessamentoPedidoCommand(message.PedidoId, message.ClienteId));
+            await _mediatorHandler.EnviarComando<CancelarProcessamentoPedidoCommand, bool>(new CancelarProcessamentoPedidoCommand(message.PedidoId, message.ClienteId));
         }
 
         public async Task Handle(PedidoPagamentoRealizadoEvent message, CancellationToken cancellationToken)
         {
             // Após o pagamento realizado, virá futuramente um evento que o pedido deve ser enviado para cozinha
-            await _mediatorHandler.EnviarComando(new FinalizarPedidoCommand(message.PedidoId, message.ClienteId));
+            await _mediatorHandler.EnviarComando<FinalizarPedidoCommand, bool>(new FinalizarPedidoCommand(message.PedidoId, message.ClienteId));
         }
 
         public async Task Handle(PedidoPagamentoRecusadoEvent message, CancellationToken cancellationToken)
         {
-            await _mediatorHandler.EnviarComando(new CancelarProcessamentoPedidoEstornarEstoqueCommand(message.PedidoId, message.ClienteId));
+            await _mediatorHandler.EnviarComando<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>(new CancelarProcessamentoPedidoEstornarEstoqueCommand(message.PedidoId, message.ClienteId));
         }
     }
 }

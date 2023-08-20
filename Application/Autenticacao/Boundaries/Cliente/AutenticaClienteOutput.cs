@@ -3,31 +3,20 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Application.Autenticacao.Boundaries.Cliente
 {
-    public class IdentificaOutput : ServiceResultBase
+    public class AutenticaClienteOutput
     {
         #region construtores
-        public IdentificaOutput()
+        public AutenticaClienteOutput()
         {
             TokenAcesso = string.Empty;
             Nome = string.Empty;
 
         }
-        public IdentificaOutput(string nome, string tokenAcesso)
+        public AutenticaClienteOutput(string nome, string tokenAcesso)
         {
             Nome = nome;
             TokenAcesso = tokenAcesso;
-            Sucesso = true;
-            Mensagem = string.Empty;
         }
-
-        public IdentificaOutput(bool sucesso, string mensagem)
-        {
-            Nome = string.Empty;
-            TokenAcesso = string.Empty;
-            Sucesso = sucesso;
-            Mensagem = mensagem;
-        }
-
         #endregion
 
         [SwaggerSchema(

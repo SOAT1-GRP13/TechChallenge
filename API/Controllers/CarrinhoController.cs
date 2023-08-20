@@ -48,7 +48,7 @@ namespace API.Controllers
 
 
                 var command = new AdicionarItemPedidoCommand(ObterClienteId(), produto.Id, produto.Nome, input.Quantidade, produto.Valor);
-                await _mediatorHandler.EnviarComando(command);
+                await _mediatorHandler.EnviarComando<AdicionarItemPedidoCommand, bool>(command);
 
                 if (OperacaoValida()) // Verifica se tem notificacoes de erro
                 {
@@ -86,7 +86,7 @@ namespace API.Controllers
                 if (produto == null) return NotFound();
 
                 var command = new AtualizarItemPedidoCommand(ObterClienteId(), input.Id, input.Quantidade);
-                await _mediatorHandler.EnviarComando(command);
+                await _mediatorHandler.EnviarComando<AtualizarItemPedidoCommand, bool>(command);
 
                 if (OperacaoValida())
                 {
@@ -120,7 +120,7 @@ namespace API.Controllers
                 if (produto == null) return NotFound();
 
                 var command = new RemoverItemPedidoCommand(ObterClienteId(), id);
-                await _mediatorHandler.EnviarComando(command);
+                await _mediatorHandler.EnviarComando<RemoverItemPedidoCommand, bool>(command);
 
                 if (OperacaoValida())
                 {
@@ -188,7 +188,7 @@ namespace API.Controllers
                 var command = new IniciarPedidoCommand(carrinho.PedidoId, ObterClienteId(), carrinho.ValorTotal, carrinhoDto.Pagamento.NomeCartao,
                     carrinhoDto.Pagamento.NumeroCartao, carrinhoDto.Pagamento.ExpiracaoCartao, carrinhoDto.Pagamento.CvvCartao);
 
-                await _mediatorHandler.EnviarComando(command);
+                await _mediatorHandler.EnviarComando<IniciarPedidoCommand, bool>(command);
 
                 if (OperacaoValida())
                 {

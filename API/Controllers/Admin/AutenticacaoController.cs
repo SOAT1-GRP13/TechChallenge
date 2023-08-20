@@ -1,5 +1,8 @@
 ﻿using Application.Autenticacao.Boundaries.LogIn;
-using Application.Autenticacao.Services;
+using Application.Autenticacao.Commands;
+using Domain.Base.Communication.Mediator;
+using Domain.Base.Messages.CommonMessages.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -7,13 +10,15 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("[Controller]")]
-    public class AutenticacaoController : Controller
+    public class AutenticacaoController : ControllerBase
     {
-        private readonly IAutenticacaoService _autenticacaoService;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public AutenticacaoController(IAutenticacaoService autenticacaoService)
+        public AutenticacaoController(
+            INotificationHandler<DomainNotification> notifications,
+            IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
-            _autenticacaoService = autenticacaoService;
+            _mediatorHandler = mediatorHandler;
         }
 
         [SwaggerOperation(
@@ -25,9 +30,17 @@ namespace API.Controllers.Admin
         [Route("LogInUsuario")]
         public async Task<IActionResult> LogInUsuario([FromBody] LogInUsuarioInput input)
         {
-            var acesso = await _autenticacaoService.AutenticaUsuario(input);
+            var command = new AdminAutenticaCommand(input);
+            var autenticado = await _mediatorHandler.EnviarComando<AdminAutenticaCommand, LogInUsuarioOutput> (command);
 
-            return Ok(acesso);
+            if (OperacaoValida())
+            {
+                return Ok(autenticado);
+            }
+            else
+            {
+                return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+            }
         }
 
 

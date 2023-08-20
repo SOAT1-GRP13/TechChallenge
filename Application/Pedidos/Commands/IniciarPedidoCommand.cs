@@ -4,7 +4,7 @@ using Domain.Base.Messages;
 
 namespace Application.Pedidos.Commands
 {
-    public class IniciarPedidoCommand : Command
+    public class IniciarPedidoCommand : Command<bool>
     {
         public Guid PedidoId { get; private set; }
         public Guid ClienteId { get; private set; }
