@@ -59,6 +59,7 @@ namespace Application.Pedidos.Commands
                 {
                     _pedidoRepository.AdicionarItem(pedidoItem);
                 }
+                _pedidoRepository.Atualizar(pedido);
             }
 
             pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
