@@ -118,6 +118,27 @@ namespace Domain.Pedidos
             PedidoStatus = PedidoStatus.Cancelado;
         }
 
+        public void AtualizarStatus(PedidoStatus status)
+        {
+            switch (status)
+            {
+                case PedidoStatus.Rascunho:
+                    TornarRascunho();
+                    break;
+                case PedidoStatus.Iniciado:
+                    IniciarPedido();
+                    break;
+                case PedidoStatus.Pago:
+                    FinalizarPedido();
+                    break;
+                case PedidoStatus.Cancelado:
+                    CancelarPedido();
+                    break;
+                default:
+                    throw new DomainException("Status do pedido inválido");
+            }
+        }
+
         public static class PedidoFactory
         {
             public static Pedido NovoPedidoRascunho(Guid clienteId)
