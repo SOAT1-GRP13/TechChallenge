@@ -7,9 +7,9 @@ namespace Application.Pedidos.Boundaries
     {
         [Required]
         [SwaggerSchema(
-            Title = "Guid do produto",
+            Title = "Guid do pedido",
             Format = "Guid")]
-        public Guid Id { get; set; }
+        public Guid IdPedido { get; set; }
 
         [Required]
         [SwaggerSchema(
