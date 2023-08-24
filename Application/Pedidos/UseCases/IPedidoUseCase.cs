@@ -3,7 +3,7 @@ using Application.Pedidos.Queries.DTO;
 
 namespace Application.Pedidos.UseCases
 {
-    public interface IStatusPedidoUseCase : IDisposable
+    public interface IPedidoUseCase : IDisposable
     {
         Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus);
     }

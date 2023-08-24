@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Application.Pedidos.UseCases
 {
-    public class StatusPedidoUseCase : IStatusPedidoUseCase
+    public class PedidoUseCase : IPedidoUseCase
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IMapper _mapper;
 
-        public StatusPedidoUseCase(
+        public PedidoUseCase(
             IPedidoRepository pedidoRepository,
             IMapper mapper
         )

@@ -13,12 +13,12 @@ namespace Application.Pedidos.Handlers
 {
     public class AtualizarStatusPedidoCommandHandler : IRequestHandler<AtualizarStatusPedidoCommand, PedidoOutput>
     {
-        private readonly IStatusPedidoUseCase _statusPedidoUseCase;
+        private readonly IPedidoUseCase _statusPedidoUseCase;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
 
         public AtualizarStatusPedidoCommandHandler(
-            IStatusPedidoUseCase statusPedidoUseCase,
+            IPedidoUseCase statusPedidoUseCase,
             IMediatorHandler mediatorHandler,
             IMapper mapper
         )

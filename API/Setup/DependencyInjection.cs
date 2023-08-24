@@ -66,7 +66,7 @@ namespace API.Setup
             // Pedidos
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPedidoQueries, PedidoQueries>();
-            services.AddScoped<IStatusPedidoUseCase, StatusPedidoUseCase>();
+            services.AddScoped<IPedidoUseCase, PedidoUseCase>();
             services.AddScoped<PedidosContext>();
 
             services.AddScoped<IRequestHandler<AtualizarStatusPedidoCommand, PedidoOutput>, AtualizarStatusPedidoCommandHandler>();
