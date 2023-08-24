@@ -8,6 +8,7 @@ COPY ./API/*.csproj ./API/
 COPY ./Application/*.csproj ./Application/
 COPY ./Domain/*.csproj ./Domain/
 COPY ./Domain.Tests/*.csproj ./Domain.Tests/
+COPY ./Application.Tests/*.csproj ./Application.Tests/
 COPY ./Infra/*.csproj ./Infra/
 RUN dotnet restore
 
