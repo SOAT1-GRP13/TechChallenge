@@ -1,4 +1,6 @@
-﻿using Application.Pedidos.Queries;
+﻿using Application.Pedidos.Boundaries;
+using Application.Pedidos.Commands;
+using Application.Pedidos.Queries;
 using Application.Pedidos.Queries.DTO;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
@@ -14,11 +16,13 @@ namespace API.Controllers
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoQueries _pedidoQueries;
+        private readonly IMediatorHandler _mediatorHandler;
 
         public PedidoController(IPedidoQueries pedidoQueries,
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
+            _mediatorHandler = mediatorHandler;
             _pedidoQueries = pedidoQueries;
         }
 
@@ -42,6 +46,24 @@ namespace API.Controllers
         public async Task<IActionResult> Pedidos()
         {
             return Ok(await _pedidoQueries.ObterTodosPedidos());
+        }
+
+        [HttpPut("atualizar-status-pedido")]
+        [SwaggerOperation(
+            Summary = "Atualizar status do pedido",
+            Description = "Atualiza o status do pedido")]
+        [SwaggerResponse(200, "Retorna o pedido atualizado", typeof(PedidoDto))]
+        [SwaggerResponse(404, "Caso não encontre o pedido com o Id informado")]
+        [SwaggerResponse(500, "Caso algo inesperado aconteça")]
+        public async Task<IActionResult> AtualizarStatusPedido([FromBody] AtualizarStatusPedidoInput input)
+        {
+            var command = new AtualizarStatusPedidoCommand(input);
+            var pedido = await _mediatorHandler.EnviarComando<AtualizarStatusPedidoCommand, PedidoOutput>(command);
+
+            if(!OperacaoValida())
+                return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+
+            return Ok(pedido);            
         }
     }
 }

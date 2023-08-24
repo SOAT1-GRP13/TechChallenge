@@ -28,6 +28,9 @@ using Application.Autenticacao.Boundaries.LogIn;
 using Application.Autenticacao.Handlers;
 using Application.Autenticacao.Boundaries.Cliente;
 using Application.Autenticacao.Queries;
+using Application.Pedidos.Handlers;
+using Application.Pedidos.Boundaries;
+using Application.Pedidos.UseCases;
 
 namespace API.Setup
 {
@@ -63,8 +66,10 @@ namespace API.Setup
             // Pedidos
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPedidoQueries, PedidoQueries>();
+            services.AddScoped<IPedidoUseCase, PedidoUseCase>();
             services.AddScoped<PedidosContext>();
 
+            services.AddScoped<IRequestHandler<AtualizarStatusPedidoCommand, PedidoOutput>, AtualizarStatusPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
