@@ -108,7 +108,7 @@ namespace Domain.Pedidos
             PedidoStatus = PedidoStatus.Iniciado;
         }
 
-        public void FinalizarPedido()
+        public void ColocarPedidoComoPago()
         {
             PedidoStatus = PedidoStatus.Pago;
         }
@@ -116,6 +116,26 @@ namespace Domain.Pedidos
         public void CancelarPedido()
         {
             PedidoStatus = PedidoStatus.Cancelado;
+        }
+
+        public void ColocarPedidoComoPronto()
+        {
+            PedidoStatus = PedidoStatus.Pronto;
+        }
+
+        public void ColocarPedidoEmPreparacao()
+        {
+            PedidoStatus = PedidoStatus.EmPreparacao;
+        }
+
+        public void ColocarPedidoComoRecebido()
+        {
+            PedidoStatus = PedidoStatus.Recebido;
+        }
+
+        public void FinalizarPedido()
+        {
+            PedidoStatus = PedidoStatus.Finalizado;
         }
 
         public void AtualizarStatus(PedidoStatus status)
@@ -129,10 +149,22 @@ namespace Domain.Pedidos
                     IniciarPedido();
                     break;
                 case PedidoStatus.Pago:
-                    FinalizarPedido();
+                    ColocarPedidoComoPago();
                     break;
                 case PedidoStatus.Cancelado:
                     CancelarPedido();
+                    break;
+                case PedidoStatus.Pronto:
+                    ColocarPedidoComoPronto();
+                    break;
+                case PedidoStatus.EmPreparacao:
+                    ColocarPedidoEmPreparacao();
+                    break;
+                case PedidoStatus.Recebido:
+                    ColocarPedidoComoRecebido();
+                    break;
+                case PedidoStatus.Finalizado:
+                    FinalizarPedido();
                     break;
                 default:
                     throw new DomainException("Status do pedido inválido");
