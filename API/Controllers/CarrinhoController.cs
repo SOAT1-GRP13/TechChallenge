@@ -44,7 +44,8 @@ namespace API.Controllers
             try
             {
                 var produto = await _produtoAppService.ObterPorId(input.Id);
-                if (produto == null) return NotFound();
+                if (produto is null)
+                    return NotFound();
 
 
                 var command = new AdicionarItemPedidoCommand(ObterClienteId(), produto.Id, produto.Nome, input.Quantidade, produto.Valor);
@@ -76,19 +77,16 @@ namespace API.Controllers
             try
             {
                 var produto = await _produtoAppService.ObterPorId(input.Id);
-                if (produto == null) return NotFound();
+                if (produto is null)
+                    return NotFound();
 
                 var command = new AtualizarItemPedidoCommand(ObterClienteId(), input.Id, input.Quantidade);
                 await _mediatorHandler.EnviarComando<AtualizarItemPedidoCommand, bool>(command);
 
-                if (OperacaoValida())
-                {
-                    return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
-                }
-                else
-                {
+                if (!OperacaoValida())
                     return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
-                }
+
+                return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
             }
             catch (Exception ex)
             {
@@ -110,19 +108,16 @@ namespace API.Controllers
             try
             {
                 var produto = await _produtoAppService.ObterPorId(id);
-                if (produto == null) return NotFound();
+                if (produto is null) 
+                    return NotFound();
 
                 var command = new RemoverItemPedidoCommand(ObterClienteId(), id);
                 await _mediatorHandler.EnviarComando<RemoverItemPedidoCommand, bool>(command);
 
-                if (OperacaoValida())
-                {
-                    return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
-                }
-                else
-                {
+                if (!OperacaoValida())
                     return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
-                }
+
+                return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
             }
             catch (Exception ex)
             {
@@ -183,19 +178,15 @@ namespace API.Controllers
 
                 await _mediatorHandler.EnviarComando<IniciarPedidoCommand, bool>(command);
 
-                if (OperacaoValida())
-                {
-                    return Ok(await _pedidoQueries.ObterPedidosCliente(ObterClienteId()));
-                }
-                else
-                {
+                if (!OperacaoValida())
                     return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
-                }
+
+                return Ok(await _pedidoQueries.ObterPedidosCliente(ObterClienteId()));
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                                                                          $"Erro ao tentar confirmar pedido. Erro: {ex.Message}");
+                                       $"Erro ao tentar confirmar pedido. Erro: {ex.Message}");
             }
         }
     }
