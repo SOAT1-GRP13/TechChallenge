@@ -16,6 +16,16 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
+    <PackageReference Include="mercadopago-sdk" Version="2.3.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Pagamentos\MercadoPago\" />
+    <None Remove="Pagamentos\MercadoPago\Boundaries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pagamentos/MercadoPago/Commands/" />
+    <Folder Include="Pagamentos\MercadoPago\" />
+    <Folder Include="Pagamentos\MercadoPago\Boundaries\" />
+  </ItemGroup>
 </Project>

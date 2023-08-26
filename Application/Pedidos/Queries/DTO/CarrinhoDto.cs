@@ -15,6 +15,5 @@ namespace Application.Pedidos.Queries.DTO
 
 
         public List<CarrinhoItemDto> Items { get; set; } = new List<CarrinhoItemDto>();
-        public CarrinhoPagamentoDto Pagamento { get; set; }
     }
 }

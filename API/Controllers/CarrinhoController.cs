@@ -108,20 +108,20 @@ namespace API.Controllers
             try
             {
                 var produto = await _produtoAppService.ObterPorId(id);
-                if (produto is null) 
+                if (produto is null)
                     return NotFound();
 
                 var command = new RemoverItemPedidoCommand(ObterClienteId(), id);
                 await _mediatorHandler.EnviarComando<RemoverItemPedidoCommand, bool>(command);
 
                 if (!OperacaoValida())
-                    return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+                    return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
 
                 return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                        $"Erro ao tentar remover item do carrinho. Erro: {ex.Message}");
             }
 
@@ -154,40 +154,25 @@ namespace API.Controllers
             }
         }
 
-
-        [HttpPost("confirmar-pedido-pagamento")]
+        [HttpPost("confirmar-pedido")]
         [SwaggerOperation(
-            Summary = "Atualizar item do carrinho",
-            Description = "Atualiza o item desejado no carrinho")]
-        [SwaggerResponse(200, "Retorna pedidos do cliente", typeof(IEnumerable<PedidoDto>))]
+            Summary = "Confirma o pedido",
+            Description = "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code. No momento apenas trazendo um id para o webhook")]
+        [SwaggerResponse(200, "Retorna pedido confirmado", typeof(PedidoOutput))]
         [SwaggerResponse(404, "Caso não encontre nenhum carrinho")]
         [SwaggerResponse(400, "Caso não obedeça alguma regra de negocio")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
-        public async Task<IActionResult> RealizarPagamentoPedido([FromBody] CarrinhoDto carrinhoDto)
+        public async Task<IActionResult> ConfirmarPedido([FromBody] IniciarPedidoInput input)
         {
-            try
-            {
-                var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId());
+            //IniciarPedidoCommand Dispara todos os eventos de dominio para criar o pedido, realizar pagamento e finalizar pedido.
+            var command = new IniciarPedidoCommand(input.PedidoId, ObterClienteId());
 
-                if (carrinho is null)
-                    return this.StatusCode(StatusCodes.Status404NotFound, "Nenhum carrinho em rascunho encontrado");
+            var pedido = await _mediatorHandler.EnviarComando<IniciarPedidoCommand, PedidoOutput>(command);
 
-                //IniciarPedidoCommand Dispara todos os eventos de dominio para criar o pedido, realizar pagamento e finalizar pedido.
-                var command = new IniciarPedidoCommand(carrinho.PedidoId, ObterClienteId(), carrinho.ValorTotal, carrinhoDto.Pagamento.NomeCartao,
-                    carrinhoDto.Pagamento.NumeroCartao, carrinhoDto.Pagamento.ExpiracaoCartao, carrinhoDto.Pagamento.CvvCartao);
+            if (!OperacaoValida())
+                return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
 
-                await _mediatorHandler.EnviarComando<IniciarPedidoCommand, bool>(command);
-
-                if (!OperacaoValida())
-                    return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
-
-                return Ok(await _pedidoQueries.ObterPedidosCliente(ObterClienteId()));
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
-                                       $"Erro ao tentar confirmar pedido. Erro: {ex.Message}");
-            }
+            return Ok(pedido);
         }
     }
 }

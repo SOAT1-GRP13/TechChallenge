@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Pedidos;
 using Domain.Base.DomainObjects;
-using Application.Pedidos.Events;
-using Domain.Base.DomainObjects.DTO;
 using Application.Pedidos.Queries.DTO;
-using Domain.Base.Messages.CommonMessages.IntegrationEvents.Pedidos;
 
 namespace Application.Pedidos.UseCases
 {
@@ -39,7 +36,6 @@ namespace Application.Pedidos.UseCases
                 pedido.AdicionarItem(pedidoItem);
 
                 _pedidoRepository.Adicionar(pedido);
-                pedido.AdicionarEvento(new PedidoRascunhoIniciadoEvent(clienteId, produtoId));
             }
             else
             {
@@ -56,7 +52,6 @@ namespace Application.Pedidos.UseCases
                 }
             }
 
-            pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, produtoId, nome, valorUnitario, quantidade));
             return await _pedidoRepository.UnitOfWork.Commit();
         }
         public async Task<bool> AtualizarItem(Guid clienteId, Guid produtoId, int quantidade)
@@ -68,7 +63,6 @@ namespace Application.Pedidos.UseCases
             if (!pedido.PedidoItemExistente(pedidoItem))
                 throw new DomainException("Item do pedido não encontrado!");
             pedido.AtualizarUnidades(pedidoItem, quantidade);
-            pedido.AdicionarEvento(new PedidoProdutoAtualizadoEvent(clienteId, pedido.Id, produtoId, quantidade));
             _pedidoRepository.AtualizarItem(pedidoItem);
             _pedidoRepository.Atualizar(pedido);
             return await _pedidoRepository.UnitOfWork.Commit();
@@ -83,19 +77,34 @@ namespace Application.Pedidos.UseCases
 
             var pedidoItem = await _pedidoRepository.ObterItemPorPedido(pedido.Id, produtoId);
 
-            if(pedidoItem is null)
+            if (pedidoItem is null)
                 throw new DomainException("Item do pedido não encontrado na base!");
 
             if (!pedido.PedidoItemExistente(pedidoItem))
                 throw new DomainException("Item do pedido não encontrado!");
 
             pedido.RemoverItem(pedidoItem);
-            pedido.AdicionarEvento(new PedidoProdutoRemovidoEvent(clienteId, pedido.Id, produtoId));
 
             _pedidoRepository.RemoverItem(pedidoItem);
             _pedidoRepository.Atualizar(pedido);
 
             return await _pedidoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<PedidoDto> TrocaStatusPedidoWebhook(int mercadoPagoId, PedidoStatus novoStatus)
+        {
+            var pedido = await _pedidoRepository.ObterPorIdMercadoPago(mercadoPagoId);
+
+            if (pedido is null)
+                return new PedidoDto();
+
+            pedido.AtualizarStatus(novoStatus);
+
+            _pedidoRepository.Atualizar(pedido);
+
+            await _pedidoRepository.UnitOfWork.Commit();
+
+            return _mapper.Map<PedidoDto>(pedido);
         }
 
         public async Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus)
@@ -114,20 +123,18 @@ namespace Application.Pedidos.UseCases
             return _mapper.Map<PedidoDto>(pedido);
         }
 
-        public async Task<bool> IniciarPedido(Guid clienteId, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
+        public async Task<bool> IniciarPedido(Guid pedidoId)
         {
-            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(clienteId);
+            var pedido = await _pedidoRepository.ObterPorId(pedidoId);
             if (pedido is null)
                 throw new DomainException("Pedido não encontrado!");
 
+            //TODO integrar com Mercado pago e adicionar um Id referente ao pagamento
             pedido.IniciarPedido();
 
-            var itensList = new List<Item>();
-            pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
-            var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
-
-            //Evento que dispara a retirada de itens do estoque no catalogo em ProdutoEventHandler.cs
-            pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido, pedido.ValorTotal, nomeCartao, numeroCartao, expiracaoCartao, cvvCartao));
+            // var itensList = new List<Item>();
+            // pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+            // var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
 
             _pedidoRepository.Atualizar(pedido);
             return await _pedidoRepository.UnitOfWork.Commit();
@@ -141,8 +148,8 @@ namespace Application.Pedidos.UseCases
                 throw new DomainException("Pedido não encontrado!");
 
             pedido.FinalizarPedido();
+            _pedidoRepository.Atualizar(pedido);
 
-            pedido.AdicionarEvento(new PedidoFinalizadoEvent(pedidoId));
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
@@ -158,21 +165,11 @@ namespace Application.Pedidos.UseCases
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
-        public async Task<bool> CancelarProcessamentoEEstornarEstoque(Guid pedidoId)
+        public async Task<PedidoDto> ObterPedidoPorId(Guid pedidoId)
         {
             var pedido = await _pedidoRepository.ObterPorId(pedidoId);
 
-            if (pedido is null)
-                throw new DomainException("Pedido não encontrado!");
-
-            var itensList = new List<Item>();
-            pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
-            var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
-
-            pedido.AdicionarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido));
-            pedido.TornarRascunho();
-
-            return await _pedidoRepository.UnitOfWork.Commit();
+            return _mapper.Map<PedidoDto>(pedido);
         }
 
         #endregion
@@ -182,5 +179,7 @@ namespace Application.Pedidos.UseCases
             GC.SuppressFinalize(this);
             _pedidoRepository.Dispose();
         }
+
+
     }
 }

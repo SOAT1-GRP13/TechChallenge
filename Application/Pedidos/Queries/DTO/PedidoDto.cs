@@ -9,5 +9,6 @@ namespace Application.Pedidos.Queries.DTO
         public decimal ValorTotal { get; set; }
         public DateTime DataCadastro { get; set; }
         public PedidoStatus PedidoStatus { get; set; }
+        public int MercadoPagoId { get; set; }
     }
 }

@@ -34,5 +34,11 @@ namespace Application.Pedidos.Boundaries
             Description = "Status do pedido",
             Format = "PedidoStatus")]
         public PedidoStatus PedidoStatus { get; set; }
+
+        [SwaggerSchema(
+            Title = "MercadoPagoId",
+            Description = "Id utilizado pelo webhook",
+            Format = "int")]
+        public int MercadoPagoId { get; set; }
     }
 }

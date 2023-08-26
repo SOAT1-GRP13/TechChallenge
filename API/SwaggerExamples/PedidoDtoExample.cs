@@ -16,7 +16,8 @@ namespace API.SwaggerExamples
                     DataCadastro = DateTime.UtcNow.AddDays(-7),
                     Id =  Guid.NewGuid(),
                     ValorTotal = 39.9m,
-                    PedidoStatus = PedidoStatus.Pago
+                    PedidoStatus = PedidoStatus.Pago,
+                    MercadoPagoId = 123456
                 }
             });
         }

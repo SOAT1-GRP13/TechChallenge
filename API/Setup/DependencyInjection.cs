@@ -13,15 +13,6 @@ using MediatR;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using Application.Pedidos.Queries;
-using Application.Pedidos.Events;
-using Domain.Base.Messages.CommonMessages.IntegrationEvents.Pedidos;
-using Application.Pagamentos.AntiCorrupition;
-using Domain.Pagamentos.Interfaces;
-using Domain.Pagamentos;
-using Infra.Pagamentos.Repository;
-using Infra.Pagamentos;
-using Domain.Pagamentos.Events;
-using Domain.Catalogo.Events;
 using Application.Autenticacao.UseCases;
 using Application.Autenticacao.Commands;
 using Application.Autenticacao.Boundaries.LogIn;
@@ -31,6 +22,8 @@ using Application.Autenticacao.Queries;
 using Application.Pedidos.Handlers;
 using Application.Pedidos.Boundaries;
 using Application.Pedidos.UseCases;
+using Application.Pagamentos.Commands;
+using Application.Pagamentos.Handlers;
 
 namespace API.Setup
 {
@@ -56,12 +49,7 @@ namespace API.Setup
             // Catalogo
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
-            services.AddScoped<IEstoqueService, EstoqueService>();
             services.AddScoped<CatalogoContext>();
-
-            services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, ProdutoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, ProdutoEventHandler>();
 
             // Pedidos
             services.AddScoped<IPedidoRepository, PedidoRepository>();
@@ -73,25 +61,12 @@ namespace API.Setup
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, AdicionarItemPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, AtualizarItemPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, RemoverItemPedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<IniciarPedidoCommand, bool>, IniciarPedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<IniciarPedidoCommand, PedidoOutput>, IniciarPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, FinalizarPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, CancelarProcessamentoPedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, CancelarProcessamentoPedidoEstornarEstoqueCommandHandler>();
-
-            services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoEstoqueRejeitadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoPagamentoRealizadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoPagamentoRecusadoEvent>, PedidoEventHandler>();
-
+            
             // Pagamento
-            services.AddScoped<IPagamentoRepository, PagamentoRepository>();
-            services.AddScoped<IPagamentoService, PagamentoService>();
-            services.AddScoped<IPagamentoCartaoCreditoFacade, PagamentoCartaoCreditoFacade>();
-            services.AddScoped<IPayPalGateway, PayPalGateway>();
-            services.AddScoped<IConfigurationManager, Application.Pagamentos.AntiCorrupition.ConfigurationManager>();
-            services.AddScoped<PagamentoContext>();
-
-            services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
+            services.AddTransient<IRequestHandler<StatusPagamentoCommand, bool>, StatusPagamentoCommandHandler>();
 
         }
     }
