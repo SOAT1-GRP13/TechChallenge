@@ -13,7 +13,7 @@ namespace Application.Pedidos.Handlers
 {
     public class AtualizarStatusPedidoCommandHandler : IRequestHandler<AtualizarStatusPedidoCommand, PedidoOutput>
     {
-        private readonly IPedidoUseCase _statusPedidoUseCase;
+        private readonly IPedidoUseCase _pedidoUseCase;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
 
@@ -23,7 +23,7 @@ namespace Application.Pedidos.Handlers
             IMapper mapper
         )
         {
-            _statusPedidoUseCase = statusPedidoUseCase;
+            _pedidoUseCase = statusPedidoUseCase;
             _mediatorHandler = mediatorHandler;
             _mapper = mapper;
         }
@@ -40,7 +40,7 @@ namespace Application.Pedidos.Handlers
             }
 
             var input = request.Input;
-            var pedidoDto = await _statusPedidoUseCase.TrocaStatusPedido(input.IdPedido, (PedidoStatus)input.Status);
+            var pedidoDto = await _pedidoUseCase.TrocaStatusPedido(input.IdPedido, (PedidoStatus)input.Status);
 
             if (pedidoDto.Codigo == 0)
             {

@@ -1,4 +1,5 @@
 ﻿using Application.Pedidos.Commands;
+using Application.Pedidos.Handlers;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using Domain.Pedidos;
@@ -8,18 +9,18 @@ using Pedido = Domain.Pedidos.Pedido;
 
 namespace Application.Tests.Pedidos
 {
-    public class PedidoCommandHandlerTests
+    public class AdicionarItemPedidoCommandHandlerTests
     {
         private readonly Guid _clienteId;
         private readonly Guid _produtoId;
         private readonly Pedido _pedido;
         private readonly AutoMocker _mocker;
-        private readonly PedidoCommandHandler _pedidoHandler;
+        private readonly AdicionarItemPedidoCommandHandler _pedidoHandler;
 
-        public PedidoCommandHandlerTests()
+        public AdicionarItemPedidoCommandHandlerTests()
         {
             _mocker = new AutoMocker();
-            _pedidoHandler = _mocker.CreateInstance<PedidoCommandHandler>();
+            _pedidoHandler = _mocker.CreateInstance<AdicionarItemPedidoCommandHandler>();
 
             _clienteId = Guid.NewGuid();
             _produtoId = Guid.NewGuid();
