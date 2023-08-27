@@ -1,9 +1,7 @@
 ﻿using Domain.Base.DomainObjects;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Autenticacao
 {
-    [Table("acesso_cliente")]
     public class AcessoCliente : Entity, IAggregateRoot
     {
         #region construtores
