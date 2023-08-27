@@ -145,7 +145,7 @@ namespace API.Controllers
                 if (carrinho is null)
                     return this.StatusCode(StatusCodes.Status404NotFound, "Nenhum carrinho em rascunho encontrado");
 
-                return Ok(await _pedidoQueries.ObterCarrinhoCliente(ObterClienteId()));
+                return Ok(carrinho);
             }
             catch (Exception ex)
             {
@@ -158,7 +158,7 @@ namespace API.Controllers
         [SwaggerOperation(
             Summary = "Confirma o pedido",
             Description = "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code. No momento apenas trazendo um id para o webhook")]
-        [SwaggerResponse(200, "Retorna pedido confirmado", typeof(PedidoOutput))]
+        [SwaggerResponse(200, "Retorna pedido confirmado", typeof(string))]
         [SwaggerResponse(404, "Caso não encontre nenhum carrinho")]
         [SwaggerResponse(400, "Caso não obedeça alguma regra de negocio")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -167,7 +167,7 @@ namespace API.Controllers
             //IniciarPedidoCommand Dispara todos os eventos de dominio para criar o pedido, realizar pagamento e finalizar pedido.
             var command = new IniciarPedidoCommand(input.PedidoId, ObterClienteId());
 
-            var pedido = await _mediatorHandler.EnviarComando<IniciarPedidoCommand, PedidoOutput>(command);
+            var pedido = await _mediatorHandler.EnviarComando<IniciarPedidoCommand, string>(command);
 
             if (!OperacaoValida())
                 return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());

@@ -61,7 +61,6 @@ namespace Application.Pedidos.Queries
                     PedidoStatus = pedido.PedidoStatus,
                     Codigo = pedido.Codigo,
                     DataCadastro = pedido.DataCadastro,
-                    MercadoPagoId = pedido.MercadoPagoId
                 });
             }
 

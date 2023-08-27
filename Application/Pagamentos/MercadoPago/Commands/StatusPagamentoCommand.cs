@@ -1,20 +1,22 @@
 using Application.Pagamentos.MercadoPago.Boundaries;
 using Domain.Base.Messages;
 
-namespace Application.Pagamentos.Commands
+namespace Application.Pagamentos.MercadoPago.Commands
 {
     public class StatusPagamentoCommand : Command<bool>
     {
-        public StatusPagamentoCommand(WebHookInput input)
+        public StatusPagamentoCommand(long id, string topic)
         {
-Input = input;
+            Id = id;
+            Topic = topic;
         }
 
-        public WebHookInput Input {get;set;}
+        public long Id { get; set; }
+        public string Topic { get; set; }
 
         public override bool EhValido()
         {
-            ValidationResult = new StatusPagamentoValidation().Validate(Input);
+            ValidationResult = new StatusPagamentoValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }

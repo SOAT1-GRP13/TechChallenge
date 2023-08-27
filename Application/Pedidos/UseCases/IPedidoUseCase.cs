@@ -12,9 +12,8 @@ namespace Application.Pedidos.UseCases
         Task<bool> RemoverItem(Guid clienteId, Guid produtoId);
 
         Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus);
-        Task<PedidoDto> TrocaStatusPedidoWebhook(int mercadoPagoId, PedidoStatus novoStatus);
 
-        Task<bool> IniciarPedido(Guid pedidoId);
+        Task<string> IniciarPedido(Guid pedidoId);
 
         Task<bool> FinalizarPedido(Guid pedidoId);
 

@@ -1,7 +1,5 @@
-﻿using Application.Autenticacao.Boundaries.LogIn;
-using Application.Autenticacao.Commands;
-using Application.Pagamentos.Commands;
-using Application.Pagamentos.MercadoPago.Boundaries;
+﻿using Application.Pagamentos.MercadoPago.Boundaries;
+using Application.Pagamentos.MercadoPago.Commands;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
@@ -31,9 +29,9 @@ namespace API.Controllers.Admin
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         [HttpPost]
         [Route("Webhook")]
-        public async Task<IActionResult> LogInUsuario([FromBody] WebHookInput input)
+        public async Task<IActionResult> WebHookMercadoPago([FromQuery] long id, [FromQuery] string topic)
         {
-            var command = new StatusPagamentoCommand(input);
+            var command = new StatusPagamentoCommand(id, topic);
             await _mediatorHandler.EnviarComando<StatusPagamentoCommand, bool>(command);
 
             if (OperacaoValida())

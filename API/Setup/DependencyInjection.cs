@@ -22,8 +22,10 @@ using Application.Autenticacao.Queries;
 using Application.Pedidos.Handlers;
 using Application.Pedidos.Boundaries;
 using Application.Pedidos.UseCases;
-using Application.Pagamentos.Commands;
-using Application.Pagamentos.Handlers;
+using Application.Pagamentos.MercadoPago.Commands;
+using Application.Pagamentos.MercadoPago.Handlers;
+using Application;
+using Application.Pagamentos.MercadoPago.Gateways;
 
 namespace API.Setup
 {
@@ -61,12 +63,13 @@ namespace API.Setup
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, AdicionarItemPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, AtualizarItemPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, RemoverItemPedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<IniciarPedidoCommand, PedidoOutput>, IniciarPedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<IniciarPedidoCommand, string>, IniciarPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, FinalizarPedidoCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, CancelarProcessamentoPedidoCommandHandler>();
             
             // Pagamento
             services.AddTransient<IRequestHandler<StatusPagamentoCommand, bool>, StatusPagamentoCommandHandler>();
+            services.AddScoped<IMercadoPagoGateway, MercadoPagoGateway>();
 
         }
     }

@@ -1,23 +1,20 @@
 ﻿using Application.Pagamentos.MercadoPago.Boundaries;
 using FluentValidation;
 
-namespace Application.Pagamentos.Commands;
+namespace Application.Pagamentos.MercadoPago.Commands;
 
-public class StatusPagamentoValidation : AbstractValidator<WebHookInput>
+public class StatusPagamentoValidation : AbstractValidator<StatusPagamentoCommand>
 {
     public StatusPagamentoValidation()
     {
-        RuleFor(x => x.Action)
-        .NotEmpty()
-        .WithMessage("Action é obrigatório");
-
         RuleFor(x => x.Id)
         .NotEmpty()
-        .WithMessage("Id é obrigatório");
+        .NotEqual(0)
+        .WithMessage("Action é obrigatório");
 
-        RuleFor(x => x.Data.Id)
+        RuleFor(x => x.Topic)
         .NotEmpty()
-        .WithMessage("Data Id é obrigatório");
+        .WithMessage("Topic é obrigatório");
     }
 
 }

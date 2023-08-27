@@ -5,7 +5,7 @@ using Application.Pedidos.Boundaries;
 
 namespace Application.Pedidos.Commands
 {
-    public class IniciarPedidoCommand : Command<PedidoOutput>
+    public class IniciarPedidoCommand : Command<string>
     {
         public Guid PedidoId { get; private set; }
         public Guid ClienteId { get; private set; }
