@@ -1,5 +1,7 @@
 ﻿using Application.Autenticacao.Boundaries.LogIn;
 using Application.Autenticacao.Commands;
+using Application.Pagamentos.Commands;
+using Application.Pagamentos.MercadoPago.Boundaries;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
@@ -10,11 +12,11 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("[Controller]")]
-    public class AutenticacaoController : ControllerBase
+    public class MercadoPagoController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public AutenticacaoController(
+        public MercadoPagoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
@@ -22,20 +24,21 @@ namespace API.Controllers.Admin
         }
 
         [SwaggerOperation(
-            Summary = "Autenticação do Gestor/Atendente",
-            Description = "Endpoint responsavel por autenticar o Gestor ou atendente")]
-        [SwaggerResponse(200, "Retorna dados se autenticado ou não", typeof(LogInUsuarioOutput))]
+            Summary = "Webhook mercado Pago",
+            Description = "Endpoint responsavel por receber um evento do mercado pago, no momento alterando o status do pedido para pago sempre")]
+        [SwaggerResponse(200, "Retorna OK após alterar o status")]
+        [SwaggerResponse(400, "Caso não seja preenchido todos os campos obrigatórios")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         [HttpPost]
-        [Route("LogInUsuario")]
-        public async Task<IActionResult> LogInUsuario([FromBody] LogInUsuarioInput input)
+        [Route("Webhook")]
+        public async Task<IActionResult> LogInUsuario([FromBody] WebHookInput input)
         {
-            var command = new AdminAutenticaCommand(input);
-            var autenticado = await _mediatorHandler.EnviarComando<AdminAutenticaCommand, LogInUsuarioOutput> (command);
+            var command = new StatusPagamentoCommand(input);
+            await _mediatorHandler.EnviarComando<StatusPagamentoCommand, bool>(command);
 
             if (OperacaoValida())
             {
-                return Ok(autenticado);
+                return Ok();
             }
             else
             {

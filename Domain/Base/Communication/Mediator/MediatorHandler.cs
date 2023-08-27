@@ -1,8 +1,6 @@
-﻿using Domain.Base.Messages.CommonMessages.DomainEvents;
-using Domain.Base.Messages.CommonMessages.Notifications;
+﻿using Domain.Base.Messages.CommonMessages.Notifications;
 using Domain.Base.Messages;
 using MediatR;
-using Domain.Base.Data.EventSourcing;
 
 namespace Domain.Base.Communication.Mediator
 {
@@ -31,11 +29,6 @@ namespace Domain.Base.Communication.Mediator
         }
 
         public async Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification
-        {
-            await _mediator.Publish(notificacao);
-        }
-
-        public async Task PublicarDomainEvent<T>(T notificacao) where T : DomainEvent
         {
             await _mediator.Publish(notificacao);
         }

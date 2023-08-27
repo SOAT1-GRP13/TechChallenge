@@ -26,8 +26,6 @@ namespace Application.Pedidos.Queries
                 SubTotal = pedido.ValorTotal // No futuro, se houver desconto, o subTotal será diferente do valor total
             };
 
-
-
             foreach (var item in pedido.PedidoItems)
             {
                 carrinho.Items.Add(new CarrinhoItemDto
@@ -47,7 +45,7 @@ namespace Application.Pedidos.Queries
         {
             var pedidos = await _pedidoRepository.ObterListaPorClienteId(clienteId);
 
-            pedidos = pedidos.Where(p => p.PedidoStatus == PedidoStatus.Pago || p.PedidoStatus == PedidoStatus.Cancelado)
+            pedidos = pedidos.Where(p => p.PedidoStatus != PedidoStatus.Finalizado && p.PedidoStatus != PedidoStatus.Cancelado)
                 .OrderByDescending(p => p.Codigo);
 
             if (!pedidos.Any()) return null;
@@ -62,7 +60,8 @@ namespace Application.Pedidos.Queries
                     ValorTotal = pedido.ValorTotal,
                     PedidoStatus = pedido.PedidoStatus,
                     Codigo = pedido.Codigo,
-                    DataCadastro = pedido.DataCadastro
+                    DataCadastro = pedido.DataCadastro,
+                    MercadoPagoId = pedido.MercadoPagoId
                 });
             }
 

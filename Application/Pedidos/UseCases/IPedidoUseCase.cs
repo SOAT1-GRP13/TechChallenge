@@ -12,13 +12,14 @@ namespace Application.Pedidos.UseCases
         Task<bool> RemoverItem(Guid clienteId, Guid produtoId);
 
         Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus);
+        Task<PedidoDto> TrocaStatusPedidoWebhook(int mercadoPagoId, PedidoStatus novoStatus);
 
-        Task<bool> IniciarPedido(Guid clienteId, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao);
+        Task<bool> IniciarPedido(Guid pedidoId);
 
         Task<bool> FinalizarPedido(Guid pedidoId);
 
         Task<bool> CancelarProcessamento(Guid pedidoId);
 
-        Task<bool> CancelarProcessamentoEEstornarEstoque(Guid pedidoId);
+        Task<PedidoDto> ObterPedidoPorId(Guid pedidoId);
     }
 }

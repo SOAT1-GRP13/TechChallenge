@@ -2,7 +2,6 @@ using API.Data;
 using API.Setup;
 using Infra.Pedidos;
 using Infra.Catalogo;
-using Infra.Pagamentos;
 using System.Reflection;
 using Infra.Autenticacao;
 using Domain.ValueObjects;
@@ -29,9 +28,6 @@ builder.Services.AddDbContext<CatalogoContext>(options =>
         options.UseNpgsql(connectionString));
 
 builder.Services.AddDbContext<PedidosContext>(options =>
-        options.UseNpgsql(connectionString));
-
-builder.Services.AddDbContext<PagamentoContext>(options =>
         options.UseNpgsql(connectionString));
 
 
@@ -103,13 +99,11 @@ await using var scope = app.Services.CreateAsyncScope();
 using var dbApplication = scope.ServiceProvider.GetService<ApplicationDbContext>();
 using var dbAutenticacao = scope.ServiceProvider.GetService<AutenticacaoContext>();
 using var dbCatalogo = scope.ServiceProvider.GetService<CatalogoContext>();
-using var dbPagamento = scope.ServiceProvider.GetService<PagamentoContext>();
 using var dbPedidos = scope.ServiceProvider.GetService<PedidosContext>();
 
 await dbApplication!.Database.MigrateAsync();
 await dbAutenticacao!.Database.MigrateAsync();
 await dbCatalogo!.Database.MigrateAsync();
-await dbPagamento!.Database.MigrateAsync();
 await dbPedidos!.Database.MigrateAsync();
 
 app.Run();

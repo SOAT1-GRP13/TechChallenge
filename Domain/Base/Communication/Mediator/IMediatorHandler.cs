@@ -1,5 +1,4 @@
 ﻿using Domain.Base.Messages;
-using Domain.Base.Messages.CommonMessages.DomainEvents;
 using Domain.Base.Messages.CommonMessages.Notifications;
 
 namespace Domain.Base.Communication.Mediator
@@ -9,6 +8,5 @@ namespace Domain.Base.Communication.Mediator
         Task PublicarEvento<T>(T evento) where T : Event;
         Task<TResponse> EnviarComando<TCommand, TResponse>(TCommand command) where TCommand : Command<TResponse>;
         Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification;
-        Task PublicarDomainEvent<T>(T notificacao) where T : DomainEvent;
     }
 }

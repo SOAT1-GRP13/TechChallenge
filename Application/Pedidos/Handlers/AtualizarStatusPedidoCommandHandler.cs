@@ -5,8 +5,6 @@ using Application.Pedidos.UseCases;
 using Application.Pedidos.Boundaries;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
-using Application.Pedidos.Queries.DTO;
-using Domain.Pagamentos;
 using AutoMapper;
 
 namespace Application.Pedidos.Handlers

@@ -1,11 +1,4 @@
-﻿using Domain.Base;
-using Domain.Base.DomainObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Base.DomainObjects;
 
 namespace Domain.Pedidos
 {
@@ -16,6 +9,7 @@ namespace Domain.Pedidos
         public decimal ValorTotal { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public PedidoStatus PedidoStatus { get; private set; }
+        public int MercadoPagoId { get; private set; }
 
         private readonly List<PedidoItem> _pedidoItems;
         public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
@@ -52,7 +46,7 @@ namespace Domain.Pedidos
 
             if (PedidoItemExistente(item))
             {
-                var itemExistente = _pedidoItems.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
+                var itemExistente = _pedidoItems.First(p => p.ProdutoId == item.ProdutoId);
                 itemExistente.AdicionarUnidades(item.Quantidade);
                 item = itemExistente;
 
@@ -105,6 +99,9 @@ namespace Domain.Pedidos
 
         public void IniciarPedido()
         {
+            Random random = new Random();
+            //TODO receber o Id do mercado pago no lugar de um numero
+            MercadoPagoId = random.Next(0, 99999999);
             PedidoStatus = PedidoStatus.Iniciado;
         }
 

@@ -26,6 +26,11 @@ namespace Infra.Pedidos.Repository
             return await _context.Pedidos.FindAsync(id);
         }
 
+        public async Task<Pedido?> ObterPorIdMercadoPago(int mercadoPagoId)
+        {
+            return await _context.Pedidos.Where(p => p.MercadoPagoId == mercadoPagoId).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
         {
             return await _context.Pedidos.AsNoTracking().Where(p => p.ClienteId == clienteId).ToListAsync();
