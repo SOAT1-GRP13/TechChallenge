@@ -5,7 +5,6 @@ namespace Domain.Pedidos
     public interface IPedidoRepository : IRepository<Pedido>
     {
         Task<Pedido> ObterPorId(Guid id);
-        Task<Pedido?> ObterPorIdMercadoPago(int mercadoPagoId);
         Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId);
         Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId);
         void Adicionar(Pedido pedido);

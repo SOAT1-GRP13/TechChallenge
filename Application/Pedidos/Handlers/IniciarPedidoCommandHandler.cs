@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Pedidos.Handlers
 {
-    public class IniciarPedidoCommandHandler : IRequestHandler<IniciarPedidoCommand, PedidoOutput>
+    public class IniciarPedidoCommandHandler : IRequestHandler<IniciarPedidoCommand, string>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoUseCase _pedidoUseCase;
@@ -26,7 +26,7 @@ namespace Application.Pedidos.Handlers
             _mapper = mapper;
         }
 
-        public async Task<PedidoOutput> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
+        public async Task<string> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
         {
             if (!message.EhValido())
             {
@@ -36,17 +36,16 @@ namespace Application.Pedidos.Handlers
 
             try
             {
-                await _pedidoUseCase.IniciarPedido(message.PedidoId);
-                var pedidoDto = await _pedidoUseCase.ObterPedidoPorId(message.PedidoId);
+                var qrData = await _pedidoUseCase.IniciarPedido(message.PedidoId);
 
-                return _mapper.Map<PedidoOutput>(pedidoDto);
+                return qrData;
             }
-            catch (Exception ex)
+            catch (DomainException ex)
             {
                 await _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, ex.Message));
             }
 
-            return new PedidoOutput();
+            return string.Empty;
         }
     }
 }

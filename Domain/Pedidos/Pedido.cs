@@ -9,7 +9,6 @@ namespace Domain.Pedidos
         public decimal ValorTotal { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public PedidoStatus PedidoStatus { get; private set; }
-        public int MercadoPagoId { get; private set; }
 
         private readonly List<PedidoItem> _pedidoItems;
         public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
@@ -99,9 +98,6 @@ namespace Domain.Pedidos
 
         public void IniciarPedido()
         {
-            Random random = new Random();
-            //TODO receber o Id do mercado pago no lugar de um numero
-            MercadoPagoId = random.Next(0, 99999999);
             PedidoStatus = PedidoStatus.Iniciado;
         }
 

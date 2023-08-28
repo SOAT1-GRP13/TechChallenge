@@ -23,12 +23,13 @@ namespace Infra.Pedidos.Repository
 
         public async Task<Pedido> ObterPorId(Guid id)
         {
-            return await _context.Pedidos.FindAsync(id);
-        }
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido == null) return null;
 
-        public async Task<Pedido?> ObterPorIdMercadoPago(int mercadoPagoId)
-        {
-            return await _context.Pedidos.Where(p => p.MercadoPagoId == mercadoPagoId).FirstOrDefaultAsync();
+            await _context.Entry(pedido)
+                .Collection(i => i.PedidoItems).LoadAsync(); // Popula pedido evitando querys com join
+
+            return pedido;
         }
 
         public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
