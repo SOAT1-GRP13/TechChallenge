@@ -93,5 +93,19 @@ namespace Infra.Pedidos.Repository
         {
             return await _context.Pedidos.AsNoTracking().ToListAsync();
         }
+
+        public async Task<IEnumerable<Pedido>> ObterPedidosParaFila()
+        {
+            var pedido = await _context.Pedidos
+                                       .Where(p => p.PedidoStatus != PedidoStatus.Finalizado
+                                                && p.PedidoStatus != PedidoStatus.Rascunho
+                                                && p.PedidoStatus != PedidoStatus.Cancelado)
+                                       .Include(p => p.PedidoItems)
+                                       .OrderBy(p => p.DataCadastro)
+                                       .OrderBy(p => p.PedidoStatus)
+                                       .ToListAsync();
+
+            return pedido;
+        }
     }
 }
