@@ -6,6 +6,8 @@ using Application.Pedidos.Boundaries;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using AutoMapper;
+using Domain.Base.DomainObjects;
+using Domain.Base.Messages;
 
 namespace Application.Pedidos.Handlers
 {
@@ -37,16 +39,24 @@ namespace Application.Pedidos.Handlers
                 return pedidoVazio;
             }
 
-            var input = request.Input;
-            var pedidoDto = await _pedidoUseCase.TrocaStatusPedido(input.IdPedido, (PedidoStatus)input.Status);
-
-            if (pedidoDto.Codigo == 0)
+            try
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification(request.MessageType, "Pedido não encontrado"));
+                var input = request.Input;
+                var pedidoDto = await _pedidoUseCase.TrocaStatusPedido(input.IdPedido, (PedidoStatus)input.Status);
+
+                if (pedidoDto.Codigo == 0)
+                {
+                    await _mediatorHandler.PublicarNotificacao(new DomainNotification(request.MessageType, "Pedido não encontrado"));
+                    return pedidoVazio;
+                }
+
+                return _mapper.Map<PedidoOutput>(pedidoDto);
+            }
+            catch (DomainException ex)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification(request.MessageType, ex.Message));
                 return pedidoVazio;
             }
-
-            return _mapper.Map<PedidoOutput>(pedidoDto);
         }
     }
 }

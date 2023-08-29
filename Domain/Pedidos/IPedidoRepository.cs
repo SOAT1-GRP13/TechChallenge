@@ -18,5 +18,7 @@ namespace Domain.Pedidos
 
         Task<IEnumerable<Pedido>> ObterTodosPedidos();
 
+        Task<IEnumerable<Pedido>> ObterPedidosParaFila();
+
     }
 }

@@ -48,6 +48,17 @@ namespace API.Controllers
             return Ok(await _pedidoQueries.ObterTodosPedidos());
         }
 
+        [HttpGet("PedidosNaFila")]
+        [SwaggerOperation(
+            Summary = "Lista todos os pedidos na fila",
+            Description = "Lista todos pedidos na fila")]
+        [SwaggerResponse(200, "Retorna pedidos na fila", typeof(IEnumerable<PedidoNaFilaOutput>))]
+        [SwaggerResponse(500, "Caso algo inesperado aconteça")]
+        public async Task<IActionResult> PedidosNaFila()
+        {
+            return Ok(await _pedidoQueries.ObterPedidosParaFila());
+        }
+
         [HttpPut("atualizar-status-pedido")]
         [SwaggerOperation(
             Summary = "Atualizar status do pedido",
