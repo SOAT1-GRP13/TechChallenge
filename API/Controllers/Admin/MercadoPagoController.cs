@@ -23,7 +23,7 @@ namespace API.Controllers.Admin
 
         [SwaggerOperation(
             Summary = "Webhook mercado Pago",
-            Description = "Endpoint responsavel por receber um evento do mercado pago, no momento alterando o status do pedido para pago sempre")]
+            Description = "Endpoint responsavel por receber um evento do mercado pago")]
         [SwaggerResponse(200, "Retorna OK após alterar o status")]
         [SwaggerResponse(400, "Caso não seja preenchido todos os campos obrigatórios")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]

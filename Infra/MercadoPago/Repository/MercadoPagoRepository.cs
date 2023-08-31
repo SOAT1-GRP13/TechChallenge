@@ -1,27 +1,35 @@
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Application.Pagamentos.MercadoPago.DTOs;
+using Domain.MercadoPago;
 using Domain.Pedidos;
+using Domain.ValueObjects;
+using Microsoft.Extensions.Options;
 
-namespace Application.Pagamentos.MercadoPago.Gateways
+namespace Infra.MercadoPago.Repository
 {
-    public class MercadoPagoGateway : IMercadoPagoGateway
+    public class MercadoPagoRepository : IMercadoPagoRepository
     {
+        private readonly ConfiguracaoMercadoPago _settings;
+
+        public MercadoPagoRepository(IOptions<ConfiguracaoMercadoPago> options)
+        {
+            _settings = options.Value;
+        }
+
         public async Task<string> GeraPedidoQrCode(Pedido pedido)
         {
-            var itensList = new List<OrderItemDto>();
+            var itensList = new List<OrderItem>();
 
             foreach (var orderItem in pedido.PedidoItems.ToList())
             {
-                itensList.Add(new OrderItemDto(orderItem));
+                itensList.Add(new OrderItem(orderItem));
             }
 
-            var dto = new MercadoPagoOrderDto(pedido, itensList);
+            var dto = new MercadoPagoOrder(pedido, itensList, _settings.Notification_url);
 
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/instore/orders/qr/seller/collectors/185446979/pos/FFFC01/qrs");
-            request.Headers.Add("Authorization", "Bearer TEST-2316387072181620-082610-d8fcda27dadc2f3c607e557511117fd6-185446979");
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{_settings.UserId}/pos/{_settings.External_Pos_Id}/qrs");
+            request.Headers.Add("Authorization", $"Bearer {_settings.AccesToken}");
 
             var serializeOptions = new JsonSerializerOptions
             {
@@ -44,18 +52,18 @@ namespace Application.Pagamentos.MercadoPago.Gateways
         public async Task<MercadoPagoOrderStatus> PegaStatusPedido(long id)
         {
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.mercadopago.com/merchant_orders/" + id.ToString());
-            request.Headers.Add("Authorization", "Bearer TEST-2316387072181620-082610-d8fcda27dadc2f3c607e557511117fd6-185446979");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://api.mercadopago.com/merchant_orders/{id}");
+            request.Headers.Add("Authorization", $"Bearer {_settings.AccesToken}");
             var response = await client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
 
-            var serializeOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
+                var serializeOptions = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                };
 
                 var statusResponse = JsonSerializer.Deserialize<MercadoPagoOrderStatus>(await response.Content.ReadAsStringAsync(), serializeOptions);
                 return statusResponse!;
