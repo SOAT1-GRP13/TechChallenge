@@ -1,4 +1,4 @@
-﻿namespace Application.Pagamentos.MercadoPago.DTOs
+﻿namespace Domain.MercadoPago
 {
 public class MercadoPagoQrResponse
 {

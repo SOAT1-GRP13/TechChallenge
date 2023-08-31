@@ -1,8 +1,10 @@
 using Application.Pagamentos.MercadoPago.Commands;
+using Application.Pagamentos.MercadoPago.UseCases;
 using Application.Pedidos.UseCases;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.DomainObjects;
 using Domain.Base.Messages.CommonMessages.Notifications;
+using Domain.MercadoPago;
 using Domain.Pedidos;
 using MediatR;
 
@@ -13,15 +15,15 @@ namespace Application.Pagamentos.MercadoPago.Handlers
     {
 
         private readonly IPedidoUseCase _pedidoUseCase;
-        private readonly IMercadoPagoGateway _mercadoPagoGateway;
+        private readonly IMercadoPagoUseCase _mercadoPagoUseCase;
         private readonly IMediatorHandler _mediatorHandler;
 
         public StatusPagamentoCommandHandler(IPedidoUseCase pedidoUseCase,
-         IMediatorHandler mediatorHandler, IMercadoPagoGateway mercadoPagoGateway)
+         IMediatorHandler mediatorHandler, IMercadoPagoUseCase mercadoPagoUseCase)
         {
             _pedidoUseCase = pedidoUseCase;
             _mediatorHandler = mediatorHandler;
-            _mercadoPagoGateway = mercadoPagoGateway;
+            _mercadoPagoUseCase = mercadoPagoUseCase;
         }
 
         public async Task<bool> Handle(StatusPagamentoCommand request, CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace Application.Pagamentos.MercadoPago.Handlers
             {
                 try
                 {
-                    var pedidoStatus = await _mercadoPagoGateway.PegaStatusPedido(request.Id);
+                    var pedidoStatus = await _mercadoPagoUseCase.PegaStatusPedido(request.Id);
 
                     if (pedidoStatus.Status == "closed")
                     {

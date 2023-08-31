@@ -1,10 +1,10 @@
 using Domain.Pedidos;
 
-namespace Application.Pagamentos.MercadoPago.DTOs
+namespace Domain.MercadoPago
 {
-    public class OrderItemDto
+    public class OrderItem
     {
-        public OrderItemDto()
+        public OrderItem()
         {
             Title = string.Empty;
             Description = string.Empty;
@@ -14,7 +14,7 @@ namespace Application.Pagamentos.MercadoPago.DTOs
             Total_amount = 0;
         }
 
-        public OrderItemDto(PedidoItem item)
+        public OrderItem(PedidoItem item)
         {
             Title = item.ProdutoNome;
             Description = "Observação do item"; //TODO implementar isto no pedidoItem

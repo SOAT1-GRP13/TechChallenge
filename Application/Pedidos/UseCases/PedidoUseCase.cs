@@ -2,7 +2,8 @@
 using Domain.Pedidos;
 using Domain.Base.DomainObjects;
 using Application.Pedidos.Queries.DTO;
-using Domain.Base.DomainObjects.DTO;
+using Domain.MercadoPago;
+using Application.Pedidos.Boundaries;
 
 namespace Application.Pedidos.UseCases
 {
@@ -10,20 +11,19 @@ namespace Application.Pedidos.UseCases
     {
         #region Propriedades
         private readonly IPedidoRepository _pedidoRepository;
-        private readonly IMercadoPagoGateway _mercadoPagoGateway;
+        private readonly IMercadoPagoRepository _mercadoPagoRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region Construtor
         public PedidoUseCase(
             IPedidoRepository pedidoRepository,
-            IMapper mapper
-,
-            IMercadoPagoGateway mercadoPagoGateway)
+            IMapper mapper,
+            IMercadoPagoRepository mercadoPagoRepository)
         {
             _pedidoRepository = pedidoRepository;
             _mapper = mapper;
-            _mercadoPagoGateway = mercadoPagoGateway;
+            _mercadoPagoRepository = mercadoPagoRepository;
         }
         #endregion
 
@@ -105,7 +105,6 @@ namespace Application.Pedidos.UseCases
             switch (novoStatus)
             {
                 case PedidoStatus.Iniciado:
-                case PedidoStatus.Pago:
                     throw new DomainException("Não é permitido ir para esse status diretamente!");
             }
 
@@ -118,7 +117,7 @@ namespace Application.Pedidos.UseCases
             return _mapper.Map<PedidoDto>(pedido);
         }
 
-        public async Task<string> IniciarPedido(Guid pedidoId)
+        public async Task<ConfirmarPedidoOutput> IniciarPedido(Guid pedidoId)
         {
             var pedido = await _pedidoRepository.ObterPorId(pedidoId) ?? throw new DomainException("Pedido não encontrado!");
             //TODO integrar com Mercado pago e adicionar um Id referente ao pagamento
@@ -128,7 +127,7 @@ namespace Application.Pedidos.UseCases
             // pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
             // var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
 
-            var qrData = await _mercadoPagoGateway.GeraPedidoQrCode(pedido);
+            var qrData = await _mercadoPagoRepository.GeraPedidoQrCode(pedido);
 
             if (string.IsNullOrEmpty(qrData))
             {
@@ -144,7 +143,7 @@ namespace Application.Pedidos.UseCases
             _pedidoRepository.Atualizar(pedido);
             await _pedidoRepository.UnitOfWork.Commit();
 
-            return qrData;
+            return new ConfirmarPedidoOutput(qrData, pedidoId);
         }
 
         public async Task<bool> FinalizarPedido(Guid pedidoId)

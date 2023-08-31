@@ -1,5 +1,6 @@
 ﻿using Domain.Pedidos;
 using Application.Pedidos.Queries.DTO;
+using Application.Pedidos.Boundaries;
 
 namespace Application.Pedidos.UseCases
 {
@@ -13,7 +14,7 @@ namespace Application.Pedidos.UseCases
 
         Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus);
 
-        Task<string> IniciarPedido(Guid pedidoId);
+        Task<ConfirmarPedidoOutput> IniciarPedido(Guid pedidoId);
 
         Task<bool> FinalizarPedido(Guid pedidoId);
 
