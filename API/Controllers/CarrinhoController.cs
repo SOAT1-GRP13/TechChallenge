@@ -1,4 +1,4 @@
-﻿using Application.Catalogo.Services;
+﻿using Application.Catalogo.Queries;
 using Application.Pedidos.Boundaries;
 using Application.Pedidos.Commands;
 using Application.Pedidos.Queries;
@@ -16,16 +16,16 @@ namespace API.Controllers
     [SwaggerTag("Endpoints relacionados ao carrinho, não é necessário se autenticar")]
     public class CarrinhoController : ControllerBase
     {
-        private readonly IProdutoAppService _produtoAppService;
+        private readonly IProdutosQueries _produtosQueries;
         private readonly IPedidoQueries _pedidoQueries;
         private readonly IMediatorHandler _mediatorHandler;
 
         public CarrinhoController(INotificationHandler<DomainNotification> notifications,
-                                  IProdutoAppService produtoAppService,
+                                  IProdutosQueries produtosQueries,
                                   IMediatorHandler mediatorHandler,
                                   IPedidoQueries pedidoQueries) : base(notifications, mediatorHandler)
         {
-            _produtoAppService = produtoAppService;
+            _produtosQueries = produtosQueries;
             _mediatorHandler = mediatorHandler;
             _pedidoQueries = pedidoQueries;
         }
@@ -43,7 +43,7 @@ namespace API.Controllers
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(input.Id);
+                var produto = await _produtosQueries.ObterPorId(input.Id);
                 if (produto is null)
                     return NotFound();
 
@@ -76,7 +76,7 @@ namespace API.Controllers
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(input.Id);
+                var produto = await _produtosQueries.ObterPorId(input.Id);
                 if (produto is null)
                     return NotFound();
 
@@ -107,7 +107,7 @@ namespace API.Controllers
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(id);
+                var produto = await _produtosQueries.ObterPorId(id);
                 if (produto is null)
                     return NotFound();
 

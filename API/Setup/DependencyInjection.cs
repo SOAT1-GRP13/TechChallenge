@@ -1,5 +1,4 @@
-﻿using Application.Catalogo.Services;
-using Application.Pedidos.Commands;
+﻿using Application.Pedidos.Commands;
 using Domain.Autenticacao;
 using Domain.Catalogo;
 using Domain.Pedidos;
@@ -24,6 +23,10 @@ using Application.Pedidos.Boundaries;
 using Application.Pedidos.UseCases;
 using Application.Pagamentos.Commands;
 using Application.Pagamentos.Handlers;
+using Application.Catalogo.Queries;
+using Application.Catalogo.Commands;
+using Application.Catalogo.Boundaries;
+using Application.Catalogo.Handlers;
 
 namespace API.Setup
 {
@@ -48,7 +51,10 @@ namespace API.Setup
 
             // Catalogo
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<IProdutoAppService, ProdutoAppService>();
+            services.AddScoped<IProdutosQueries, ProdutosQueries>();
+            services.AddScoped<IRequestHandler<AdicionarProdutoCommand, ProdutoOutput>, AdicionarProdutoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarProdutoCommand, ProdutoOutput>, AtualizarProdutoCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoverProdutoCommand, bool>, RemoverProdutoCommandHandler>();
             services.AddScoped<CatalogoContext>();
 
             // Pedidos
