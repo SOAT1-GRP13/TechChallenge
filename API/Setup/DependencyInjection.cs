@@ -27,8 +27,6 @@ using Application.Pagamentos.MercadoPago.Gateways;
 using Application.Pagamentos.MercadoPago.UseCases;
 using Domain.MercadoPago;
 using Infra.MercadoPago.Repository;
-using Application.Pagamentos.Commands;
-using Application.Pagamentos.Handlers;
 using Application.Catalogo.Queries;
 using Application.Catalogo.Commands;
 using Application.Catalogo.Boundaries;
