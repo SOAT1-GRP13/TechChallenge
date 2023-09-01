@@ -1,6 +1,13 @@
-﻿using Application.Catalogo.Boundaries;
+﻿using Application.Autenticacao.Boundaries.Cliente;
+using Application.Autenticacao.Commands;
+using Application.Catalogo.Boundaries;
+using Application.Catalogo.Commands;
 using Application.Catalogo.Dto;
-using Application.Catalogo.Services;
+using Application.Catalogo.Queries;
+using Application.Pedidos.Queries;
+using Domain.Base.Communication.Mediator;
+using Domain.Base.Messages.CommonMessages.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -9,14 +16,18 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("Catalogo")]
-    public class ProdutosController : Controller
+    public class ProdutosController : ControllerBase
     {
-        private readonly IProdutoAppService _produtoAppService;
-
-        public ProdutosController(IProdutoAppService produtoAppService)
+        private readonly IProdutosQueries _produtosQueries;
+        private readonly IMediatorHandler _mediatorHandler;
+        public ProdutosController(IProdutosQueries produtosQueries,
+            INotificationHandler<DomainNotification> notifications,
+            IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
-            _produtoAppService = produtoAppService;
+            _produtosQueries = produtosQueries;
+            _mediatorHandler = mediatorHandler;
         }
+
 
         [HttpGet("lista_produtos")]
         [AllowAnonymous]
@@ -30,7 +41,7 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var produtos = await _produtoAppService.ObterTodos();
+                var produtos = await _produtosQueries.ObterTodos();
                 if (produtos == null) return NotFound("Nenhum produto encontrado.");
 
                 return Ok(produtos);
@@ -55,7 +66,7 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var categorias = await _produtoAppService.ObterCategorias();
+                var categorias = await _produtosQueries.ObterCategorias();
                 if (categorias == null) return NotFound("Nenhuma categoria encontrada.");
 
                 return Ok(categorias);
@@ -80,7 +91,7 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(id);
+                var produto = await _produtosQueries.ObterPorId(id);
                 if (produto == null) return NotFound("Produto não encontrado.");
 
                 return Ok(produto);
@@ -105,7 +116,7 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorCategoria(codigo);
+                var produto = await _produtosQueries.ObterPorCategoria(codigo);
                 if (produto == null) return NotFound("Produto não encontrado.");
 
                 return Ok(produto);
@@ -129,12 +140,21 @@ namespace API.Controllers.Admin
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         public async Task<IActionResult> Post([FromBody] ProdutoInput produtoInput)
         {
+           
             try
             {
-                var produto = await _produtoAppService.AdicionarProduto(produtoInput);
-                if (produto == null) return BadRequest("Erro ao tentar adicionar produto.");
 
-                return Ok(produto);
+                var command = new AdicionarProdutoCommand(produtoInput);
+                var produto = await _mediatorHandler.EnviarComando<AdicionarProdutoCommand, ProdutoOutput>(command);
+
+                if (OperacaoValida())
+                {
+                    return Ok(produto);
+                }
+                else
+                {
+                    return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+                }
             }
             catch (Exception ex)
             {
@@ -156,10 +176,11 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(produtoEditarInput.Id);
+                var produto = await _produtosQueries.ObterPorId(produtoEditarInput.Id);
                 if (produto == null) return NotFound("Produto não encontrado.");
 
-                var produtoAtualizado = await _produtoAppService.AtualizarProduto(produtoEditarInput);
+                var command = new AtualizarProdutoCommand(produtoEditarInput);
+                var produtoAtualizado = await _mediatorHandler.EnviarComando<AtualizarProdutoCommand, ProdutoOutput>(command);
 
                 return Ok(produtoAtualizado);
             }
@@ -182,10 +203,11 @@ namespace API.Controllers.Admin
         {
             try
             {
-                var produto = await _produtoAppService.ObterPorId(id);
+                var produto = await _produtosQueries.ObterPorId(id);
                 if (produto == null) return NotFound("Produto não encontrado.");
 
-                await _produtoAppService.RemoverProduto(id);
+                var command = new RemoverProdutoCommand(id);
+                var produtoRemovido = await _mediatorHandler.EnviarComando<RemoverProdutoCommand, bool>(command);
 
                 return Ok("Produto excluído com sucesso.");
             }
