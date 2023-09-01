@@ -32,6 +32,7 @@ builder.Services.AddDbContext<PedidosContext>(options =>
 
 
 builder.Services.Configure<ConfiguracaoToken>(builder.Configuration.GetSection(ConfiguracaoToken.Configuration));
+builder.Services.Configure<ConfiguracaoMercadoPago>(builder.Configuration.GetSection(ConfiguracaoMercadoPago.Configuration));
 builder.Services.AddAuthenticationJWT(secret);
 
 builder.Services.AddControllers();

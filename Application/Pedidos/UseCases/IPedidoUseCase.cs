@@ -1,5 +1,6 @@
 ﻿using Domain.Pedidos;
 using Application.Pedidos.Queries.DTO;
+using Application.Pedidos.Boundaries;
 
 namespace Application.Pedidos.UseCases
 {
@@ -12,9 +13,8 @@ namespace Application.Pedidos.UseCases
         Task<bool> RemoverItem(Guid clienteId, Guid produtoId);
 
         Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus);
-        Task<PedidoDto> TrocaStatusPedidoWebhook(int mercadoPagoId, PedidoStatus novoStatus);
 
-        Task<bool> IniciarPedido(Guid pedidoId);
+        Task<ConfirmarPedidoOutput> IniciarPedido(Guid pedidoId);
 
         Task<bool> FinalizarPedido(Guid pedidoId);
 

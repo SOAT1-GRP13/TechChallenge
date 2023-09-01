@@ -1,9 +1,7 @@
 ﻿using Domain.Base.DomainObjects;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Autenticacao
 {
-    [Table("acesso_cliente")]
     public class AcessoCliente : Entity, IAggregateRoot
     {
         #region construtores
@@ -20,7 +18,7 @@ namespace Domain.Autenticacao
             CPF = cPF;
             Senha = senha;
             Email = string.Empty;
-            Nome= string.Empty;
+            Nome = string.Empty;
 
             ValidarAutenticacao();
         }
@@ -37,16 +35,12 @@ namespace Domain.Autenticacao
 
         #endregion
 
-        [Column("cpf")]
         public string CPF { get; private set; }
 
-        [Column("senha")]
         public string Senha { get; private set; }
 
-        [Column("nome")]
         public string Nome { get; private set; }
 
-        [Column("email")]
         public string Email { get; private set; }
 
 

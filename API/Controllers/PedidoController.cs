@@ -48,11 +48,22 @@ namespace API.Controllers
             return Ok(await _pedidoQueries.ObterTodosPedidos());
         }
 
+        [HttpGet("PedidosNaFila")]
+        [SwaggerOperation(
+            Summary = "Lista todos os pedidos na fila",
+            Description = "Lista todos pedidos na fila")]
+        [SwaggerResponse(200, "Retorna pedidos na fila", typeof(IEnumerable<PedidoNaFilaOutput>))]
+        [SwaggerResponse(500, "Caso algo inesperado aconteça")]
+        public async Task<IActionResult> PedidosNaFila()
+        {
+            return Ok(await _pedidoQueries.ObterPedidosParaFila());
+        }
+
         [HttpPut("atualizar-status-pedido")]
         [SwaggerOperation(
             Summary = "Atualizar status do pedido",
-            Description = "Atualiza o status do pedido")]
-        [SwaggerResponse(200, "Retorna o pedido atualizado", typeof(PedidoDto))]
+            Description = "Atualiza o status do pedido, no momento serve como um agnostico ao mercado pago até termos publicado uma url valida para notification_url")]
+        [SwaggerResponse(200, "Retorna o pedido atualizado", typeof(PedidoOutput))]
         [SwaggerResponse(404, "Caso não encontre o pedido com o Id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         public async Task<IActionResult> AtualizarStatusPedido([FromBody] AtualizarStatusPedidoInput input)
@@ -60,10 +71,28 @@ namespace API.Controllers
             var command = new AtualizarStatusPedidoCommand(input);
             var pedido = await _mediatorHandler.EnviarComando<AtualizarStatusPedidoCommand, PedidoOutput>(command);
 
-            if(!OperacaoValida())
-                return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+            if (!OperacaoValida())
+                return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
 
-            return Ok(pedido);            
+            return Ok(pedido);
+        }
+
+        [HttpGet("consultar-status-pedido/{pedidoId}")]
+        [SwaggerOperation(
+    Summary = "Consultar status do pedido",
+    Description = "Consulta status do pedido a partir do Guid")]
+        [SwaggerResponse(200, "Retorna o pedido atualizado", typeof(ConsultarStatusPedidoOutput))]
+        [SwaggerResponse(404, "Caso não encontre o pedido com o Id informado")]
+        [SwaggerResponse(500, "Caso algo inesperado aconteça")]
+        public async Task<IActionResult> ConsultarStatusPedido([FromRoute] Guid pedidoId)
+        {
+            var command = new ConsultarStatusPedidoCommand(pedidoId);
+            var pedido = await _mediatorHandler.EnviarComando<ConsultarStatusPedidoCommand, ConsultarStatusPedidoOutput>(command);
+
+            if (!OperacaoValida())
+                return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+
+            return Ok(pedido);
         }
     }
 }

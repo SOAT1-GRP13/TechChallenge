@@ -1,11 +1,12 @@
-﻿namespace Application.Pagamentos.MercadoPago.Boundaries;
-
-public class WebHookInputData
+﻿namespace Application.Pagamentos.MercadoPago.Boundaries
 {
-    public WebHookInputData()
+    public class WebHookInputData
     {
-        Id = 0;
-    }
+        public WebHookInputData()
+        {
+            Id = 0;
+        }
 
-    public int Id { get; set; }
+        public int Id { get; set; }
+    }
 }

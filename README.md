@@ -25,6 +25,22 @@ O event storm do nosso projeto ser acessado pelo seguinte link:
 
 Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13/archive/refs/heads/main.zip), ou Clonando o projeto.
 
+# Clean Architecture
+
+Devido à natureza específica do framework .Net, adotamos uma nomeclatura diferente para nossa estrutura que segue os princípios da Clean Architecture (Arquitetura Limpa).
+
+Na nossa arquitetura, a camada de Controller corresponde à Camada de API da Clean Architecture. Esta camada é responsável por lidar com as requisições externas e coordenar o fluxo de dados.
+
+A camada de queries foi concebida como a camada de Gateways na Clean Architecture. Aqui, centralizamos a lógica relacionada à recuperação de dados, permitindo uma separação clara entre a fonte de dados e a lógica de negócios.
+
+Para a implementação das operações de comando, optamos por utilizar a camada de command handlers, que equivale à camada de controller na Clean Architecture. Nesta camada, tratamos as ações e comandos vindos da camada de API, garantindo a execução das operações necessárias.
+
+O projeto de Domain abriga as nossas entidades de negócio e objetos de valor (Value Objects). Esta camada é o coração do nosso sistema, encapsulando as regras de negócio essenciais.
+
+No contexto da persistência de dados, a camada de Infraestrutura (Infra) foi designada como a camada de DB (Banco de Dados) na Clean Architecture. Aqui, lidamos com aspectos de armazenamento e recuperação de dados, mantendo a separação entre as preocupações de banco de dados e as regras de negócio.
+
+Esta arquitetura foi adotada para promover a manutenibilidade, escalabilidade e testabilidade do nosso projeto, permitindo uma clara separação de responsabilidades em cada camada. Estamos comprometidos em seguir os princípios da Clean Architecture para alcançar um sistema robusto e bem estruturado.
+
 
 # 🛠️ Abrir e rodar o projeto utilizando o docker
 
@@ -80,6 +96,7 @@ Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubern
    ```bash
    kubectl top pods
    ```
+Esse site tem um exemplo de como configurar no docker desktop: https://dev.to/docker/enable-kubernetes-metrics-server-on-docker-desktop-5434. Lembre-se de reiniciar o docker desktop após a configuração.
 
 Para realizar um stress teste, dentro da pasta kubernetes voce pode executar o comando abaixo para linux:
    ```bash

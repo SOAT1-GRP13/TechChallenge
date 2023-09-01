@@ -1,7 +1,5 @@
-﻿using Application.Autenticacao.Boundaries.LogIn;
-using Application.Autenticacao.Commands;
-using Application.Pagamentos.Commands;
-using Application.Pagamentos.MercadoPago.Boundaries;
+﻿using Application.Pagamentos.MercadoPago.Boundaries;
+using Application.Pagamentos.MercadoPago.Commands;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
@@ -25,15 +23,15 @@ namespace API.Controllers.Admin
 
         [SwaggerOperation(
             Summary = "Webhook mercado Pago",
-            Description = "Endpoint responsavel por receber um evento do mercado pago, no momento alterando o status do pedido para pago sempre")]
+            Description = "Endpoint responsavel por receber um evento do mercado pago")]
         [SwaggerResponse(200, "Retorna OK após alterar o status")]
         [SwaggerResponse(400, "Caso não seja preenchido todos os campos obrigatórios")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         [HttpPost]
         [Route("Webhook")]
-        public async Task<IActionResult> LogInUsuario([FromBody] WebHookInput input)
+        public async Task<IActionResult> WebHookMercadoPago([FromQuery] long id, [FromQuery] string topic)
         {
-            var command = new StatusPagamentoCommand(input);
+            var command = new StatusPagamentoCommand(id, topic);
             await _mediatorHandler.EnviarComando<StatusPagamentoCommand, bool>(command);
 
             if (OperacaoValida())

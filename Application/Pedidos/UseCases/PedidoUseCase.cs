@@ -2,6 +2,8 @@
 using Domain.Pedidos;
 using Domain.Base.DomainObjects;
 using Application.Pedidos.Queries.DTO;
+using Domain.MercadoPago;
+using Application.Pedidos.Boundaries;
 
 namespace Application.Pedidos.UseCases
 {
@@ -9,17 +11,19 @@ namespace Application.Pedidos.UseCases
     {
         #region Propriedades
         private readonly IPedidoRepository _pedidoRepository;
+        private readonly IMercadoPagoRepository _mercadoPagoRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region Construtor
         public PedidoUseCase(
             IPedidoRepository pedidoRepository,
-            IMapper mapper
-        )
+            IMapper mapper,
+            IMercadoPagoRepository mercadoPagoRepository)
         {
             _pedidoRepository = pedidoRepository;
             _mapper = mapper;
+            _mercadoPagoRepository = mercadoPagoRepository;
         }
         #endregion
 
@@ -91,22 +95,6 @@ namespace Application.Pedidos.UseCases
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
-        public async Task<PedidoDto> TrocaStatusPedidoWebhook(int mercadoPagoId, PedidoStatus novoStatus)
-        {
-            var pedido = await _pedidoRepository.ObterPorIdMercadoPago(mercadoPagoId);
-
-            if (pedido is null)
-                return new PedidoDto();
-
-            pedido.AtualizarStatus(novoStatus);
-
-            _pedidoRepository.Atualizar(pedido);
-
-            await _pedidoRepository.UnitOfWork.Commit();
-
-            return _mapper.Map<PedidoDto>(pedido);
-        }
-
         public async Task<PedidoDto> TrocaStatusPedido(Guid idPedido, PedidoStatus novoStatus)
         {
             var pedido = await _pedidoRepository.ObterPorId(idPedido);
@@ -114,6 +102,12 @@ namespace Application.Pedidos.UseCases
             if (pedido is null)
                 return new PedidoDto();
 
+            switch (novoStatus)
+            {
+                case PedidoStatus.Iniciado:
+                    throw new DomainException("Não é permitido ir para esse status diretamente!");
+            }
+
             pedido.AtualizarStatus(novoStatus);
 
             _pedidoRepository.Atualizar(pedido);
@@ -123,13 +117,23 @@ namespace Application.Pedidos.UseCases
             return _mapper.Map<PedidoDto>(pedido);
         }
 
-        public async Task<bool> IniciarPedido(Guid pedidoId)
+        public async Task<ConfirmarPedidoOutput> IniciarPedido(Guid pedidoId)
         {
-            var pedido = await _pedidoRepository.ObterPorId(pedidoId);
-            if (pedido is null)
-                throw new DomainException("Pedido não encontrado!");
-
+            var pedido = await _pedidoRepository.ObterPorId(pedidoId) ?? throw new DomainException("Pedido não encontrado!");
             //TODO integrar com Mercado pago e adicionar um Id referente ao pagamento
+
+
+            // var itensList = new List<Item>();
+            // pedido.PedidoItems.ToList().ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+            // var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
+
+            var qrData = await _mercadoPagoRepository.GeraPedidoQrCode(pedido);
+
+            if (string.IsNullOrEmpty(qrData))
+            {
+                throw new DomainException("Falha ao integrar com o MercadoPago");
+            }
+
             pedido.IniciarPedido();
 
             // var itensList = new List<Item>();
@@ -137,7 +141,9 @@ namespace Application.Pedidos.UseCases
             // var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
 
             _pedidoRepository.Atualizar(pedido);
-            return await _pedidoRepository.UnitOfWork.Commit();
+            await _pedidoRepository.UnitOfWork.Commit();
+
+            return new ConfirmarPedidoOutput(qrData, pedidoId);
         }
 
         public async Task<bool> FinalizarPedido(Guid pedidoId)
