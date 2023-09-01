@@ -157,7 +157,7 @@ namespace API.Controllers
         [HttpPost("confirmar-pedido")]
         [SwaggerOperation(
             Summary = "Confirma o pedido",
-            Description = "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code. No momento apenas trazendo um id para o webhook")]
+            Description = "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code.")]
         [SwaggerResponse(200, "Retorna pedido confirmado", typeof(ConfirmarPedidoOutput))]
         [SwaggerResponse(404, "Caso não encontre nenhum carrinho")]
         [SwaggerResponse(400, "Caso não obedeça alguma regra de negocio")]
