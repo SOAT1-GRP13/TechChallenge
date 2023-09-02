@@ -1,6 +1,4 @@
-﻿using Application.Catalogo.Boundaries;
-using Application.Catalogo.Commands.Validation;
-using Domain.Base.Messages;
+﻿using Domain.Base.Messages;
 
 
 namespace Application.Catalogo.Commands

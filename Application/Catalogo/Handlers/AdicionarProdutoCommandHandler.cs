@@ -1,18 +1,11 @@
 ﻿using Application.Catalogo.Boundaries;
 using Application.Catalogo.Commands;
-using Application.Pedidos.Commands;
-using Application.Pedidos.UseCases;
 using AutoMapper;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.DomainObjects;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using Domain.Catalogo;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Catalogo.Handlers
 {
@@ -39,8 +32,6 @@ namespace Application.Catalogo.Handlers
             {
                 foreach (var error in message.ValidationResult.Errors)
                     await _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
-
-                return null;
             }
 
             try
@@ -58,10 +49,9 @@ namespace Application.Catalogo.Handlers
             catch (DomainException ex)
             {
                 await _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, ex.Message));
-                return null;
             }
 
-
+            return new ProdutoOutput();
         }
     }
 }

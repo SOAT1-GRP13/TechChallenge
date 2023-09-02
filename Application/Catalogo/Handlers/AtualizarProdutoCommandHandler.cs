@@ -34,8 +34,6 @@ namespace Application.Catalogo.Handlers
             {
                 foreach (var error in message.ValidationResult.Errors)
                     await _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
-
-                return null;
             }
 
             try
@@ -53,10 +51,8 @@ namespace Application.Catalogo.Handlers
             catch (DomainException ex)
             {
                 await _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, ex.Message));
-                return null;
             }
-
-
+            return new ProdutoOutput();
         }
     }
 }

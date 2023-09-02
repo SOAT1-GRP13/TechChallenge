@@ -13,7 +13,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("Carrinho")]
-    [SwaggerTag("Endpoints relacionados ao carrinho, não é necessário se autenticar")]
+    [SwaggerTag("Endpoints relacionados ao carrinho, não é necessário se autenticar, Caso tenha se autenticado como cliente o clienteId é pego de forma automatica, se não é utilizado um Id padrão")]
     public class CarrinhoController : ControllerBase
     {
         private readonly IProdutosQueries _produtosQueries;
