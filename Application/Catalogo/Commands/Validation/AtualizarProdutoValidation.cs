@@ -1,10 +1,5 @@
 ﻿using Application.Catalogo.Boundaries;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Catalogo.Commands.Validation
 {
@@ -19,6 +14,27 @@ namespace Application.Catalogo.Commands.Validation
             RuleFor(c => c.CategoriaId)
                 .NotEqual(Guid.Empty)
                 .WithMessage(IdCategoriaErroMsg);
+
+            RuleFor(c => c.CategoriaId)
+                .NotEmpty()
+                .WithMessage("Id da categoria é obrigatório");
+
+            RuleFor(c => c.Id)
+                .NotEmpty()
+                .WithMessage("Id do produto é obrigatório");
+
+            RuleFor(c => c.Imagem)
+                .NotEmpty()
+                .WithMessage("Imagem é obrigatório");
+
+            RuleFor(c => c.Descricao)
+                .NotEmpty()
+                .WithMessage("Descrição é obrigatório");
+
+
+            RuleFor(c => c.Ativo)
+                .NotNull()
+                .WithMessage("Ativo é obrigatório");
 
             RuleFor(c => c.Nome)
                 .NotEmpty()

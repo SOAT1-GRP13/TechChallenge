@@ -1,10 +1,7 @@
-﻿using Application.Autenticacao.Boundaries.Cliente;
-using Application.Autenticacao.Commands;
-using Application.Catalogo.Boundaries;
+﻿using Application.Catalogo.Boundaries;
 using Application.Catalogo.Commands;
 using Application.Catalogo.Dto;
 using Application.Catalogo.Queries;
-using Application.Pedidos.Queries;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
@@ -16,6 +13,7 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("Catalogo")]
+    [SwaggerTag("Endpoints relacionados a produtos, alguns deles é necessario estar autenticado como gestor")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutosQueries _produtosQueries;
@@ -48,7 +46,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                        $"Erro ao tentar recuperar produtos. Erro: {ex.Message}");
             }
 
@@ -73,7 +71,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                        $"Erro ao tentar recuperar categorias. Erro: {ex.Message}");
             }
 
@@ -98,7 +96,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                        $"Erro ao tentar recuperar produto. Erro: {ex.Message}");
             }
 
@@ -123,7 +121,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                        $"Erro ao tentar recuperar produto. Erro: {ex.Message}");
             }
 
@@ -153,13 +151,13 @@ namespace API.Controllers.Admin
                 }
                 else
                 {
-                    return this.StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
+                    return StatusCode(StatusCodes.Status400BadRequest, ObterMensagensErro());
                 }
             }
             catch (Exception ex)
             {
 
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                                           $"Erro ao tentar adicionar produto. Erro: {ex.Message}");
             }
         }
@@ -186,7 +184,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                                           $"Erro ao tentar atualizar produto. Erro: {ex.Message}");
             }
         }
@@ -213,7 +211,7 @@ namespace API.Controllers.Admin
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                return StatusCode(StatusCodes.Status500InternalServerError,
                                                           $"Erro ao tentar excluir produto. Erro: {ex.Message}");
             }
         }

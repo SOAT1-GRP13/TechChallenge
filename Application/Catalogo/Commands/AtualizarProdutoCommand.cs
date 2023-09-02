@@ -1,11 +1,6 @@
 ﻿using Application.Catalogo.Boundaries;
 using Application.Catalogo.Commands.Validation;
 using Domain.Base.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Catalogo.Commands
 {

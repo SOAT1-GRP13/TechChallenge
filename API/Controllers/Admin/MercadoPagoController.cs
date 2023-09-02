@@ -1,5 +1,4 @@
-﻿using Application.Pagamentos.MercadoPago.Boundaries;
-using Application.Pagamentos.MercadoPago.Commands;
+﻿using Application.Pagamentos.MercadoPago.Commands;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
@@ -10,6 +9,7 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("[Controller]")]
+    [SwaggerTag("Endpoints relacionados ao mercado pago")]
     public class MercadoPagoController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;

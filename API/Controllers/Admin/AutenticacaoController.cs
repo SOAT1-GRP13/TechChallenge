@@ -10,6 +10,7 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("[Controller]")]
+    [SwaggerTag("Endpoints para relacionado ao gestão, é necessário se autenticar aqui caso queira utilizar o crud de produtos")]
     public class AutenticacaoController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;

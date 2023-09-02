@@ -40,7 +40,7 @@ namespace API.Controllers
         [HttpGet("pedidos")]
         [SwaggerOperation(
             Summary = "Lista todos os pedidos",
-            Description = "Lista todos pedidos")]
+            Description = "Lista todos pedidos de forma não ordenada")]
         [SwaggerResponse(200, "Retorna pedidos idependente do status", typeof(IEnumerable<PedidoDto>))]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         public async Task<IActionResult> Pedidos()
@@ -51,7 +51,7 @@ namespace API.Controllers
         [HttpGet("PedidosNaFila")]
         [SwaggerOperation(
             Summary = "Lista todos os pedidos na fila",
-            Description = "Lista todos pedidos na fila")]
+            Description = "Lista todos pedidos na fila de forma ordenada conforme Tech Challenge fase 2")]
         [SwaggerResponse(200, "Retorna pedidos na fila", typeof(IEnumerable<PedidoNaFilaOutput>))]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         public async Task<IActionResult> PedidosNaFila()
@@ -79,8 +79,8 @@ namespace API.Controllers
 
         [HttpGet("consultar-status-pedido/{pedidoId}")]
         [SwaggerOperation(
-    Summary = "Consultar status do pedido",
-    Description = "Consulta status do pedido a partir do Guid")]
+            Summary = "Consultar status do pedido",
+            Description = "Consulta status do pedido a partir do Guid")]
         [SwaggerResponse(200, "Retorna o pedido atualizado", typeof(ConsultarStatusPedidoOutput))]
         [SwaggerResponse(404, "Caso não encontre o pedido com o Id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
