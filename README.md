@@ -128,6 +128,7 @@ No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
 
 
 - http://localhost/api-docs/index.html
+- http://localhost:31116/api-docs/index.html - No Kubernetes
 
 # ✔️ Tecnologias utilizadas
 
