@@ -18,4 +18,13 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Pagamentos\MercadoPago\" />
+    <None Remove="Pagamentos\MercadoPago\Boundaries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pagamentos/MercadoPago/Commands/" />
+    <Folder Include="Pagamentos\MercadoPago\" />
+    <Folder Include="Pagamentos\MercadoPago\Boundaries\" />
+  </ItemGroup>
 </Project>

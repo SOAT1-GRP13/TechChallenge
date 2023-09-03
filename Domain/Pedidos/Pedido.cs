@@ -1,11 +1,4 @@
-﻿using Domain.Base;
-using Domain.Base.DomainObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Base.DomainObjects;
 
 namespace Domain.Pedidos
 {
@@ -52,7 +45,7 @@ namespace Domain.Pedidos
 
             if (PedidoItemExistente(item))
             {
-                var itemExistente = _pedidoItems.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
+                var itemExistente = _pedidoItems.First(p => p.ProdutoId == item.ProdutoId);
                 itemExistente.AdicionarUnidades(item.Quantidade);
                 item = itemExistente;
 
@@ -108,7 +101,7 @@ namespace Domain.Pedidos
             PedidoStatus = PedidoStatus.Iniciado;
         }
 
-        public void FinalizarPedido()
+        public void ColocarPedidoComoPago()
         {
             PedidoStatus = PedidoStatus.Pago;
         }
@@ -116,6 +109,59 @@ namespace Domain.Pedidos
         public void CancelarPedido()
         {
             PedidoStatus = PedidoStatus.Cancelado;
+        }
+
+        public void ColocarPedidoComoPronto()
+        {
+            PedidoStatus = PedidoStatus.Pronto;
+        }
+
+        public void ColocarPedidoEmPreparacao()
+        {
+            PedidoStatus = PedidoStatus.EmPreparacao;
+        }
+
+        public void ColocarPedidoComoRecebido()
+        {
+            PedidoStatus = PedidoStatus.Recebido;
+        }
+
+        public void FinalizarPedido()
+        {
+            PedidoStatus = PedidoStatus.Finalizado;
+        }
+
+        public void AtualizarStatus(PedidoStatus status)
+        {
+            switch (status)
+            {
+                case PedidoStatus.Rascunho:
+                    TornarRascunho();
+                    break;
+                case PedidoStatus.Iniciado:
+                    IniciarPedido();
+                    break;
+                case PedidoStatus.Pago:
+                    ColocarPedidoComoPago();
+                    break;
+                case PedidoStatus.Cancelado:
+                    CancelarPedido();
+                    break;
+                case PedidoStatus.Pronto:
+                    ColocarPedidoComoPronto();
+                    break;
+                case PedidoStatus.EmPreparacao:
+                    ColocarPedidoEmPreparacao();
+                    break;
+                case PedidoStatus.Recebido:
+                    ColocarPedidoComoRecebido();
+                    break;
+                case PedidoStatus.Finalizado:
+                    FinalizarPedido();
+                    break;
+                default:
+                    throw new DomainException("Status do pedido inválido");
+            }
         }
 
         public static class PedidoFactory

@@ -1,4 +1,5 @@
-﻿using Application.Pedidos.Queries.DTO;
+﻿using Application.Pedidos.Boundaries;
+using Application.Pedidos.Queries.DTO;
 using Domain.Pedidos;
 
 
@@ -26,8 +27,6 @@ namespace Application.Pedidos.Queries
                 SubTotal = pedido.ValorTotal // No futuro, se houver desconto, o subTotal será diferente do valor total
             };
 
-
-
             foreach (var item in pedido.PedidoItems)
             {
                 carrinho.Items.Add(new CarrinhoItemDto
@@ -47,7 +46,7 @@ namespace Application.Pedidos.Queries
         {
             var pedidos = await _pedidoRepository.ObterListaPorClienteId(clienteId);
 
-            pedidos = pedidos.Where(p => p.PedidoStatus == PedidoStatus.Pago || p.PedidoStatus == PedidoStatus.Cancelado)
+            pedidos = pedidos.Where(p => p.PedidoStatus != PedidoStatus.Finalizado && p.PedidoStatus != PedidoStatus.Cancelado)
                 .OrderByDescending(p => p.Codigo);
 
             if (!pedidos.Any()) return null;
@@ -62,7 +61,7 @@ namespace Application.Pedidos.Queries
                     ValorTotal = pedido.ValorTotal,
                     PedidoStatus = pedido.PedidoStatus,
                     Codigo = pedido.Codigo,
-                    DataCadastro = pedido.DataCadastro
+                    DataCadastro = pedido.DataCadastro,
                 });
             }
 
@@ -87,6 +86,44 @@ namespace Application.Pedidos.Queries
                     Codigo = pedido.Codigo,
                     DataCadastro = pedido.DataCadastro
                 });
+            }
+
+            return pedidosView;
+        }
+
+        public async Task<IEnumerable<PedidoNaFilaOutput>> ObterPedidosParaFila()
+        {
+            var pedidos = await _pedidoRepository.ObterPedidosParaFila();
+
+            if (!pedidos.Any()) return null;
+
+            var pedidosView = new List<PedidoNaFilaOutput>();
+
+            foreach (var pedido in pedidos)
+            {
+                var pedidoView = new PedidoNaFilaOutput
+                {
+                    Id = pedido.Id,
+                    ValorTotal = pedido.ValorTotal,
+                    PedidoStatus = pedido.PedidoStatus,
+                    Codigo = pedido.Codigo,
+                    DataCadastro = pedido.DataCadastro
+                };
+                pedidoView.Itens = new List<PedidoNaFilaOutput.Item>();
+
+                foreach (var itemPedido in pedido.PedidoItems)
+                {
+                    var item = new PedidoNaFilaOutput.Item
+                    {
+                        ProdutoId = itemPedido.ProdutoId,
+                        ProdutoNome = itemPedido.ProdutoNome,
+                        Quantidade = itemPedido.Quantidade
+                    };
+                    pedidoView.Itens.Add(item);
+                }
+
+                pedidosView.Add(pedidoView);
+
             }
 
             return pedidosView;

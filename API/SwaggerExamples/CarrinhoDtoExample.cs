@@ -23,13 +23,6 @@ namespace API.SwaggerExamples
                         ValorUnitario = 5,
                         ValorTotal = 10
                     }
-                },
-                Pagamento = new CarrinhoPagamentoDto()
-                {
-                    CvvCartao = "338",
-                    NumeroCartao = "5307050388351466",
-                    ExpiracaoCartao = "01/2024",
-                    NomeCartao = "José Silva"
                 }
             };
         }

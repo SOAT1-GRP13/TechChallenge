@@ -1,7 +1,6 @@
 ﻿using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

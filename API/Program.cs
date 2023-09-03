@@ -1,14 +1,14 @@
 using API.Data;
 using API.Setup;
-using Application.Catalogo.AutoMapper;
-using Domain.ValueObjects;
-using Infra.Autenticacao;
-using Infra.Catalogo;
-using Infra.Pagamentos;
 using Infra.Pedidos;
-using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore.Filters;
+using Infra.Catalogo;
 using System.Reflection;
+using Infra.Autenticacao;
+using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Application.Pedidos.AutoMapper;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Catalogo.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +30,9 @@ builder.Services.AddDbContext<CatalogoContext>(options =>
 builder.Services.AddDbContext<PedidosContext>(options =>
         options.UseNpgsql(connectionString));
 
-builder.Services.AddDbContext<PagamentoContext>(options =>
-        options.UseNpgsql(connectionString));
-
 
 builder.Services.Configure<ConfiguracaoToken>(builder.Configuration.GetSection(ConfiguracaoToken.Configuration));
+builder.Services.Configure<ConfiguracaoMercadoPago>(builder.Configuration.GetSection(ConfiguracaoMercadoPago.Configuration));
 builder.Services.AddAuthenticationJWT(secret);
 
 builder.Services.AddControllers();
@@ -44,6 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGenConfig();
 
 builder.Services.AddAutoMapper(typeof(ProdutosMappingProfile));
+builder.Services.AddAutoMapper(typeof(PedidosMappingProfile));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.RegisterServices();
@@ -101,13 +100,11 @@ await using var scope = app.Services.CreateAsyncScope();
 using var dbApplication = scope.ServiceProvider.GetService<ApplicationDbContext>();
 using var dbAutenticacao = scope.ServiceProvider.GetService<AutenticacaoContext>();
 using var dbCatalogo = scope.ServiceProvider.GetService<CatalogoContext>();
-using var dbPagamento = scope.ServiceProvider.GetService<PagamentoContext>();
 using var dbPedidos = scope.ServiceProvider.GetService<PedidosContext>();
 
 await dbApplication!.Database.MigrateAsync();
 await dbAutenticacao!.Database.MigrateAsync();
 await dbCatalogo!.Database.MigrateAsync();
-await dbPagamento!.Database.MigrateAsync();
 await dbPedidos!.Database.MigrateAsync();
 
 app.Run();

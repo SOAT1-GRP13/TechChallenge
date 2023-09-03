@@ -1,9 +1,4 @@
 ﻿using Domain.Base.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Pedidos
 {
@@ -22,6 +17,8 @@ namespace Domain.Pedidos
         void RemoverItem(PedidoItem pedidoItem);
 
         Task<IEnumerable<Pedido>> ObterTodosPedidos();
+
+        Task<IEnumerable<Pedido>> ObterPedidosParaFila();
 
     }
 }

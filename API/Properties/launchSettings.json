@@ -11,12 +11,11 @@
   "profiles": {
     "API": {
       "commandName": "Project",
-      "launchBrowser": false,
       "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5267",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5267",
       "dotnetRunMessages": true
     },
     "IIS Express": {

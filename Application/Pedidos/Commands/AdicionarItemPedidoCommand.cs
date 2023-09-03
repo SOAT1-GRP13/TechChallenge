@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Pedidos.Commands
 {
-    public class AdicionarItemPedidoCommand : Command
+    public class AdicionarItemPedidoCommand : Command<bool>
     {
         //Um comando representa uma intenção de mudança do estado da entidade no banco e na aplicação.
         public Guid ClienteId { get; private set; }
@@ -30,31 +30,38 @@ namespace Application.Pedidos.Commands
 
     public class AdicionarItemPedidoValidation : AbstractValidator<AdicionarItemPedidoCommand>
     {
+        public static string IdClienteErroMsg => "Id do cliente inválido";
+        public static string IdProdutoErroMsg => "Id do produto inválido";
+        public static string NomeErroMsg => "O nome do produto não foi informado";
+        public static string QtdMaxErroMsg => "A quantidade máxima de um item é 10";
+        public static string QtdMinErroMsg => "A quantidade miníma de um item é 1";
+        public static string ValorErroMsg => "O valor do item precisa ser maior que 0";
+
         public AdicionarItemPedidoValidation()
         {
             RuleFor(c => c.ClienteId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage(IdClienteErroMsg);
 
             RuleFor(c => c.ProdutoId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do produto inválido");
+                .WithMessage(IdProdutoErroMsg);
 
             RuleFor(c => c.Nome)
                 .NotEmpty()
-                .WithMessage("O nome do produto não foi informado");
+                .WithMessage(NomeErroMsg);
 
             RuleFor(c => c.Quantidade)
                 .GreaterThan(0)
-                .WithMessage("A quantidade miníma de um item é 1");
+                .WithMessage(QtdMinErroMsg);
 
             RuleFor(c => c.Quantidade)
                 .LessThan(10)
-                .WithMessage("A quantidade máxima de um item é 10");
+                .WithMessage(QtdMaxErroMsg);
 
             RuleFor(c => c.ValorUnitario)
                 .GreaterThan(0)
-                .WithMessage("O valor do item precisa ser maior que 0");
+                .WithMessage(ValorErroMsg);
         }
     }
 }
