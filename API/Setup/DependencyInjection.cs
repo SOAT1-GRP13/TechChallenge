@@ -1,9 +1,6 @@
 ﻿using Application.Pedidos.Commands;
-using Domain.Autenticacao;
 using Domain.Catalogo;
 using Domain.Pedidos;
-using Infra.Autenticacao;
-using Infra.Autenticacao.Repository;
 using Infra.Catalogo;
 using Infra.Catalogo.Repository;
 using Infra.Pedidos.Repository;
@@ -12,12 +9,6 @@ using MediatR;
 using Domain.Base.Communication.Mediator;
 using Domain.Base.Messages.CommonMessages.Notifications;
 using Application.Pedidos.Queries;
-using Application.Autenticacao.UseCases;
-using Application.Autenticacao.Commands;
-using Application.Autenticacao.Boundaries.LogIn;
-using Application.Autenticacao.Handlers;
-using Application.Autenticacao.Boundaries.Cliente;
-using Application.Autenticacao.Queries;
 using Application.Pedidos.Handlers;
 using Application.Pedidos.Boundaries;
 using Application.Pedidos.UseCases;
@@ -43,15 +34,6 @@ namespace API.Setup
 
             //Domain Notifications 
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-
-            //Autenticacao
-            services.AddTransient<IRequestHandler<AdminAutenticaCommand, LogInUsuarioOutput>, AdminAutenticacaoCommandHandler>();
-            services.AddTransient<IRequestHandler<AutenticaClienteCommand, AutenticaClienteOutput>, AutenticaClienteCommandHandler>();
-            services.AddTransient<IAutenticacaoRepository, AutenticacaoRepository>();
-            services.AddTransient<IRequestHandler<CadastraClienteCommand,AutenticaClienteOutput>,  CadastraClienteCommandHandler>();
-            services.AddScoped<IAutenticacaoUseCase, AutenticacaoUseCase>();
-            services.AddScoped<IAutenticacaoQuery, AutenticacaoQuery>();
-            services.AddScoped<AutenticacaoContext>();
 
             // Catalogo
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
