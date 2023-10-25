@@ -36,14 +36,10 @@ namespace API.Controllers
         protected Guid ObterClienteId()
         {
 
-            //TODO - Verificar se o cliente está autenticado e recupera o id
             if (!string.IsNullOrEmpty(User.FindFirstValue(ClaimTypes.NameIdentifier)))
-            {
                 return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            }
 
-            //Caso não esteja autenticado, retorna o id de cliente visitante
-            return Guid.Parse("4885e451-b0e4-4490-b959-04fabc806d32");
+            throw new Exception("Cliente não identificado");
         }
     }
 }
