@@ -28,7 +28,6 @@ namespace API.Controllers.Admin
 
 
         [HttpGet("lista_produtos")]
-        [Authorize]
         [SwaggerOperation(
             Summary = "Listar produtos",
             Description = "Lista os produtos cadastrados")]
