@@ -3,7 +3,6 @@ using API.Setup;
 using Infra.Pedidos;
 using Infra.Catalogo;
 using System.Reflection;
-using Infra.Autenticacao;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Application.Pedidos.AutoMapper;
@@ -19,9 +18,6 @@ var connectionString = builder.Configuration.GetSection("DatabaseSettings:Connec
 string secret = builder.Configuration.GetSection("ConfiguracaoToken:ClientSecret").Value;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionString));
-
-builder.Services.AddDbContext<AutenticacaoContext>(options =>
         options.UseNpgsql(connectionString));
 
 builder.Services.AddDbContext<CatalogoContext>(options =>
@@ -98,12 +94,10 @@ app.MapControllers();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var dbApplication = scope.ServiceProvider.GetService<ApplicationDbContext>();
-using var dbAutenticacao = scope.ServiceProvider.GetService<AutenticacaoContext>();
 using var dbCatalogo = scope.ServiceProvider.GetService<CatalogoContext>();
 using var dbPedidos = scope.ServiceProvider.GetService<PedidosContext>();
 
 await dbApplication!.Database.MigrateAsync();
-await dbAutenticacao!.Database.MigrateAsync();
 await dbCatalogo!.Database.MigrateAsync();
 await dbPedidos!.Database.MigrateAsync();
 
