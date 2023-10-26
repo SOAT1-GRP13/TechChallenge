@@ -13,7 +13,7 @@ namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("Catalogo")]
-    [SwaggerTag("Endpoints relacionados a produtos, Necessário estar autenticado para acessar e alguns deles é necessário estar autenticado como gestor")]
+    [SwaggerTag("Endpoints relacionados a produtos, Alguns são necessários estar autenticado para acessar, outros não precisa e alguns deles é necessário estar autenticado como gestor. O detalhamento do nível de autenticacão estará descrito em cada endpoint.")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutosQueries _produtosQueries;
@@ -28,10 +28,9 @@ namespace API.Controllers.Admin
 
 
         [HttpGet("lista_produtos")]
-        [Authorize]
         [SwaggerOperation(
             Summary = "Listar produtos",
-            Description = "Lista os produtos cadastrados")]
+            Description = "Lista os produtos cadastrados. Não precisa estar autenticado")]
         [SwaggerResponse(200, "Retorna produtos cadastrados", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum produto cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -56,7 +55,7 @@ namespace API.Controllers.Admin
         [Authorize]
         [SwaggerOperation(
             Summary = "Listar categorias",
-            Description = "Lista as categorias cadastradas")]
+            Description = "Lista as categorias cadastradas. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna categorias cadastrados", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum categoria cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -81,7 +80,7 @@ namespace API.Controllers.Admin
         [Authorize]
         [SwaggerOperation(
             Summary = "Busca produto por id",
-            Description = "Retorna produto por id")]
+            Description = "Retorna produto por id. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna produto", typeof(ProdutoDto))]
         [SwaggerResponse(404, "Caso não tenha produto com o id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -106,7 +105,7 @@ namespace API.Controllers.Admin
         [Authorize]
         [SwaggerOperation(
             Summary = "Listar produtos por categoria",
-            Description = "Lista os produtos cadastrados filtrados por categoria")]
+            Description = "Lista os produtos cadastrados filtrados por categoria. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna produtos ", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum produto cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
