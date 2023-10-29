@@ -1,17 +1,17 @@
 using System.Text;
 using System.Text.Json;
+using Domain.Configuration;
 using Domain.MercadoPago;
 using Domain.Pedidos;
-using Domain.ValueObjects;
 using Microsoft.Extensions.Options;
 
 namespace Infra.MercadoPago.Repository
 {
     public class MercadoPagoRepository : IMercadoPagoRepository
     {
-        private readonly ConfiguracaoMercadoPago _settings;
+        private readonly Secrets _settings;
 
-        public MercadoPagoRepository(IOptions<ConfiguracaoMercadoPago> options)
+        public MercadoPagoRepository(IOptions<Secrets> options)
         {
             _settings = options.Value;
         }
@@ -28,7 +28,7 @@ namespace Infra.MercadoPago.Repository
             var dto = new MercadoPagoOrder(pedido, itensList, _settings.Notification_url);
 
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{_settings.UserId}/pos/{_settings.External_Pos_Id}/qrs");
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{_settings.MercadoPagoUserId}/pos/{_settings.External_Pos_Id}/qrs");
             request.Headers.Add("Authorization", $"Bearer {_settings.AccesToken}");
 
             var serializeOptions = new JsonSerializerOptions

@@ -20,7 +20,7 @@ namespace Infra.Catalogo
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_configuration.GetSection("DatabaseSettings:ConnectionString").Value);
+            optionsBuilder.UseNpgsql(_configuration.GetSection("ConnectionString").Value);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
