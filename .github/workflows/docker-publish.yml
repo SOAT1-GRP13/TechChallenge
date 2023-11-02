@@ -20,4 +20,4 @@ jobs:
       run: docker build -t christiandmelo/tech-challenge-soat1-grp13:latest .
 
     - name: Push Docker image
-      run: docker push christiandmelo/tech-challenge-soat1-grp13:latest:latest
+      run: docker push christiandmelo/tech-challenge-soat1-grp13:latest
