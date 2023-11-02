@@ -5,5 +5,6 @@
         Gestor = 0,
         Cliente = 1,
         Atendente = 2,
+        ClienteSemCpf = 3,
     }
 }

@@ -5,7 +5,7 @@
 # Resumo do projeto
 Este projeto foi desenvolvido em C# com .NET 6, seguindo os princípios da arquitetura hexagonal. É um trabalho em andamento que esté sendo realizado durante nossa pós-graduação, com o objetivo de aplicar as melhores práticas de arquitetura de software.
 
-O propósito principal do projeto é criar uma API REST para atender as necessidades de uma rede fictícia de fast food. Essa API permitirá a realização de operações relacionadas a pedidos, gerenciamento de produtos, autenticação de usuários, entre outras funcionalidades essenciais para o funcionamento de uma rede de fast food.
+O propósito principal do projeto é criar uma API REST para atender as necessidades de uma rede fictícia de fast food. Essa API permitirá a realização de operações relacionadas a pedidos, gerenciamento de produtos, entre outras funcionalidades essenciais para o funcionamento de uma rede de fast food.
 
 Ao longo do desenvolvimento, estaremos fazendo entregas incrementais e criando releases no GIT para acompanhar o progresso do projeto. Esperamos que este trabalho demonstre nosso conhecimento teórico e prático adquirido durante a pós-graduação, além de servir como um exemplo de aplicação das melhores práticas de arquitetura em projetos de software.
 
@@ -15,6 +15,23 @@ Sinta-se à vontade para entrar em contato conosco se tiver alguma dúvida ou su
 > :construction: Projeto em construção :construction:
 
 License: [MIT](License.txt)
+
+# Bando de dados
+
+Inicialmente, nosso projeto foi concebido como um monolito, e, naquela época, tínhamos a necessidade de um banco de dados com alta integridade dos dados e um bom relacionamento entre as tabelas. Portanto, escolhemos o banco de dados PostgreSQL no início do projeto devido à familiaridade do grupo com ele.
+
+Com o desenvolvimento do projeto, surgiu a necessidade de separar o processo de autenticação em um microsserviço. Compreendemos que, em algum momento, nosso monolito será dividido em vários microsserviços, e acreditamos que é uma prática recomendada separar também a base de dados. No entanto, neste momento, consideramos que a melhor estratégia é migrar o banco de dados PostgreSQL conforme está configurado para um serviço gerenciável na nuvem, que, no nosso caso, será o AWS RDS. Isso ocorre porque a maior parte da aplicação continua como um monolito.
+
+Nossos critérios de decisão incluem a compatibilidade e a redução da complexidade, uma vez que não desejamos fazer alterações no código neste momento, concentrando-nos principalmente na migração para a nuvem. Acreditamos que uma migração em fases é a estratégia mais apropriada, seguindo o paradigma dos "5 R's" da AWS, que incluem Rehost, Refactor, Replatform, Rebuild e Replace.
+
+Quando ocorrer a divisão do monolito em microsserviços, nossa equipe realizará uma reavaliação e redefinição da solução de base de dados a ser utilizada por cada microsserviço.
+
+# Autenticação
+
+Com o avanço do projeto e à medida que nosso entendimento sobre o mesmo cresceu, identificamos a necessidade de migrar a funcionalidade de autenticação para a AWS. Como resultado, criamos um novo repositório dedicado exclusivamente às informações de autenticação, iniciando assim o processo de decomposição do nosso monólito em microserviços.
+
+Você pode acessar o novo repositório por meio do seguinte link:
+- https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13-Auth
 
 # 💡 Event Storm
 
@@ -106,26 +123,30 @@ Para windows execute o arquivo stress-test.exe dentro da pasta stress-windows.
 Lembrando que o HPA demora alguns instantes para entender que precisa escalar o pod, então é necessário aguardar alguns minutos para que o pod seja escalado. e também é necessário aguardar alguns minutos para que o pod volte ao estado normal.
 
 # ⌨️ Testando a API
+Você pode testar esta API de duas maneiras: usando o Postman ou o Swagger, que está configurado no projeto.
 
-Essa API pode ser testada via Postman ou via swagger que está configurado no projeto.
-Para acessar o swagger do projeto, utilize o link abaixo:
+Acessando o Swagger:
+
+Para acessar o Swagger do projeto localmente, utilize o seguinte link:
 - http://localhost/swagger/index.html
-Caso esteja utilizando o kubernetes, utilize o link abaixo:
-http://localhost:31116/swagger/index.html
 
-As chamadas que exigem autenticação estão informadas na documentação
+Se você estiver usando o Kubernetes, utilize o link abaixo:
+- http://localhost:31116/swagger/index.html
 
-O token do gestor pode ser obtido através do seguinte endpoint:
-- http://localhost/Autenticacao/LogInUsuario - O usuario do exemplo do swagger ja se autentica
+O Swagger já contém exemplos de chamadas com dados reais.
 
-O swagger ja possui exemplos de chamadas com dados reais
+Se estiver testando via Swagger, lembre-se de adicionar o token obtido na resposta da chamada no menu "Authorize".
 
-Caso esteja testando via Swagger, é necessário adicionar o token obtido na resposta da chamada no menu "Authorize" 
+Autenticação:
+As chamadas que requerem autenticação são detalhadas na documentação. Para obter um token Bearer, você pode autenticar-se em nosso serviço online - TODO: INSIRA O LINK PARA O SERVIÇO AQUI.
+
+Se você preferir testar nosso serviço de autenticação localmente, siga as orientações no seguinte repositório:
+- https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13-Auth
+
 
 # 📒 Documentação da API
 
 No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
-
 
 - http://localhost/api-docs/index.html
 - http://localhost:31116/api-docs/index.html - No Kubernetes

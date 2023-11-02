@@ -3,25 +3,25 @@ using API.Setup;
 using Infra.Pedidos;
 using Infra.Catalogo;
 using System.Reflection;
-using Infra.Autenticacao;
-using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Application.Pedidos.AutoMapper;
 using Swashbuckle.AspNetCore.Filters;
 using Application.Catalogo.AutoMapper;
+using Domain.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(DatabaseSettings.DatabaseConfiguration));
-var connectionString = builder.Configuration.GetSection("DatabaseSettings:ConnectionString").Value;
+builder.Services.AddControllers();
 
-string secret = builder.Configuration.GetSection("ConfiguracaoToken:ClientSecret").Value;
+builder.Configuration.AddAmazonSecretsManager("us-west-2", "soat1-grp13");
+builder.Services.Configure<Secrets>(builder.Configuration);
+
+var connectionString = builder.Configuration.GetSection("ConnectionString").Value;
+
+string secret = builder.Configuration.GetSection("ClientSecret").Value;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionString));
-
-builder.Services.AddDbContext<AutenticacaoContext>(options =>
         options.UseNpgsql(connectionString));
 
 builder.Services.AddDbContext<CatalogoContext>(options =>
@@ -30,12 +30,8 @@ builder.Services.AddDbContext<CatalogoContext>(options =>
 builder.Services.AddDbContext<PedidosContext>(options =>
         options.UseNpgsql(connectionString));
 
-
-builder.Services.Configure<ConfiguracaoToken>(builder.Configuration.GetSection(ConfiguracaoToken.Configuration));
-builder.Services.Configure<ConfiguracaoMercadoPago>(builder.Configuration.GetSection(ConfiguracaoMercadoPago.Configuration));
 builder.Services.AddAuthenticationJWT(secret);
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 builder.Services.AddEndpointsApiExplorer();
@@ -98,12 +94,10 @@ app.MapControllers();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var dbApplication = scope.ServiceProvider.GetService<ApplicationDbContext>();
-using var dbAutenticacao = scope.ServiceProvider.GetService<AutenticacaoContext>();
 using var dbCatalogo = scope.ServiceProvider.GetService<CatalogoContext>();
 using var dbPedidos = scope.ServiceProvider.GetService<PedidosContext>();
 
 await dbApplication!.Database.MigrateAsync();
-await dbAutenticacao!.Database.MigrateAsync();
 await dbCatalogo!.Database.MigrateAsync();
 await dbPedidos!.Database.MigrateAsync();
 

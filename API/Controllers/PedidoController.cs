@@ -1,18 +1,19 @@
-﻿using Application.Pedidos.Boundaries;
-using Application.Pedidos.Commands;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Application.Pedidos.Queries;
+using Application.Pedidos.Commands;
+using Application.Pedidos.Boundaries;
 using Application.Pedidos.Queries.DTO;
 using Domain.Base.Communication.Mediator;
-using Domain.Base.Messages.CommonMessages.Notifications;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
+using Domain.Base.Messages.CommonMessages.Notifications;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("Pedidos")]
-    [SwaggerTag("Endpoints relacionados a pedidos, não é necessário se autenticar")]
+    [SwaggerTag("Endpoints relacionados a pedidos, sendo necessário se autenticar")]
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoQueries _pedidoQueries;
@@ -27,6 +28,7 @@ namespace API.Controllers
         }
 
         [HttpGet("pedidos-por-cliente/{clientId}")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Listar pedidos por cliente",
             Description = "Lista os pedidos pelo id do cliente")]
@@ -38,6 +40,7 @@ namespace API.Controllers
         }
 
         [HttpGet("pedidos")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Lista todos os pedidos",
             Description = "Lista todos pedidos de forma não ordenada")]
@@ -49,6 +52,7 @@ namespace API.Controllers
         }
 
         [HttpGet("PedidosNaFila")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Lista todos os pedidos na fila",
             Description = "Lista todos pedidos na fila de forma ordenada conforme Tech Challenge fase 2")]
@@ -60,6 +64,7 @@ namespace API.Controllers
         }
 
         [HttpPut("atualizar-status-pedido")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Atualizar status do pedido",
             Description = "Atualiza o status do pedido, no momento serve como um agnostico ao mercado pago até termos publicado uma url valida para notification_url")]
@@ -78,6 +83,7 @@ namespace API.Controllers
         }
 
         [HttpGet("consultar-status-pedido/{pedidoId}")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Consultar status do pedido",
             Description = "Consulta status do pedido a partir do Guid")]

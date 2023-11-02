@@ -1,19 +1,20 @@
-﻿using Application.Catalogo.Queries;
-using Application.Pedidos.Boundaries;
-using Application.Pedidos.Commands;
-using Application.Pedidos.Queries;
-using Application.Pedidos.Queries.DTO;
-using Domain.Base.Communication.Mediator;
-using Domain.Base.Messages.CommonMessages.Notifications;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.Pedidos.Queries;
+using Application.Pedidos.Commands;
+using Application.Catalogo.Queries;
+using Application.Pedidos.Queries.DTO;
+using Application.Pedidos.Boundaries;
+using Microsoft.AspNetCore.Authorization;
+using Domain.Base.Communication.Mediator;
 using Swashbuckle.AspNetCore.Annotations;
+using Domain.Base.Messages.CommonMessages.Notifications;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("Carrinho")]
-    [SwaggerTag("Endpoints relacionados ao carrinho, não é necessário se autenticar, Caso tenha se autenticado como cliente o clienteId é pego de forma automatica, se não é utilizado um Id padrão")]
+    [SwaggerTag("Endpoints relacionados ao carrinho, sendo necessário se autenticar e o clienteId é pego de forma automatica")]
     public class CarrinhoController : ControllerBase
     {
         private readonly IProdutosQueries _produtosQueries;
@@ -32,6 +33,7 @@ namespace API.Controllers
 
 
         [HttpPost("adicionar-item")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Adicionar Item ao carrinho",
             Description = "Adiciona o item desejado ao carrinho")]
@@ -65,6 +67,7 @@ namespace API.Controllers
         }
 
         [HttpPut("atualizar-item")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Atualizar item do carrinho",
             Description = "Atualiza o item desejado no carrinho")]
@@ -96,6 +99,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("remover-item/{id}")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Remover item do carrinho",
             Description = "Remove o item desejado no carrinho")]
@@ -130,6 +134,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Listar itens do carrinho",
             Description = "Lista os itens no carrinho")]
@@ -155,6 +160,7 @@ namespace API.Controllers
         }
 
         [HttpPost("confirmar-pedido")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Confirma o pedido",
             Description = "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code.")]

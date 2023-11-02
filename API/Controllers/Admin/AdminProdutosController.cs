@@ -1,19 +1,19 @@
-﻿using Application.Catalogo.Boundaries;
-using Application.Catalogo.Commands;
+﻿using MediatR;
 using Application.Catalogo.Dto;
-using Application.Catalogo.Queries;
-using Domain.Base.Communication.Mediator;
-using Domain.Base.Messages.CommonMessages.Notifications;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Application.Catalogo.Queries;
+using Application.Catalogo.Commands;
+using Application.Catalogo.Boundaries;
+using Domain.Base.Communication.Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
+using Domain.Base.Messages.CommonMessages.Notifications;
 
 namespace API.Controllers.Admin
 {
     [ApiController]
     [Route("Catalogo")]
-    [SwaggerTag("Endpoints relacionados a produtos, alguns deles é necessario estar autenticado como gestor")]
+    [SwaggerTag("Endpoints relacionados a produtos, Alguns são necessários estar autenticado para acessar, outros não precisa e alguns deles é necessário estar autenticado como gestor. O detalhamento do nível de autenticacão estará descrito em cada endpoint.")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutosQueries _produtosQueries;
@@ -28,10 +28,9 @@ namespace API.Controllers.Admin
 
 
         [HttpGet("lista_produtos")]
-        [AllowAnonymous]
         [SwaggerOperation(
             Summary = "Listar produtos",
-            Description = "Lista os produtos cadastrados, não é necessario se autenticar")]
+            Description = "Lista os produtos cadastrados. Não precisa estar autenticado")]
         [SwaggerResponse(200, "Retorna produtos cadastrados", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum produto cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -53,10 +52,10 @@ namespace API.Controllers.Admin
         }
 
         [HttpGet("lista_categorias")]
-        [AllowAnonymous]
+        [Authorize]
         [SwaggerOperation(
-    Summary = "Listar categorias",
-    Description = "Lista as categorias cadastradas, não é necessario se autenticar")]
+            Summary = "Listar categorias",
+            Description = "Lista as categorias cadastradas. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna categorias cadastrados", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum categoria cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -78,10 +77,10 @@ namespace API.Controllers.Admin
         }
 
         [HttpGet("busca_produto/{id}")]
-        [AllowAnonymous]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Busca produto por id",
-            Description = "Retorna produto por id, não é necessario se autenticar")]
+            Description = "Retorna produto por id. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna produto", typeof(ProdutoDto))]
         [SwaggerResponse(404, "Caso não tenha produto com o id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
@@ -103,14 +102,14 @@ namespace API.Controllers.Admin
         }
 
         [HttpGet("busca_produto_por_categoria/{codigo}")]
-        [AllowAnonymous]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Listar produtos por categoria",
-            Description = "Lista os produtos cadastrados filtrados por categoria, não é necessario se autenticar")]
+            Description = "Lista os produtos cadastrados filtrados por categoria. Precisa se autenticar")]
         [SwaggerResponse(200, "Retorna produtos ", typeof(IEnumerable<ProdutoDto>))]
         [SwaggerResponse(404, "Caso não tenha nenhum produto cadastrado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
-        public async Task<IActionResult> Get([FromRoute, SwaggerRequestBody("codigo do produto", Required = true)]  int codigo)
+        public async Task<IActionResult> Get([FromRoute, SwaggerRequestBody("codigo do produto", Required = true)] int codigo)
         {
             try
             {
@@ -132,13 +131,13 @@ namespace API.Controllers.Admin
         [Authorize(Roles = "Gestor")]
         [SwaggerOperation(
             Summary = "Cadastrar produto",
-            Description = "Realiza o cadastro do produto, é necessario estar autenticado como gestor")]
+            Description = "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor")]
         [SwaggerResponse(200, "Retorna produto ", typeof(ProdutoOutput))]
         [SwaggerResponse(400, "Caso de erro ao adicionar produto")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
         public async Task<IActionResult> Post([FromBody] ProdutoInput produtoInput)
         {
-           
+
             try
             {
 
@@ -166,11 +165,11 @@ namespace API.Controllers.Admin
         [Authorize(Roles = "Gestor")]
         [SwaggerOperation(
             Summary = "Editar produto",
-            Description = "Realiza o cadastro do produto, é necessario estar autenticado como gestor")]
+            Description = "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor")]
         [SwaggerResponse(200, "Retorna produto ", typeof(ProdutoOutput))]
         [SwaggerResponse(404, "Caso não encontre o produto com o Id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
-        public async Task<IActionResult> Put([FromBody]ProdutoEditarInput produtoEditarInput)
+        public async Task<IActionResult> Put([FromBody] ProdutoEditarInput produtoEditarInput)
         {
             try
             {
@@ -193,11 +192,11 @@ namespace API.Controllers.Admin
         [Authorize(Roles = "Gestor")]
         [SwaggerOperation(
             Summary = "Deletar produto",
-            Description = "Realiza o cadastro do produto, é necessario estar autenticado como gestor")]
+            Description = "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor")]
         [SwaggerResponse(200, "Em caso de remoção com sucesso")]
         [SwaggerResponse(404, "Caso não encontre o produto com o Id informado")]
         [SwaggerResponse(500, "Caso algo inesperado aconteça")]
-        public async Task<IActionResult> Delete([FromRoute]Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
             {
