@@ -21,3 +21,30 @@ jobs:
 
     - name: Push Docker image
       run: docker push christiandmelo/tech-challenge-soat1-grp13:${{github.run_id}}
+  
+  update-service:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-region: us-west-2
+        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ../../deploy/task-definition.json
+        container-name: soat1-grp13-api
+        image: christiandmelo/tech-challenge-soat1-grp13:${{github.run_id}}
+    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: soat1-grp13-service
+        cluster: soat1-grp13-tech-challenge
+        wait-for-service-stability: true
