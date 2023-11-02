@@ -42,7 +42,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ../../deploy/task-definition.json
+        task-definition: deploy/task-definition.json
         container-name: soat1-grp13-api
         image: christiandmelo/tech-challenge-soat1-grp13:${{github.run_id}}
     
