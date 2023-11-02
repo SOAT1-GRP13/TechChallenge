@@ -1,0 +1,23 @@
+name: Docker Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t christiandmelo/tech-challenge-soat1-grp13:latest .
+
+    - name: Push Docker image
+      run: docker push christiandmelo/tech-challenge-soat1-grp13:latest:latest
