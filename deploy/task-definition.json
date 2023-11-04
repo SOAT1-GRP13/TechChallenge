@@ -1,0 +1,43 @@
+{
+  "family": "soat1-grp13-api",
+  "containerDefinitions": [
+    {
+      "name": "soat1-grp13-api",
+      "image": "christiandmelo/tech-challenge-soat1-grp13:latest",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "soat1-grp13-api-80-tcp",
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/soat1-grp13-api",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      }
+    }
+  ],
+  "taskRoleArn": "arn:aws:iam::834794241069:role/taskRole",
+  "executionRoleArn": "arn:aws:iam::834794241069:role/taskRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  }
+}

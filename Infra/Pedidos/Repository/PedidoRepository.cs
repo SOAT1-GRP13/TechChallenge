@@ -1,4 +1,5 @@
 ﻿using Domain.Base.Data;
+using Domain.Configuration;
 using Domain.Pedidos;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,10 @@ namespace Infra.Pedidos.Repository
     public class PedidoRepository : IPedidoRepository
     {
         private readonly PedidosContext _context;
-        private readonly DatabaseSettings _settings;
+        private readonly Secrets _settings;
         private readonly DbContextOptions<PedidosContext> _optionsBuilder;
 
-        public PedidoRepository(PedidosContext context, IOptions<DatabaseSettings> options)
+        public PedidoRepository(PedidosContext context, IOptions<Secrets> options)
         {
             _context = context;
             _settings = options.Value;
