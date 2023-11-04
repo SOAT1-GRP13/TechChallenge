@@ -123,6 +123,10 @@ Para windows execute o arquivo stress-test.exe dentro da pasta stress-windows.
 Lembrando que o HPA demora alguns instantes para entender que precisa escalar o pod, então é necessário aguardar alguns minutos para que o pod seja escalado. e também é necessário aguardar alguns minutos para que o pod volte ao estado normal.
 
 # ⌨️ Testando a API
+
+**Importante**
+Nesse módulo nos fizemos um ajuste no projeto para ele pegar o acesso ao banco de dados via secret manager. Para testar localmente, tem que realizar o ajuste no program e adicionar a connection string o appSettings.
+
 Você pode testar esta API de duas maneiras: usando o Postman ou o Swagger, que está configurado no projeto.
 
 Acessando o Swagger:
@@ -138,7 +142,7 @@ O Swagger já contém exemplos de chamadas com dados reais.
 Se estiver testando via Swagger, lembre-se de adicionar o token obtido na resposta da chamada no menu "Authorize".
 
 Autenticação:
-As chamadas que requerem autenticação são detalhadas na documentação. Para obter um token Bearer, você pode autenticar-se em nosso serviço online - TODO: INSIRA O LINK PARA O SERVIÇO AQUI.
+As chamadas que requerem autenticação são detalhadas na documentação. Para obter um token Bearer, você pode através do seguinte projeto: https://github.com/SOAT1-GRP13/TechChallenge-SOAT1-GRP13-Auth.
 
 Se você preferir testar nosso serviço de autenticação localmente, siga as orientações no seguinte repositório:
 - https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13-Auth
