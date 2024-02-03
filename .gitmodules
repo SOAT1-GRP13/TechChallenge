@@ -4,3 +4,6 @@
 [submodule "Produto"]
 	path = Produto
 	url = https://github.com/SOAT1-GRP13/TechChallenge-Produto
+[submodule "Pedido"]
+	path = Pedido
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Pedido
