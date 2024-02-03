@@ -10,3 +10,6 @@
 [submodule "Producao"]
 	path = Producao
 	url = https://github.com/SOAT1-GRP13/TechChallenge-Producao
+[submodule "Pagamento"]
+	path = Pagamento
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Pagamento
