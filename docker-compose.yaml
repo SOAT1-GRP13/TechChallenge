@@ -1,7 +1,22 @@
 version: '3'
 services:
+  ##### RabbitMQ
+  rabbitmq:
+    build:
+      context: ./RabbitMQ 
+      dockerfile: Dockerfile
+    ports:
+      - "5672:5672"  # Porta padrão do RabbitMQ
+      - "15672:15672"  # Porta da interface de gerenciamento do RabbitMQ
+    environment:
+      RABBITMQ_DEFAULT_USER: "user"
+      RABBITMQ_DEFAULT_PASS: "password"
+    #volumes:
+    #  - ./init.sh:/init.sh  # Monta o script init.sh no container (opcional se já copiado pelo Dockerfile)
+
+
   ##### Auth
-  app-auth:
+  api-auth:
     build:
       context: ./Auth
       args:
@@ -12,10 +27,11 @@ services:
     ports:
       - "5270:80"
     depends_on:
+      - rabbitmq
       - postgres-db-auth
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.10
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.10
 
   postgres-db-auth:  
     hostname: postgres-compose
@@ -28,12 +44,12 @@ services:
       - "15436:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-auth:/var/lib/postgresql/data
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.11
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.11
 
   ##### Pedido
-  app-pedido:
+  api-pedido:
     build:
       context: ./Pedido
       args:
@@ -44,10 +60,11 @@ services:
     ports:
       - "5271:80"
     depends_on:
+      - rabbitmq
       - postgres-db-pedido
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.20
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.20
 
   postgres-db-pedido:
     hostname: postgres-compose
@@ -60,12 +77,12 @@ services:
       - "15437:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-pedido:/var/lib/postgresql/data
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.21
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.21
 
   ##### Producao
-  app-producao:
+  api-producao:
     build:
       context: ./Producao
       args:
@@ -76,11 +93,11 @@ services:
     ports:
       - "5272:80"
     depends_on:
-      - app-auth
-      - app-pedido
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.30
+      - rabbitmq
+      - postgres-db-producao
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.30
 
   postgres-db-producao:
     hostname: postgres-compose
@@ -93,12 +110,12 @@ services:
       - "15438:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-producao:/var/lib/postgresql/data
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.31
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.31
 
   ##### Produto
-  app-produto:
+  api-produto:
     build:
       context: ./Produto
       args:
@@ -109,10 +126,11 @@ services:
     ports:
       - "5273:80"
     depends_on:
-      - app-producao
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.40
+      - rabbitmq
+      - postgres-db-produto
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.40
 
   postgres-db-produto:
     hostname: postgres-compose
@@ -125,12 +143,12 @@ services:
       - "15439:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-produto:/var/lib/postgresql/data
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.41
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.41
 
   ##### Pagamento
-  app-pagamento:
+  api-pagamento:
     build:
       context: ./Pagamento
       args:
@@ -141,16 +159,16 @@ services:
     ports:
       - "5274:80"
     depends_on:
-      - app-producao
-    networks:
-      tech-challenge-soat1-grp13-network:
-        ipv4_address: 172.23.0.50
+      - rabbitmq
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.50
 
-networks:
-  tech-challenge-soat1-grp13-network:
-    ipam:
-      config:
-        - subnet: 172.23.0.0/16
+#networks:
+#  tech-challenge-soat1-grp13-network:
+#    ipam:
+#      config:
+#        - subnet: 172.23.0.0/16
 
 volumes:
   tech-challenge-soat1-grp13-db-data-auth:
