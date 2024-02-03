@@ -1,3 +1,6 @@
 [submodule "Auth"]
 	path = Auth
 	url = https://github.com/SOAT1-GRP13/TechChallenge-Auth
+[submodule "Produto"]
+	path = Produto
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Produto
