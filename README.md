@@ -16,16 +16,6 @@ Sinta-se à vontade para entrar em contato conosco se tiver alguma dúvida ou su
 
 License: [MIT](License.txt)
 
-# Bando de dados
-
-Inicialmente, nosso projeto foi concebido como um monolito, e, naquela época, tínhamos a necessidade de um banco de dados com alta integridade dos dados e um bom relacionamento entre as tabelas. Portanto, escolhemos o banco de dados PostgreSQL no início do projeto devido à familiaridade do grupo com ele.
-
-Com o desenvolvimento do projeto, surgiu a necessidade de separar o processo de autenticação em um microsserviço. Compreendemos que, em algum momento, nosso monolito será dividido em vários microsserviços, e acreditamos que é uma prática recomendada separar também a base de dados. No entanto, neste momento, consideramos que a melhor estratégia é migrar o banco de dados PostgreSQL conforme está configurado para um serviço gerenciável na nuvem, que, no nosso caso, será o AWS RDS. Isso ocorre porque a maior parte da aplicação continua como um monolito.
-
-Nossos critérios de decisão incluem a compatibilidade e a redução da complexidade, uma vez que não desejamos fazer alterações no código neste momento, concentrando-nos principalmente na migração para a nuvem. Acreditamos que uma migração em fases é a estratégia mais apropriada, seguindo o paradigma dos "5 R's" da AWS, que incluem Rehost, Refactor, Replatform, Rebuild e Replace.
-
-Quando ocorrer a divisão do monolito em microsserviços, nossa equipe realizará uma reavaliação e redefinição da solução de base de dados a ser utilizada por cada microsserviço.
-
 # Autenticação
 
 Com o avanço do projeto e à medida que nosso entendimento sobre o mesmo cresceu, identificamos a necessidade de migrar a funcionalidade de autenticação para a AWS. Como resultado, criamos um novo repositório dedicado exclusivamente às informações de autenticação, iniciando assim o processo de decomposição do nosso monólito em microserviços.
@@ -72,55 +62,6 @@ docker-compose up
 O docker-compose.yaml do projeto, está configurado para buildar a solution projeto, subir um container da imagem projeto, um container do banco de dados e executar as migrations no banco.
 Esses containers compartilham de uma mesma rede e será criado um volume no docker para utilização do container banco.
 O container do projeto está mapeado para ficar exposto na porta 80 da máquina local e o banco na porta 15432.
-
-# Abrir e rodar o projeto utilizando o Kubernetes
-
-Antes de prosseguir, certifique-se de estar dentro da pasta "Kubernetes" localizada na raiz do projeto.
-
-**Importante:** A ordem de execução dos comandos é fundamental para a correta criação dos recursos. Execute-os na mesma ordem em que estão listados abaixo.
-
-## Passo 1: Configuração do PostgreSQL
-
-1. Crie o ConfigMap e os Secrets do PostgreSQL:
-   ```bash
-   kubectl apply -f configmaps/postgres-configmap.yaml
-   kubectl apply -f secrets/postgres-secrets.yaml
-   ```
-
-2. Crie o Volume do PostgreSQL:
-   ```bash
-   kubectl apply -f volumes/postgres-pv.yaml
-   kubectl apply -f volumes/postgres-pvc.yaml
-   ```
-
-3. Crie o Deployment e o Service do PostgreSQL:
-   ```bash
-   kubectl apply -f deployments/postgres-deployment.yaml
-   kubectl apply -f services/postgres-service.yaml
-   ```
-
-## Passo 2: API Deployment, Service e HPA (Horizontal Pod Autoscaler)
-
-4. Crie o Deployment, o Service e o Horizontal Pod Autoscaler da API:
-   ```bash
-   kubectl apply -f deployments/api-deployment.yaml
-   kubectl apply -f services/api-service.yaml
-   kubectl apply -f hpa/api-hpa.yaml
-   ```
-
-Lembre-se de que os comandos acima precisam ser executados em um ambiente Kubernetes configurado corretamente. Acompanhe as saídas dos comandos para garantir que os recursos estejam sendo criados sem erros. Após a execução, você terá suas aplicações implantadas e prontas para uso.
-**Importante:** Para que o hpa funcione corretamente, sua máquina tem que ter o metrics configurado corretamente. voce pode verificar se está configurado utilizando o comando:
-   ```bash
-   kubectl top pods
-   ```
-Esse site tem um exemplo de como configurar no docker desktop: https://dev.to/docker/enable-kubernetes-metrics-server-on-docker-desktop-5434. Lembre-se de reiniciar o docker desktop após a configuração.
-
-Para realizar um stress teste, dentro da pasta kubernetes voce pode executar o comando abaixo para linux:
-   ```bash
-   sh stress-linux.sh 0.0001 > out.txt
-   ```
-Para windows execute o arquivo stress-test.exe dentro da pasta stress-windows.
-Lembrando que o HPA demora alguns instantes para entender que precisa escalar o pod, então é necessário aguardar alguns minutos para que o pod seja escalado. e também é necessário aguardar alguns minutos para que o pod volte ao estado normal.
 
 # ⌨️ Testando a API
 
