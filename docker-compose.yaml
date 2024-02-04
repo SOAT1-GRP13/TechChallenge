@@ -11,167 +11,180 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "user"
       RABBITMQ_DEFAULT_PASS: "password"
-    #volumes:
-    #  - ./init.sh:/init.sh  # Monta o script init.sh no container (opcional se já copiado pelo Dockerfile)
 
 
-#  ##### Auth
-#  api-auth:
-#    build:
-#      context: ./Auth
-#      args:
-#        - BUILD_CONFIGURATION=Debug
-#      dockerfile: Dockerfile
-#    image: tech-challenge-soat1-grp13-auth:latest
-#    restart: on-failure    
-#    ports:
-#      - "5270:80"
-#    depends_on:
-#      - rabbitmq
-#      - postgres-db-auth
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.10
-#
-#  postgres-db-auth:  
-#    hostname: postgres-compose
-#    image: postgres
-#    environment:
-#      POSTGRES_PASSWORD: "SenhaLocalAuth"
-#      POSTGRES_USER: fiap
-#      POSTGRES_DB: techChallengeAuth
-#    ports:
-#      - "15436:5432"
-#    volumes:
-#      - tech-challenge-soat1-grp13-db-data-auth:/var/lib/postgresql/data
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.11
-#
-#  ##### Pedido
-#  api-pedido:
-#    build:
-#      context: ./Pedido
-#      args:
-#        - BUILD_CONFIGURATION=Debug
-#      dockerfile: Dockerfile
-#    image: tech-challenge-soat1-grp13-pedido:latest
-#    restart: on-failure    
-#    ports:
-#      - "5271:80"
-#    depends_on:
-#      - rabbitmq
-#      - postgres-db-pedido
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.20
-#
-#  postgres-db-pedido:
-#    hostname: postgres-compose
-#    image: postgres
-#    environment:
-#      POSTGRES_PASSWORD: "SenhaLocalPedido"
-#      POSTGRES_USER: fiap
-#      POSTGRES_DB: techChallengePedido
-#    ports:
-#      - "15437:5432"
-#    volumes:
-#      - tech-challenge-soat1-grp13-db-data-pedido:/var/lib/postgresql/data
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.21
-#
-#  ##### Producao
-#  api-producao:
-#    build:
-#      context: ./Producao
-#      args:
-#        - BUILD_CONFIGURATION=Debug
-#      dockerfile: Dockerfile
-#    image: tech-challenge-soat1-grp13-producao:latest
-#    restart: on-failure    
-#    ports:
-#      - "5272:80"
-#    depends_on:
-#      - rabbitmq
-#      - postgres-db-producao
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.30
-#
-#  postgres-db-producao:
-#    hostname: postgres-compose
-#    image: postgres
-#    environment:
-#      POSTGRES_PASSWORD: "SenhaLocalProducao"
-#      POSTGRES_USER: fiap
-#      POSTGRES_DB: techChallengeProducao
-#    ports:
-#      - "15438:5432"
-#    volumes:
-#      - tech-challenge-soat1-grp13-db-data-producao:/var/lib/postgresql/data
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.31
-#
-#  ##### Produto
-#  api-produto:
-#    build:
-#      context: ./Produto
-#      args:
-#        - BUILD_CONFIGURATION=Debug
-#      dockerfile: Dockerfile
-#    image: tech-challenge-soat1-grp13-produto:latest
-#    restart: on-failure    
-#    ports:
-#      - "5273:80"
-#    depends_on:
-#      - rabbitmq
-#      - postgres-db-produto
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.40
-#
-#  postgres-db-produto:
-#    hostname: postgres-compose
-#    image: postgres
-#    environment:
-#      POSTGRES_PASSWORD: "SenhaLocalProduto"
-#      POSTGRES_USER: fiap
-#      POSTGRES_DB: techChallengeProduto
-#    ports:
-#      - "15439:5432"
-#    volumes:
-#      - tech-challenge-soat1-grp13-db-data-produto:/var/lib/postgresql/data
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.41
-#
-#  ##### Pagamento
-#  api-pagamento:
-#    build:
-#      context: ./Pagamento
-#      args:
-#        - BUILD_CONFIGURATION=Debug
-#      dockerfile: Dockerfile
-#    image: tech-challenge-soat1-grp13-pagamento:latest
-#    restart: on-failure    
-#    ports:
-#      - "5274:80"
-#    depends_on:
-#      - rabbitmq
-#    #networks:
-#    #  tech-challenge-soat1-grp13-network:
-#    #    ipv4_address: 172.23.0.50
-#
-##networks:
-##  tech-challenge-soat1-grp13-network:
-##    ipam:
-##      config:
-##        - subnet: 172.23.0.0/16
-#
-#volumes:
-#  tech-challenge-soat1-grp13-db-data-auth:
-#  tech-challenge-soat1-grp13-db-data-pedido:
-#  tech-challenge-soat1-grp13-db-data-producao:
-#  tech-challenge-soat1-grp13-db-data-produto:
+  ##### Auth
+  api-auth:
+    build:
+      context: ./Auth
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-auth:latest
+    restart: on-failure    
+    ports:
+      - "5270:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=User ID=fiap;Password=SenhaLocalAuth;Host=postgres-db-auth;Port=5432;Database=techChallengeAuth;Pooling=true;
+    depends_on:
+      - rabbitmq
+      - postgres-db-auth
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.10
+
+  postgres-db-auth:  
+    hostname: postgres-compose
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "SenhaLocalAuth"
+      POSTGRES_USER: fiap
+      POSTGRES_DB: techChallengeAuth
+    ports:
+      - "15436:5432"
+    volumes:
+      - tech-challenge-soat1-grp13-db-data-auth:/var/lib/postgresql/data
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.11
+
+  ##### Pedido
+  api-pedido:
+    build:
+      context: ./Pedido
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-pedido:latest
+    restart: on-failure    
+    ports:
+      - "5271:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=User ID=fiap;Password=SenhaLocalPedido;Host=postgres-db-pedido;Port=5432;Database=techChallengePedido;Pooling=true;
+    depends_on:
+      - rabbitmq
+      - postgres-db-pedido
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.20
+
+  postgres-db-pedido:
+    hostname: postgres-compose
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "SenhaLocalPedido"
+      POSTGRES_USER: fiap
+      POSTGRES_DB: techChallengePedido
+    ports:
+      - "15437:5432"
+    volumes:
+      - tech-challenge-soat1-grp13-db-data-pedido:/var/lib/postgresql/data
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.21
+
+  ##### Producao
+  api-producao:
+    build:
+      context: ./Producao
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-producao:latest
+    restart: on-failure    
+    ports:
+      - "5272:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=User ID=fiap;Password=SenhaLocalProducao;Host=postgres-db-producao;Port=5432;Database=techChallengeProducao;Pooling=true;
+    depends_on:
+      - rabbitmq
+      - postgres-db-producao
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.30
+
+  postgres-db-producao:
+    hostname: postgres-compose
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "SenhaLocalProducao"
+      POSTGRES_USER: fiap
+      POSTGRES_DB: techChallengeProducao
+    ports:
+      - "15438:5432"
+    volumes:
+      - tech-challenge-soat1-grp13-db-data-producao:/var/lib/postgresql/data
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.31
+
+  ##### Produto
+  api-produto:
+    build:
+      context: ./Produto
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-produto:latest
+    restart: on-failure    
+    ports:
+      - "5273:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=User ID=fiap;Password=SenhaLocalProduto;Host=postgres-db-produto;Port=5432;Database=techChallengeProduto;Pooling=true;
+    depends_on:
+      - rabbitmq
+      - postgres-db-produto
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.40
+
+  postgres-db-produto:
+    hostname: postgres-compose
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "SenhaLocalProduto"
+      POSTGRES_USER: fiap
+      POSTGRES_DB: techChallengeProduto
+    ports:
+      - "15439:5432"
+    volumes:
+      - tech-challenge-soat1-grp13-db-data-produto:/var/lib/postgresql/data
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.41
+
+  ##### Pagamento
+  api-pagamento:
+    build:
+      context: ./Pagamento
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-pagamento:latest
+    restart: on-failure    
+    ports:
+      - "5274:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=User ID=fiap;Password=SenhaLocalPagamento;Host=postgres-db-pedido;Port=5432;Database=techChallengePagamento;Pooling=true;
+    depends_on:
+      - rabbitmq
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipv4_address: 172.23.0.50
+
+#networks:
+#  tech-challenge-soat1-grp13-network:
+#    ipam:
+#      config:
+#        - subnet: 172.23.0.0/16
+
+volumes:
+  tech-challenge-soat1-grp13-db-data-auth:
+  tech-challenge-soat1-grp13-db-data-pedido:
+  tech-challenge-soat1-grp13-db-data-producao:
+  tech-challenge-soat1-grp13-db-data-produto:
