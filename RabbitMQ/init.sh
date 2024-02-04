@@ -12,10 +12,8 @@ wait_for_rabbitmq() {
 
 # Função para criar filas usando rabbitmqadmin
 create_queues() {
-    echo "Criando filas..."
-
-    # Exemplo de criação de fila
-    rabbitmqadmin declare queue name=fila_de_teste durable=true
+    echo "Criando fila de teste..."
+    rabbitmqadmin --username user --password password declare queue name=fila_de_teste durable=true
 
     # Exemplo de criação de exchange
     #rabbitmqadmin declare exchange name=my_exchange type=direct
@@ -31,3 +29,5 @@ wait_for_rabbitmq
 
 # Cria as filas
 create_queues
+
+tail -f /dev/null
