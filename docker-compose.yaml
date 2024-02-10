@@ -2,15 +2,14 @@ version: '3'
 services:
   ##### RabbitMQ
   rabbitmq:
-    build:
-      context: ./RabbitMQ 
-      dockerfile: Dockerfile
+    image: rabbitmq:3-management  # Usa a imagem do RabbitMQ com o plugin de gerenciamento habilitado
     ports:
       - "5672:5672"  # Porta padrão do RabbitMQ
       - "15672:15672"  # Porta da interface de gerenciamento do RabbitMQ
     environment:
       RABBITMQ_DEFAULT_USER: "user"
       RABBITMQ_DEFAULT_PASS: "password"
+
 
 
   ##### Auth
