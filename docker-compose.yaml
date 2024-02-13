@@ -1,16 +1,21 @@
-version: '3'
+version: '3.8'
 services:
-  ##### RabbitMQ
+  ##### RabbitMQdocker pull rabbitmq:management-alpine
   rabbitmq:
-    image: rabbitmq:3-management  # Usa a imagem do RabbitMQ com o plugin de gerenciamento habilitado
+    image: rabbitmq:management-alpine  # Usa a imagem do RabbitMQ com o plugin de gerenciamento habilitado
     ports:
       - "5672:5672"  # Porta padrão do RabbitMQ
       - "15672:15672"  # Porta da interface de gerenciamento do RabbitMQ
     environment:
       RABBITMQ_DEFAULT_USER: "user"
       RABBITMQ_DEFAULT_PASS: "password"
-
-
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: '-rabbitmq_management path_prefix "/rabbitmanagement"'
+      RABBITMQ_DEFAULT_VHOST: "/rabbit"
+    healthcheck:
+      test: rabbitmq-diagnostics -q check_port_connectivity
+      interval: 30s
+      timeout: 30s
+      retries: 10
 
   ##### Auth
   api-auth:
@@ -27,8 +32,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalAuth;Host=postgres-db-auth;Port=5432;Database=techChallengeAuth;Pooling=true;
     depends_on:
-      - rabbitmq
-      - postgres-db-auth
+      postgres-db-auth:
+        condition: service_healthy
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.10
@@ -44,6 +49,12 @@ services:
       - "15436:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-auth:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.11
@@ -62,10 +73,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalPedido;Host=postgres-db-pedido;Port=5432;Database=techChallengePedido;Pooling=true;
-      - RabbitMQ:Host=rabbitmq
+      - RabbitMQ:Hostname=rabbitmq
     depends_on:
-      - rabbitmq
-      - postgres-db-pedido
+      rabbitmq:
+        condition: service_healthy
+      postgres-db-pedido:
+        condition: service_healthy
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.20
@@ -81,6 +94,12 @@ services:
       - "15437:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-pedido:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.21
@@ -99,9 +118,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalProducao;Host=postgres-db-producao;Port=5432;Database=techChallengeProducao;Pooling=true;
+      - RabbitMQ:Hostname=rabbitmq
     depends_on:
-      - rabbitmq
-      - postgres-db-producao
+      rabbitmq:
+        condition: service_healthy
+      postgres-db-producao:
+        condition: service_healthy
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.30
@@ -117,6 +139,12 @@ services:
       - "15438:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-producao:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.31
@@ -136,7 +164,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalProduto;Host=postgres-db-produto;Port=5432;Database=techChallengeProduto;Pooling=true;
     depends_on:
-      - rabbitmq
       - postgres-db-produto
     #networks:
     #  tech-challenge-soat1-grp13-network:
@@ -172,7 +199,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalPagamento;Host=postgres-db-pedido;Port=5432;Database=techChallengePagamento;Pooling=true;
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.50
