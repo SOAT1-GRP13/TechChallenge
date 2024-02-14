@@ -15,6 +15,7 @@ services:
     depends_on:
       - dynamodb-local
     image: amazon/aws-cli
+    restart: on-failure 
     environment:
       AWS_ACCESS_KEY_ID: Aksdjaksdhueiadqwert
       AWS_SECRET_ACCESS_KEY: dshdajksdhajskdhasjkdhasjkdashkjqwertyui
