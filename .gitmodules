@@ -1,0 +1,15 @@
+[submodule "Auth"]
+	path = Auth
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Auth
+[submodule "Produto"]
+	path = Produto
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Produto
+[submodule "Pedido"]
+	path = Pedido
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Pedido
+[submodule "Producao"]
+	path = Producao
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Producao
+[submodule "Pagamento"]
+	path = Pagamento
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Pagamento
