@@ -13,3 +13,6 @@
 [submodule "Pagamento"]
 	path = Pagamento
 	url = https://github.com/SOAT1-GRP13/TechChallenge-Pagamento
+[submodule "Notificacao"]
+	path = Notificacao
+	url = https://github.com/SOAT1-GRP13/TechChallenge-Notificacao
