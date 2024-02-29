@@ -226,7 +226,7 @@ services:
       - "5274:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - RabbitMQ:Hostname=rabbitmq
+      - Rabbit_Hostname=rabbitmq
       - DynamoLocal:ServiceURL=http://dynamodb-local:8000
     depends_on:
       rabbitmq:
