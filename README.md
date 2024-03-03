@@ -18,7 +18,8 @@ License: [MIT](License.txt)
 
 # Relatório de Impacto à Proteção de Dados Pessoais (RIPD)
 
-O relatório pode ser acessado através do link: https://soat1-grp13.github.io/TechChallenge/Documentos/RIPD/index.html
+O relatório pode ser acessado através do link: 
+- https://soat1-grp13.github.io/TechChallenge/Documentos/RIPD/index.html
 
 # Autenticação
 
