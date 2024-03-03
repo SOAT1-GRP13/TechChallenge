@@ -1,21 +1,21 @@
 version: '3.8'
 services:
-  
+
   dynamodb-local:
-   command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-   image: "amazon/dynamodb-local:latest"
-   container_name: dynamodb-local
-   ports:
-     - "8000:8000"
-   volumes:
-     - "./docker/dynamodb:/home/dynamodblocal/data"
-   working_dir: /home/dynamodblocal
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
 
   dynamodb-init:
     depends_on:
       - dynamodb-local
     image: amazon/aws-cli
-    restart: on-failure 
+    restart: on-failure
     environment:
       AWS_ACCESS_KEY_ID: Aksdjaksdhueiadqwert
       AWS_SECRET_ACCESS_KEY: dshdajksdhajskdhasjkdhasjkdashkjqwertyui
@@ -31,10 +31,10 @@ services:
 
   ##### RabbitMQdocker pull rabbitmq:management-alpine
   rabbitmq:
-    image: rabbitmq:management-alpine  # Usa a imagem do RabbitMQ com o plugin de gerenciamento habilitado
+    image: rabbitmq:management-alpine # Usa a imagem do RabbitMQ com o plugin de gerenciamento habilitado
     ports:
-      - "5672:5672"  # Porta padrão do RabbitMQ
-      - "15672:15672"  # Porta da interface de gerenciamento do RabbitMQ
+      - "5672:5672" # Porta padrão do RabbitMQ
+      - "15672:15672" # Porta da interface de gerenciamento do RabbitMQ
     environment:
       RABBITMQ_DEFAULT_USER: "user"
       RABBITMQ_DEFAULT_PASS: "password"
@@ -54,7 +54,7 @@ services:
         - BUILD_CONFIGURATION=Debug
       dockerfile: Dockerfile
     image: tech-challenge-soat1-grp13-auth:latest
-    restart: on-failure    
+    restart: on-failure
     ports:
       - "5270:80"
     environment:
@@ -67,7 +67,7 @@ services:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.10
 
-  postgres-db-auth:  
+  postgres-db-auth:
     hostname: postgres-compose
     image: postgres
     environment:
@@ -79,16 +79,16 @@ services:
     volumes:
       - tech-challenge-soat1-grp13-db-data-auth:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      test: [ "CMD-SHELL", "pg_isready", "-d", "db_prod" ]
       interval: 30s
       timeout: 60s
       retries: 5
-      start_period: 80s  
+      start_period: 80s
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.11
 
-  ##### Pedido
+    ##### Pedido
   api-pedido:
     build:
       context: ./Pedido
@@ -96,13 +96,13 @@ services:
         - BUILD_CONFIGURATION=Debug
       dockerfile: Dockerfile
     image: tech-challenge-soat1-grp13-pedido:latest
-    restart: on-failure    
+    restart: on-failure
     ports:
       - "5271:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalPedido;Host=postgres-db-pedido;Port=5432;Database=techChallengePedido;Pooling=true;
-      - RabbitMQ:Hostname=rabbitmq
+      - Rabbit_Hostname=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -124,16 +124,16 @@ services:
     volumes:
       - tech-challenge-soat1-grp13-db-data-pedido:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      test: [ "CMD-SHELL", "pg_isready", "-d", "db_prod" ]
       interval: 30s
       timeout: 60s
       retries: 5
-      start_period: 80s  
+      start_period: 80s
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.21
 
-  ##### Producao
+    ##### Producao
   api-producao:
     build:
       context: ./Producao
@@ -141,13 +141,13 @@ services:
         - BUILD_CONFIGURATION=Debug
       dockerfile: Dockerfile
     image: tech-challenge-soat1-grp13-producao:latest
-    restart: on-failure    
+    restart: on-failure
     ports:
       - "5272:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=User ID=fiap;Password=SenhaLocalProducao;Host=postgres-db-producao;Port=5432;Database=techChallengeProducao;Pooling=true;
-      - RabbitMQ:Hostname=rabbitmq
+      - Rabbit_Hostname=rabbitmq
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -169,16 +169,16 @@ services:
     volumes:
       - tech-challenge-soat1-grp13-db-data-producao:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      test: [ "CMD-SHELL", "pg_isready", "-d", "db_prod" ]
       interval: 30s
       timeout: 60s
       retries: 5
-      start_period: 80s  
+      start_period: 80s
     #networks:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.31
 
-  ##### Produto
+    ##### Produto
   api-produto:
     build:
       context: ./Produto
@@ -186,7 +186,7 @@ services:
         - BUILD_CONFIGURATION=Debug
       dockerfile: Dockerfile
     image: tech-challenge-soat1-grp13-produto:latest
-    restart: on-failure    
+    restart: on-failure
     ports:
       - "5273:80"
     environment:
@@ -213,7 +213,7 @@ services:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.41
 
-  ##### Pagamento
+    ##### Pagamento
   api-pagamento:
     build:
       context: ./Pagamento
@@ -221,12 +221,12 @@ services:
         - BUILD_CONFIGURATION=Debug
       dockerfile: Dockerfile
     image: tech-challenge-soat1-grp13-pagamento:latest
-    restart: on-failure    
+    restart: on-failure
     ports:
       - "5274:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - RabbitMQ:Hostname=rabbitmq
+      - Rabbit_Hostname=rabbitmq
       - DynamoLocal:ServiceURL=http://dynamodb-local:8000
     depends_on:
       rabbitmq:
@@ -237,11 +237,11 @@ services:
     #  tech-challenge-soat1-grp13-network:
     #    ipv4_address: 172.23.0.50
 
-#networks:
-#  tech-challenge-soat1-grp13-network:
-#    ipam:
-#      config:
-#        - subnet: 172.23.0.0/16
+    #networks:
+    #  tech-challenge-soat1-grp13-network:
+    #    ipam:
+    #      config:
+    #        - subnet: 172.23.0.0/16
 
 volumes:
   tech-challenge-soat1-grp13-db-data-auth:
