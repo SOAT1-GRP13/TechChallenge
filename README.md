@@ -98,11 +98,11 @@ No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
 
 # Possíveis fluxos de status do pedido
 
-![fluxo_status_pedido](</Imagens/fluxo_status.png>)
+![fluxo_status_pedido](</Documentos/Imagens/fluxo_status.png>)
 
 # Fluxo de comunicação entre os microserviços
 
-![fluxo_microservicos](</Imagens/fluxo_microservicos.png>)
+![fluxo_microservicos](</Documentos/Imagens/fluxo_microservicos.png>)
 
 # ✔️ Tecnologias utilizadas
 

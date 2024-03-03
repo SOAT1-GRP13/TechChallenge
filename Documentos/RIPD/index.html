@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>RIPD - Relatório de Impacto à Proteção de Dados Pessoais</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/gaia.css" rel="stylesheet"/>
+
+    <!--     Fonts and icons     -->
+    <link href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="section section-header">
+        <div class="parallax filter">
+            <div class="image"
+                style="background-image: url('assets/img/header-1.jpeg')">
+            </div>
+            <div class="container">
+                <div class="content">
+                    <div class="title-area">
+                        <h1 class="title-modern">RIPD</h1>
+                        <h3>Relatório de Impacto à Proteção de Dados Pessoais</h2>
+                        <div class="separator line-separator">♦</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>	
+	
+	<div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Introdução</h2>
+                    <div class="separator separator-danger">1</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Objetivo do Relatório</h3>
+                        <p class="description">Este Relatório de Impacto à Proteção de Dados Pessoais (RIPD) é elaborado com o propósito de avaliar as práticas de tratamento de dados pessoais empregadas pelo novo sistema de autoatendimento da lanchonete. O relatório visa identificar riscos potenciais à privacidade e à segurança dos dados dos clientes, além de propor medidas eficazes para mitigar tais riscos, garantindo a conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD) e reforçando o compromisso da lanchonete com a proteção da privacidade dos usuários.</p>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Descrição do Sistema</h3>
+                        <p class="description">O sistema de autoatendimento foi desenvolvido com o objetivo de otimizar o processo de pedidos na lanchonete, oferecendo uma experiência mais ágil e personalizada aos clientes. Por meio deste sistema, os clientes têm a liberdade de selecionar os produtos de sua preferência, personalizar itens conforme o desejo e realizar o pagamento de forma independente, sem a necessidade de interação direta com os atendentes. A identificação do cliente é opcional e serve para facilitar promoções personalizadas e um atendimento mais eficiente. Após a confirmação do pagamento, o pedido é automaticamente encaminhado para a cozinha. Uma notificação é enviada ao cliente assim que o pedido está pronto para retirada, garantindo assim um serviço rápido e eficiente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Contexto da Coleta de Dados</h2>
+                    <div class="separator separator-danger">2</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Tipos de Dados Coletados</h3>
+                        <p class="description">No sistema de autoatendimento, priorizamos a transparência e a minimização de dados. Quando o cliente opta por se identificar, coletamos informações limitadas, que incluem CPF, Nome e E-mail. Esses dados são essenciais para personalizar a experiência do usuário e facilitar o processo de atendimento. Para transações de pagamento, os dados do cartão de crédito do cliente são requisitados, mas essas informações são processadas diretamente por um gateway de pagamento seguro e confiável, não sendo armazenadas em nossos sistemas para garantir a máxima segurança.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Finalidade da Coleta</h3>
+                        <p class="description">A coleta de dados pessoais serve a várias finalidades essenciais. Primeiramente, os dados são utilizados para a efetivação de pedidos e transações de pagamento, assegurando a correta execução dos serviços oferecidos pelo sistema de autoatendimento. Além disso, os dados pessoais podem ser empregados em estratégias de marketing, como o envio de promoções e novidades, sempre com o consentimento prévio do cliente. Essas práticas visam enriquecer a experiência do cliente, oferecendo opções mais alinhadas aos seus interesses e preferências.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Avaliação de Riscos</h2>
+                    <div class="separator separator-danger">3</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Riscos Identificados</h3>
+                        <p class="description">No processo de implementação e operação do nosso sistema de autoatendimento, identificamos diversos riscos associados à proteção de dados pessoais. Entre eles, destaca-se o risco de acesso não autorizado ao nosso banco de dados armazenado na AWS, o que poderia levar à exposição indevida de informações sensíveis dos clientes, como CPF, nome e e-mail. Além disso, a interação com o gateway de pagamento, apesar de não envolver o armazenamento de dados de cartão de crédito em nossos sistemas, pode apresentar vulnerabilidades durante a transmissão desses dados, aumentando o risco de interceptação ou mau uso dessas informações. Outros riscos incluem a possibilidade de ataques de phishing direcionados aos nossos clientes, utilizando-se de dados coletados indevidamente, e falhas de segurança que podem surgir de vulnerabilidades de software ou configurações inadequadas do sistema.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Impacto Potencial</h3>
+                        <p class="description">O impacto potencial desses riscos para os clientes e para a lanchonete pode ser significativo. Para os clientes, o acesso não autorizado ao banco de dados poderia resultar na exposição de suas informações pessoais, levando a consequências como fraude, roubo de identidade e violação de privacidade. Para a lanchonete, além do comprometimento da confiança e da reputação perante seus clientes, tais incidentes poderiam resultar em sanções legais significativas sob a LGPD, incluindo multas e outras penalidades. É essencial, portanto, que medidas robustas de segurança e privacidade sejam implementadas e continuamente revisadas para mitigar esses riscos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Medidas de Mitigação</h2>
+                    <div class="separator separator-danger">4</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Controles de Segurança</h3>
+                        <p class="description">Adotamos uma série de medidas de segurança para proteger os dados pessoais dos nossos clientes e mitigar os riscos identificados. As senhas dos clientes são criptografadas utilizando algoritmos de criptografia robustos, garantindo que mesmo em caso de acesso indevido ao nosso banco de dados, estas informações permaneçam protegidas. Além disso, não armazenamos informações de cartões de crédito dos clientes, pois essas são processadas diretamente pelo gateway de pagamento, o que minimiza nossa exposição a riscos relacionados a dados financeiros. Nosso banco de dados é hospedado na AWS, onde contamos com a expertise e as práticas de segurança líderes de mercado para a proteção da infraestrutura de servidores. Além disso, o banco de dados é isolado em uma rede interna, sem acesso direto da internet, reduzindo significativamente a possibilidade de ataques externos.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-icon">
+                        <h3>Avaliação da Eficácia</h3>
+                        <p class="description">Para assegurar a eficácia contínua das medidas de segurança implementadas, realizamos avaliações periódicas que incluem testes de penetração, auditorias de segurança e revisões de configuração. Essas avaliações são conduzidas tanto por nossa equipe interna de segurança da informação quanto por consultores externos especializados, garantindo uma visão abrangente e imparcial das nossas práticas de segurança. Além disso, mantemos um processo de monitoramento contínuo, que inclui o uso de ferramentas de detecção de intrusões e análise de logs, para identificar e responder rapidamente a quaisquer indícios de atividades suspeitas. Os resultados dessas avaliações são documentados e revisados pela nossa equipe de gestão, assegurando que quaisquer lacunas de segurança identificadas sejam prontamente endereçadas através da implementação de medidas corretivas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Direito à Anonimização de Dados</h2>
+                    <div class="separator separator-danger">5</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Comprometimento com a Privacidade</h3>
+                        <p class="description">A lanchonete valoriza a privacidade e a segurança dos dados pessoais de seus clientes. Em conformidade com a LGPD e outros regulamentos relevantes, reconhecemos o direito dos clientes de solicitar a anonimização de seus dados pessoais. A anonimização é o processo pelo qual os dados pessoais são irreversivelmente alterados de tal maneira que o titular dos dados não possa ser identificado.</p>
+                    </div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Solicitação de Anonimização</h3>
+                        <p class="description">Os clientes têm o direito de solicitar, a qualquer momento, que seus dados pessoais sejam anonimizados. Essa solicitação pode ser feita através dos canais de atendimento ao cliente disponibilizados pela lanchonete. Ao receber uma solicitação de anonimização, a lanchonete se compromete a processar essa solicitação de acordo com as leis aplicáveis e dentro de um prazo razoável, garantindo que os dados do solicitante sejam tratados de forma a preservar sua privacidade.</p>
+                    </div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Efeitos da Anonimização</h3>
+                        <p class="description">É importante que os clientes estejam cientes de que, após a anonimização dos dados, a lanchonete não será capaz de restaurar esses dados para sua forma original ou fornecer certos serviços personalizados que dependem da identificação do cliente. A anonimização é um processo irreversível e visa garantir a proteção da privacidade do titular dos dados.</p>
+                    </div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Compromisso com a Transparência</h3>
+                        <p class="description">A lanchonete se compromete a manter os clientes informados sobre o processo de anonimização e a garantir que todas as etapas sejam realizadas de forma transparente e segura. Nosso objetivo é assegurar que os direitos dos clientes sejam plenamente respeitados e que tenham total confiança em como seus dados pessoais são tratados.</p>
+                    </div>
+                </div>
+			</div>
+        </div>
+    </div>
+	
+	<div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Conclusão e Recomendações</h2>
+                    <div class="separator separator-danger">6</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Resumo dos Achados</h3>
+                        <p class="description">O desenvolvimento e implementação do sistema de autoatendimento da lanchonete introduziram uma série de considerações importantes relativas à proteção de dados pessoais. Identificamos riscos específicos associados ao tratamento desses dados, incluindo a possibilidade de acesso não autorizado ao banco de dados e a interceptação de informações durante transações de pagamento. Apesar desses riscos, medidas de mitigação robustas foram estabelecidas, tais como a criptografia de senhas, a não retenção de dados de pagamento, e a adoção de práticas de segurança avançadas providenciadas pela infraestrutura da AWS. A avaliação da eficácia dessas medidas é realizada continuamente por meio de auditorias de segurança, testes de penetração e monitoramento de sistemas, garantindo uma resposta ágil a quaisquer ameaças emergentes.</p>
+                    </div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="info-icon">
+                        <h3>Recomendações</h3>
+                        <p class="description">Revisão Contínua de Políticas de Segurança: Manter uma política de revisão e atualização contínua das práticas e políticas de segurança, para garantir que estas permaneçam alinhadas com as melhores práticas do setor e com a evolução das ameaças cibernéticas.</p>
+                        <ul>
+                            <li><p class="description"><b>Fortalecimento da Autenticação</b> Considerar a implementação de métodos de autenticação mais fortes, como a autenticação multifatorial, especialmente para áreas do sistema que tratam de informações mais sensíveis.</p></li>
+                            <li><p class="description"><b>Treinamento de Conscientização em Segurança</b>: Investir em programas regulares de treinamento para os funcionários, focando na conscientização sobre segurança da informação e proteção de dados pessoais, para garantir que todos estejam cientes de suas responsabilidades e das melhores práticas a serem seguidas.</p></li>
+                            <li><p class="description"><b>Gestão de Consentimento dos Usuários</b>: Assegurar que os processos de coleta de consentimento sejam claros, transparentes e facilmente acessíveis, permitindo que os clientes gerenciem suas preferências de forma simples e eficaz.</p></li>
+                            <li><p class="description"><b>Plano de Resposta a Incidentes</b>: Desenvolver e manter um plano de resposta a incidentes de segurança detalhado, que inclua procedimentos para a notificação rápida dos titulares de dados e das autoridades competentes em caso de violações de dados.</p></li>
+                            <li><p class="description"><b>Avaliações de Impacto à Proteção de Dados</b>: Realizar regularmente avaliações de impacto à proteção de dados para novas tecnologias ou processos de negócios, garantindo que os riscos à privacidade sejam identificados e abordados proativamente.</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer footer-big footer-color-black" data-color="black">
+        <div class="container">
+            <div class="copyright">
+                 © <script> document.write(new Date().getFullYear()) </script> Tech Challenge, SOAT1-GRP13
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+
+</html>
