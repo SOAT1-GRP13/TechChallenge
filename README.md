@@ -16,6 +16,11 @@ Sinta-se à vontade para entrar em contato conosco se tiver alguma dúvida ou su
 
 License: [MIT](License.txt)
 
+# Relatório de Impacto à Proteção de Dados Pessoais (RIPD)
+
+O relatório pode ser acessado através do link: 
+- https://soat1-grp13.github.io/TechChallenge/Documentos/RIPD/index.html
+
 # Autenticação
 
 Com o avanço do projeto e à medida que nosso entendimento sobre o mesmo cresceu, identificamos a necessidade de migrar a funcionalidade de autenticação para a AWS. Como resultado, criamos um novo repositório dedicado exclusivamente às informações de autenticação, iniciando assim o processo de decomposição do nosso monólito em microserviços.
