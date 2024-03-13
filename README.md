@@ -32,7 +32,7 @@ Por fim, a escolha da saga orquestrada nos proporciona um excelente equilíbrio 
 # Relatório OWASP Zap
 
 O relatório pode ser acessado através do link:
-- 
+- https://soat1-grp13.github.io/TechChallenge/Documentos/OWASP_ZAP/index.html
 
 *Obs:* Após rodarmos a ferramenta de análise, não foram identificadas vulnerabilidades de alto risco. Portanto, de acordo com os requisitos do projeto, não se faz necessária nenhuma modificação no código atual.
 
