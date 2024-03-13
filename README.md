@@ -21,21 +21,25 @@ License: [MIT](License.txt)
 O relatório pode ser acessado através do link: 
 - https://soat1-grp13.github.io/TechChallenge/Documentos/RIPD/index.html
 
-# Autenticação
+# SAGA Coreografada
 
-Com o avanço do projeto e à medida que nosso entendimento sobre o mesmo cresceu, identificamos a necessidade de migrar a funcionalidade de autenticação para a AWS. Como resultado, criamos um novo repositório dedicado exclusivamente às informações de autenticação, iniciando assim o processo de decomposição do nosso monólito em microserviços.
+No desenvolvimento do nosso projeto, optamos pela implementação da saga orquestrada com base em várias considerações estratégicas e técnicas. Primeiramente, o design do nosso sistema é caracterizado por sua simplicidade e clareza, onde cada microserviço é projetado para executar uma função específica dentro de uma sequência operacional bem definida. Esta abordagem promove um alto grau de autonomia entre os serviços, permitindo-lhes reagir e processar eventos de maneira independente, o que é crucial para a manutenção da flexibilidade e escalabilidade do sistema.
 
-Você pode acessar o novo repositório por meio do seguinte link:
-- https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13-Auth
+Além disso, a natureza orquestrada da saga facilita a visualização e o entendimento do fluxo de eventos e operações através do sistema. Isso se alinha perfeitamente com os objetivos educacionais do nosso projeto, oferecendo uma oportunidade única para observar e analisar a comunicação entre os serviços em um ambiente controlado. A transparência e a capacidade de rastrear o fluxo de mensagens entre os serviços são aspectos valiosos para a compreensão dos princípios de sistemas distribuídos e arquiteturas baseadas em microserviços.
+
+Por fim, a escolha da saga orquestrada nos proporciona um excelente equilíbrio entre complexidade e funcionalidade, garantindo que, mesmo com uma lógica de negócios relativamente simples, possamos explorar eficientemente conceitos avançados de sistemas distribuídos, como compensação de transações e garantia de consistência eventual. Essa abordagem nos permite não apenas atender aos requisitos do projeto, mas também aprofundar nosso entendimento sobre padrões de design de microserviços e comunicação baseada em mensagens.
+
+# Relatório OWASP Zap
+
+O relatório pode ser acessado através do link:
+- 
+
+*Obs:* Após rodarmos a ferramenta de análise, não foram identificadas vulnerabilidades de alto risco. Portanto, de acordo com os requisitos do projeto, não se faz necessária nenhuma modificação no código atual.
 
 # 💡 Event Storm
 
 O event storm do nosso projeto ser acessado pelo seguinte link:
 - https://miro.com/app/board/uXjVMG0DfQE=/?share_link_id=33596606417
-
-# 📁 Acesso ao projeto
-
-Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13/archive/refs/heads/main.zip), ou Clonando o projeto.
 
 # Clean Architecture
 
@@ -64,42 +68,41 @@ Com o docker instalado, acesse a pasta raiz do projeto e execute o comando abaix
 docker-compose up
 ```
 
-O docker-compose.yaml do projeto, está configurado para buildar a solution projeto, subir um container da imagem projeto, um container do banco de dados e executar as migrations no banco.
-Esses containers compartilham de uma mesma rede e será criado um volume no docker para utilização do container banco.
-O container do projeto está mapeado para ficar exposto na porta 80 da máquina local e o banco na porta 15432.
+O arquivo docker-compose.yaml incluído neste projeto é projetado para automatizar o processo de construção e implantação de nossa arquitetura de microserviços. Ao executar este docker-compose, ele iniciará um conjunto de contêineres Docker, seguindo uma estrutura bem definida: um contêiner individual para cada microserviço descrito no projeto, além de contêineres dedicados para os bancos de dados associados a esses microserviços, sempre que aplicável. Isso assegura um isolamento eficaz das dependências e facilita a gestão de recursos.
+
+Adicionalmente, o arquivo docker-compose está encarregado de instanciar um contêiner para o RabbitMQ, que atua como nosso intermediário de mensagens Este setup garante que as filas necessárias sejam criadas dinamicamente conforme os microserviços são ativados e interagem uns com os outros.
+
+Cada microserviço, ao ser inicializado, é responsável por executar suas próprias 'migrations', criando as tabelas necessárias e inserindo registros de exemplo, estabelecendo assim o estado inicial requerido para que o sistema funcione corretamente.
 
 # ⌨️ Testando a API
 
-**Importante**
-Nesse módulo nos fizemos um ajuste no projeto para ele pegar o acesso ao banco de dados via secret manager. Para testar localmente, tem que realizar o ajuste no program e adicionar a connection string o appSettings.
-
 Você pode testar esta API de duas maneiras: usando o Postman ou o Swagger, que está configurado no projeto.
 
-Acessando o Swagger:
+**Swagger**:
 
 Para acessar o Swagger do projeto localmente, utilize o seguinte link:
-- http://localhost/swagger/index.html
-
-Se você estiver usando o Kubernetes, utilize o link abaixo:
-- http://localhost:31116/swagger/index.html
-
+- Auth - http://localhost:5270/swagger/index.html
+- Pedido - http://localhost:5271/swagger/index.html
+- Produção - http://localhost:5272/swagger/index.html
+- Produto - http://localhost:5273/swagger/index.html
+- Pagamento - http://localhost:5274/swagger/index.html
+- Notificação - http://localhost:5275/swagger/index.html
+  
 O Swagger já contém exemplos de chamadas com dados reais.
 
 Se estiver testando via Swagger, lembre-se de adicionar o token obtido na resposta da chamada no menu "Authorize".
-
 Autenticação:
 As chamadas que requerem autenticação são detalhadas na documentação. Para obter um token Bearer, você pode através do seguinte projeto: https://github.com/SOAT1-GRP13/TechChallenge-SOAT1-GRP13-Auth.
 
-Se você preferir testar nosso serviço de autenticação localmente, siga as orientações no seguinte repositório:
-- https://github.com/christiandmelo/TechChallenge-SOAT1-GRP13-Auth
+**Postman**
+
+Você pode baixar nossa Collection no link abaixo e testar todo o projeto:
+
 
 
 # 📒 Documentação da API
 
-No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
-
-- http://localhost/api-docs/index.html
-- http://localhost:31116/api-docs/index.html - No Kubernetes
+Nos projetos foi instalado o REDOC e pode ser acessado através do caminho http://localhost:[PORTA]/api-docs/index.html
 
 # Possíveis fluxos de status do pedido
 
@@ -114,6 +117,7 @@ No projeto foi instalado o REDOC e pode ser acessado através do link abaixo:
 - ``.Net 6``
 - ``Postgres``
 - ``Docker``
+- ``RabbitMQ``
 
 
 # Autores
