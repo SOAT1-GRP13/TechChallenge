@@ -23,7 +23,7 @@ O relatório pode ser acessado através do link:
 
 # SAGA Coreografada
 
-No desenvolvimento do nosso projeto, optamos pela implementação da saga orquestrada com base em várias considerações estratégicas e técnicas. Primeiramente, o design do nosso sistema é caracterizado por sua simplicidade e clareza, onde cada microserviço é projetado para executar uma função específica dentro de uma sequência operacional bem definida. Esta abordagem promove um alto grau de autonomia entre os serviços, permitindo-lhes reagir e processar eventos de maneira independente, o que é crucial para a manutenção da flexibilidade e escalabilidade do sistema.
+No desenvolvimento do nosso projeto, optamos pela implementação da saga coreografada com base em várias considerações estratégicas e técnicas. Primeiramente, o design do nosso sistema é caracterizado por sua simplicidade e clareza, onde cada microserviço é projetado para executar uma função específica dentro de uma sequência operacional bem definida. Esta abordagem promove um alto grau de autonomia entre os serviços, permitindo-lhes reagir e processar eventos de maneira independente, o que é crucial para a manutenção da flexibilidade e escalabilidade do sistema.
 
 Além disso, a natureza orquestrada da saga facilita a visualização e o entendimento do fluxo de eventos e operações através do sistema. Isso se alinha perfeitamente com os objetivos educacionais do nosso projeto, oferecendo uma oportunidade única para observar e analisar a comunicação entre os serviços em um ambiente controlado. A transparência e a capacidade de rastrear o fluxo de mensagens entre os serviços são aspectos valiosos para a compreensão dos princípios de sistemas distribuídos e arquiteturas baseadas em microserviços.
 
