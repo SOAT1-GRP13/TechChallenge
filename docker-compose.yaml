@@ -108,9 +108,6 @@ services:
         condition: service_healthy
       postgres-db-pedido:
         condition: service_healthy
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.20
 
   postgres-db-pedido:
     hostname: postgres-compose
@@ -129,9 +126,6 @@ services:
       timeout: 60s
       retries: 5
       start_period: 80s
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.21
 
     ##### Producao
   api-producao:
@@ -153,9 +147,6 @@ services:
         condition: service_healthy
       postgres-db-producao:
         condition: service_healthy
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.30
 
   postgres-db-producao:
     hostname: postgres-compose
@@ -194,9 +185,6 @@ services:
       - ConnectionString=User ID=fiap;Password=SenhaLocalProduto;Host=postgres-db-produto;Port=5432;Database=techChallengeProduto;Pooling=true;
     depends_on:
       - postgres-db-produto
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.40
 
   postgres-db-produto:
     hostname: postgres-compose
@@ -209,9 +197,6 @@ services:
       - "15439:5432"
     volumes:
       - tech-challenge-soat1-grp13-db-data-produto:/var/lib/postgresql/data
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.41
 
     ##### Pagamento
   api-pagamento:
@@ -233,15 +218,23 @@ services:
         condition: service_healthy
     links:
       - dynamodb-local
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipv4_address: 172.23.0.50
 
-    #networks:
-    #  tech-challenge-soat1-grp13-network:
-    #    ipam:
-    #      config:
-    #        - subnet: 172.23.0.0/16
+  api-notificacao:
+    build:
+      context: ./Notificacao
+      args:
+        - BUILD_CONFIGURATION=Debug
+      dockerfile: Dockerfile
+    image: tech-challenge-soat1-grp13-notificacao:latest
+    restart: on-failure
+    ports:
+      - "5275:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Rabbit_Hostname=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
 volumes:
   tech-challenge-soat1-grp13-db-data-auth:
