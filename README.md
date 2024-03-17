@@ -96,15 +96,11 @@ As chamadas que requerem autenticação são detalhadas na documentação. Para 
 
 **Postman**
 
-Você pode baixar nossa Collection no link abaixo e testar todo o projeto:
-
-
+Você pode baixar nossa Collection nos arquivos presentes na pasta Documentos/Postman
 
 # 📒 Documentação da API
 
 Nos projetos foi instalado o REDOC e pode ser acessado através do caminho http://localhost:[PORTA]/api-docs/index.html
-
-Caso queira testar utilizando o postman basta importar os arquivos presentes na pasta Documentos/Postman
 
 # Possíveis fluxos de status do pedido
 
