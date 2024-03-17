@@ -1,0 +1,5756 @@
+{
+	"info": {
+		"_postman_id": "5186d418-8434-4068-96a5-3debc7e6dfa5",
+		"name": "TechChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4094400",
+		"_collection_link": "https://soat1-grp13.postman.co/workspace/soat-1-grp13~93e16dec-f4bd-44a2-bbcb-f38830f42282/collection/4094400-5186d418-8434-4068-96a5-3debc7e6dfa5?action=share&source=collection_link&creator=4094400"
+	},
+	"item": [
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "LogInUsuario",
+							"item": [
+								{
+									"name": "Autenticação do Gestor/Atendente",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nomeUsuario\": \"fiapUser\",\n  \"senha\": \"Teste@123\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:{{AuthPort}}/auth/Admin/LogInUsuario",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "{{AuthPort}}",
+											"path": [
+												"auth",
+												"Admin",
+												"LogInUsuario"
+											]
+										},
+										"description": "Endpoint responsavel por autenticar o Gestor ou atendente"
+									},
+									"response": [
+										{
+											"name": "Retorna dados se autenticado ou não",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"nomeUsuario\": \"<string>\",\n  \"senha\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Admin/LogInUsuario",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Admin",
+														"LogInUsuario"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"nomeUsuario\": \"<string>\",\n  \"tokenAcesso\": \"<string>\"\n}"
+										},
+										{
+											"name": "Caso algo inesperado aconteça",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"nomeUsuario\": \"<string>\",\n  \"senha\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Admin/LogInUsuario",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Admin",
+														"LogInUsuario"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Cliente",
+							"item": [
+								{
+									"name": "Identificação do cliente",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"27133084023\",\n  \"senha\": \"123456\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:{{AuthPort}}/auth/Cliente/AutenticaCliente",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "{{AuthPort}}",
+											"path": [
+												"auth",
+												"Cliente",
+												"AutenticaCliente"
+											]
+										},
+										"description": "Endpoint responsavel por autenticar o cliente"
+									},
+									"response": [
+										{
+											"name": "Retorna dados se autenticado ou não",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\",\n  \"senha\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AutenticaCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AutenticaCliente"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"nome\": \"<string>\",\n  \"tokenAcesso\": \"<string>\"\n}"
+										},
+										{
+											"name": "Caso algo inesperado aconteça",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\",\n  \"senha\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AutenticaCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AutenticaCliente"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Identificação do cliente por nome",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nome\": \"João silverio\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:{{AuthPort}}/auth/Cliente/AutenticaClientePorNome",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "{{AuthPort}}",
+											"path": [
+												"auth",
+												"Cliente",
+												"AutenticaClientePorNome"
+											]
+										},
+										"description": "Endpoint responsavel por autenticar o cliente por nome"
+									},
+									"response": [
+										{
+											"name": "Retorna dados se autenticado ou não",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"nome\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AutenticaClientePorNome",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AutenticaClientePorNome"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"nome\": \"<string>\",\n  \"tokenAcesso\": \"<string>\"\n}"
+										},
+										{
+											"name": "Caso algo inesperado aconteça",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"nome\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AutenticaClientePorNome",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AutenticaClientePorNome"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Cadastro do cliente",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let response = pm.response.json();\r",
+													"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"27133084023\",\n  \"senha\": \"123456\",\n  \"email\": \"teste2@provedor.com\",\n  \"nome\": \"José Silveira da costa junior\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:{{AuthPort}}/auth/Cliente/CadastraCliente",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "{{AuthPort}}",
+											"path": [
+												"auth",
+												"Cliente",
+												"CadastraCliente"
+											]
+										},
+										"description": "Endpoint responsavel por cadastrar o cliente"
+									},
+									"response": [
+										{
+											"name": "Cadastra o usuario e ja o autentica",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\",\n  \"senha\": \"<string>\",\n  \"email\": \"<string>\",\n  \"nome\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/CadastraCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"CadastraCliente"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"nome\": \"<string>\",\n  \"tokenAcesso\": \"<string>\"\n}"
+										},
+										{
+											"name": "Caso algo inesperado aconteça",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\",\n  \"senha\": \"<string>\",\n  \"email\": \"<string>\",\n  \"nome\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/CadastraCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"CadastraCliente"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Anonimização do cliente",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"27133084023\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:{{AuthPort}}/auth/Cliente/AnonimizarCliente",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "{{AuthPort}}",
+											"path": [
+												"auth",
+												"Cliente",
+												"AnonimizarCliente"
+											]
+										},
+										"description": "Endpoint responsavel por anonimizar todos os dados que coletamos do cliente"
+									},
+									"response": [
+										{
+											"name": "Cliente anonimizado",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AnonimizarCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AnonimizarCliente"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "<boolean>"
+										},
+										{
+											"name": "Caso algo inesperado aconteça",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"description": "Added as a part of security scheme: apikey",
+														"key": "Authorization",
+														"value": "<API Key>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"cpf\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/Cliente/AnonimizarCliente",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"Cliente",
+														"AnonimizarCliente"
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Carrinho",
+					"item": [
+						{
+							"name": "Adicionar Item ao carrinho",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"pm.environment.set(\"PedidoId\", response.pedidoId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"903562cf-1368-4e93-9de3-93f88b1407be\",\r\n  \"nome\": \"Coca-Cola - Lata\",\r\n  \"valor\": 5,\r\n  \"quantidade\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/adicionar-item",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"adicionar-item"
+									]
+								},
+								"description": "Adiciona o item desejado ao carrinho"
+							},
+							"response": [
+								{
+									"name": "Retorna dados do carrinho",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/adicionar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"adicionar-item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"subTotal\": \"<double>\",\n  \"valorTotal\": \"<double>\",\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não obedeça alguma regra de negocio",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/adicionar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"adicionar-item"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  \"<string>\",\n  \"<string>\"\n]"
+								},
+								{
+									"name": "Caso não encontre o produto com o Id informado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/adicionar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"adicionar-item"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/adicionar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"adicionar-item"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Listar itens do carrinho",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/meu-carrinho",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"meu-carrinho"
+									]
+								},
+								"description": "Lista os itens no carrinho"
+							},
+							"response": [
+								{
+									"name": "Retorna dados do carrinho",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/meu-carrinho",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"meu-carrinho"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"subTotal\": \"<double>\",\n  \"valorTotal\": \"<double>\",\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre nenhum carrinho",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/meu-carrinho",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"meu-carrinho"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/meu-carrinho",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"meu-carrinho"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Confirma o pedido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pedidoId\": \"{{PedidoId}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/confirmar-pedido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"confirmar-pedido"
+									]
+								},
+								"description": "Confirma o pedido e é nesta etapa que deve integrar com o mercado pago trazendo o QR Code."
+							},
+							"response": [
+								{
+									"name": "Retorna pedido confirmado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"pedidoId\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/confirmar-pedido",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"confirmar-pedido"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"subTotal\": \"<double>\",\n  \"valorTotal\": \"<double>\",\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não obedeça alguma regra de negocio",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"pedidoId\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/confirmar-pedido",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"confirmar-pedido"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso não encontre nenhum carrinho",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"pedidoId\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/confirmar-pedido",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"confirmar-pedido"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"pedidoId\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/confirmar-pedido",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"confirmar-pedido"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Consultar status do pedido",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/consultar-status-pedido/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"consultar-status-pedido",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Consulta status do pedido a partir do Guid"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<string>\",\n  \"status\": null,\n  \"descStatus\": \"<string>\"\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Atualizar item do carrinho",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"903562cf-1368-4e93-9de3-93f88b1407be\",\r\n  \"nome\": \"Coca-Cola - Lata\",\r\n  \"valor\": 5,\r\n  \"quantidade\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/atualizar-item",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"atualizar-item"
+									]
+								},
+								"description": "Atualiza o item desejado no carrinho"
+							},
+							"response": [
+								{
+									"name": "Retorna dados do carrinho",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/atualizar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"atualizar-item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"subTotal\": \"<double>\",\n  \"valorTotal\": \"<double>\",\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não obedeça alguma regra de negocio",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/atualizar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"atualizar-item"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  \"<string>\",\n  \"<string>\"\n]"
+								},
+								{
+									"name": "Caso não encontre o produto com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/atualizar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"atualizar-item"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"quantidade\": \"<integer>\",\n  \"valor\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/atualizar-item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"atualizar-item"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Remover item do carrinho",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{PedidoPort}}/pedido/Carrinho/remover-item/903562cf-1368-4e93-9de3-93f88b1407be",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PedidoPort}}",
+									"path": [
+										"pedido",
+										"Carrinho",
+										"remover-item",
+										"903562cf-1368-4e93-9de3-93f88b1407be"
+									]
+								},
+								"description": "Remove o item desejado no carrinho"
+							},
+							"response": [
+								{
+									"name": "Retorna dados do carrinho",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/remover-item/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"remover-item",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"subTotal\": \"<double>\",\n  \"valorTotal\": \"<double>\",\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"valorUnitario\": \"<double>\",\n      \"valorTotal\": \"<double>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não obedeça alguma regra de negocio",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/remover-item/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"remover-item",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  \"<string>\",\n  \"<string>\"\n]"
+								},
+								{
+									"name": "Caso não encontre o produto com o Id informado",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/remover-item/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"remover-item",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Carrinho/remover-item/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Carrinho",
+												"remover-item",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Pagamento",
+					"item": [
+						{
+							"name": "Busca QR code pelo pedido id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{PagamentoPort}}/MercadoPago/BuscaQR/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PagamentoPort}}",
+									"path": [
+										"MercadoPago",
+										"BuscaQR",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Retorna QR code e pedido id."
+							},
+							"response": [
+								{
+									"name": "Retorna o qr com pedido id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/BuscaQR/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"BuscaQR",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"qr_data\": \"<string>\",\n  \"pedidoId\": \"<uuid>\"\n}"
+								},
+								{
+									"name": "Caso não tenha pedido com o id informado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/BuscaQR/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"BuscaQR",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/BuscaQR/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"BuscaQR",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Webhook mercado Pago",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/MercadoPago/Webhook?id=<long>&topic=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"MercadoPago",
+										"Webhook"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "<long>"
+										},
+										{
+											"key": "topic",
+											"value": "<string>"
+										}
+									]
+								},
+								"description": "Endpoint responsavel por receber um evento do mercado pago"
+							},
+							"response": [
+								{
+									"name": "Retorna OK após alterar o status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/Webhook?id=<long>&topic=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"Webhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<long>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso não seja preenchido todos os campos obrigatórios",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/Webhook?id=<long>&topic=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"Webhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<long>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/Webhook?id=<long>&topic=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"Webhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<long>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Webhook fake mercado Pago",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{PagamentoPort}}/MercadoPago/FakeWebhook?id={{PedidoId}}&topic=topicFake&status=closed",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{PagamentoPort}}",
+									"path": [
+										"MercadoPago",
+										"FakeWebhook"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{PedidoId}}"
+										},
+										{
+											"key": "topic",
+											"value": "topicFake"
+										},
+										{
+											"key": "status",
+											"value": "closed"
+										}
+									]
+								},
+								"description": "Endpoint responsavel por receber um evento simulando o mercado pago, para considerar como pago o status deve ser igual a closed, caso contraria será pedido recusado"
+							},
+							"response": [
+								{
+									"name": "Retorna OK após alterar o status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/FakeWebhook?id=<uuid>&topic=<string>&status=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"FakeWebhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												},
+												{
+													"key": "status",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso não seja preenchido todos os campos obrigatórios",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/FakeWebhook?id=<uuid>&topic=<string>&status=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"FakeWebhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												},
+												{
+													"key": "status",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/MercadoPago/FakeWebhook?id=<uuid>&topic=<string>&status=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"MercadoPago",
+												"FakeWebhook"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												},
+												{
+													"key": "topic",
+													"value": "<string>"
+												},
+												{
+													"key": "status",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Producao",
+					"item": [
+						{
+							"name": "Consultar status do pedido",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									},
+									{
+										"key": "accept",
+										"value": "text/plain",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/consultar-status-pedido/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"consultar-status-pedido",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Consulta status do pedido a partir do Guid"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<string>\",\n  \"status\": null\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Consultar pedidos para fila de cliente",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/consultar-pedidos-fila-cliente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"consultar-pedidos-fila-cliente"
+									]
+								},
+								"description": "Consulta os pedidos para fila de cliente"
+							},
+							"response": [
+								{
+									"name": "Retorna os pedidos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-cliente",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-cliente"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"pedidoId\": \"<string>\",\n    \"clientId\": \"<string>\",\n    \"status\": null\n  },\n  {\n    \"pedidoId\": \"<string>\",\n    \"clientId\": \"<string>\",\n    \"status\": null\n  }\n]"
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-cliente",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-cliente"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Consultar pedidos para fila de produção",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/consultar-pedidos-fila-producao",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"consultar-pedidos-fila-producao"
+									]
+								},
+								"description": "Consulta os pedidos para fila de produção"
+							},
+							"response": [
+								{
+									"name": "Retorna os pedidos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-producao",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-producao"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"pedidoId\": \"<uuid>\",\n    \"clienteId\": \"<uuid>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"pedidoStatus\": null,\n    \"items\": [\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      },\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"pedidoId\": \"<uuid>\",\n    \"clienteId\": \"<uuid>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"pedidoStatus\": null,\n    \"items\": [\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      },\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      }\n    ]\n  }\n]"
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-producao",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-producao"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido Em Preparacao",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/pedido-em-preparacao/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"pedido-em-preparacao",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Em Preparação"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido pronto",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/pedido-pronto/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"pedido-pronto",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Pronto"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido como finalizado",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProducaoPort}}/Pedidos/pedido-finalizado/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProducaoPort}}",
+									"path": [
+										"Pedidos",
+										"pedido-finalizado",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Finalizado"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Produto",
+					"item": [
+						{
+							"name": "Deletar produto",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/excluir_produto/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"excluir_produto",
+										""
+									]
+								},
+								"description": "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor"
+							},
+							"response": [
+								{
+									"name": "Em caso de remoção com sucesso",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/excluir_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"excluir_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso não encontre o produto com o Id informado",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/excluir_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"excluir_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/excluir_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"excluir_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Listar categorias",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/lista_categorias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"lista_categorias"
+									]
+								},
+								"description": "Lista as categorias cadastradas. Precisa se autenticar"
+							},
+							"response": [
+								{
+									"name": "Retorna categorias cadastrados",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_categorias",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_categorias"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  }\n]"
+								},
+								{
+									"name": "Caso não tenha nenhum categoria cadastrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_categorias",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_categorias"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_categorias",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_categorias"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Listar produtos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/lista_produtos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"lista_produtos"
+									]
+								},
+								"description": "Lista os produtos cadastrados. Não precisa estar autenticado"
+							},
+							"response": [
+								{
+									"name": "Retorna produtos cadastrados",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_produtos",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_produtos"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  }\n]"
+								},
+								{
+									"name": "Caso não tenha nenhum produto cadastrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_produtos",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_produtos"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/lista_produtos",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"lista_produtos"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Busca produto por id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/busca_produto/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"busca_produto",
+										""
+									]
+								},
+								"description": "Retorna produto por id. Precisa se autenticar"
+							},
+							"response": [
+								{
+									"name": "Retorna produto",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<uuid>\",\n  \"categoriaId\": \"<uuid>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<double>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"imagem\": \"<string>\"\n}"
+								},
+								{
+									"name": "Caso não tenha produto com o id informado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Listar produtos por categoria",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/busca_produto_por_categoria/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"busca_produto_por_categoria",
+										""
+									]
+								},
+								"description": "Lista os produtos cadastrados filtrados por categoria. Precisa se autenticar"
+							},
+							"response": [
+								{
+									"name": "Retorna produtos ",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto_por_categoria/:codigo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto_por_categoria",
+												":codigo"
+											],
+											"variable": [
+												{
+													"key": "codigo"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"categoriaId\": \"<uuid>\",\n    \"nome\": \"<string>\",\n    \"descricao\": \"<string>\",\n    \"ativo\": \"<boolean>\",\n    \"valor\": \"<double>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"imagem\": \"<string>\"\n  }\n]"
+								},
+								{
+									"name": "Caso não tenha nenhum produto cadastrado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto_por_categoria/:codigo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto_por_categoria",
+												":codigo"
+											],
+											"variable": [
+												{
+													"key": "codigo"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/busca_produto_por_categoria/:codigo",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"busca_produto_por_categoria",
+												":codigo"
+											],
+											"variable": [
+												{
+													"key": "codigo"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Cadastrar produto",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"categoriaId\": \"45dd547f-5209-49c6-8cd1-ee5c384e93f2\",\r\n  \"nome\": \"X-Bacon com Cheddar\",\r\n  \"descricao\": \"Hamburguer artesanal com 5 fatias de bacon e muito cheddar\",\r\n  \"ativo\": true,\r\n  \"valor\": 35.9,\r\n  \"imagem\": \"teste\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/cadastro_produto",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"cadastro_produto"
+									]
+								},
+								"description": "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor"
+							},
+							"response": [
+								{
+									"name": "Retorna produto ",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/cadastro_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"cadastro_produto"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}"
+								},
+								{
+									"name": "Caso de erro ao adicionar produto",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/cadastro_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"cadastro_produto"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/cadastro_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"cadastro_produto"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Editar produto",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"d940bd2d-d0c5-4565-adfa-822652c58c17\",\r\n  \"categoriaId\": \"45dd547f-5209-49c6-8cd1-ee5c384e93f2\",\r\n  \"nome\": \"X-Bacon com Cheddar\",\r\n  \"descricao\": \"Hamburguer artesanal com 5 fatias de bacon e muito cheddar\",\r\n  \"ativo\": true,\r\n  \"valor\": 35.9,\r\n  \"imagem\": \"teste\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{ProdutoPort}}/Catalogo/cadastro_produto",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{ProdutoPort}}",
+									"path": [
+										"Catalogo",
+										"cadastro_produto"
+									]
+								},
+								"description": "Realiza o cadastro do produto, sendo necessário estar autenticado como gestor"
+							},
+							"response": [
+								{
+									"name": "Retorna produto ",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/editar_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"editar_produto"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}"
+								},
+								{
+									"name": "Caso não encontre o produto com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/editar_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"editar_produto"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"categoriaId\": \"<string>\",\n  \"nome\": \"<string>\",\n  \"descricao\": \"<string>\",\n  \"ativo\": \"<boolean>\",\n  \"valor\": \"<number>\",\n  \"imagem\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Catalogo/editar_produto",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Catalogo",
+												"editar_produto"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Notificacao",
+					"item": [
+						{
+							"name": "consultar-notificacao-pedido",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{NotificacaoPort}}/notificacao/Notificacao/consultar-notificacao-pedido/{{PedidoId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{NotificacaoPort}}",
+									"path": [
+										"notificacao",
+										"Notificacao",
+										"consultar-notificacao-pedido",
+										"{{PedidoId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AWS",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Login Adm",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nomeUsuario\": \"fiapUser\",\n  \"senha\": \"Teste@123\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/auth/Admin/LogInUsuario",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"auth",
+										"Admin",
+										"LogInUsuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastro Cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cpf\": \"82720528064\",\n  \"senha\": \"123456\",\n  \"email\": \"teste@provedor.com\",\n  \"nome\": \"José Silva\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/auth/Cliente/CadastraCliente",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"auth",
+										"Cliente",
+										"CadastraCliente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cpf\": \"82720528064\",\n  \"senha\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/auth/Cliente/AutenticaCliente",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"auth",
+										"Cliente",
+										"AutenticaCliente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Identifica cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set(\"tokenAcesso\", response.tokenAcesso);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"teste\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/auth/Cliente/AutenticaClientePorNome",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"auth",
+										"Cliente",
+										"AutenticaClientePorNome"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AnonimizarCliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cpf\": \"82720528064\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/auth/Cliente/AnonimizarCliente",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"auth",
+										"Cliente",
+										"AnonimizarCliente"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Carrinho",
+					"item": [
+						{
+							"name": "adicionar item carrinho",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set(\"PedidoId\", response.pedidoId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"903562cf-1368-4e93-9de3-93f88b1407be\",\n  \"nome\": \"Coca-Cola - Lata\",\n  \"valor\": 5,\n  \"quantidade\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apigateway}}/pedido/Carrinho/adicionar-item",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pedido",
+										"Carrinho",
+										"adicionar-item"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "confirmar-pedido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"pedidoId\": \"{{PedidoId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apigateway}}/pedido/Carrinho/confirmar-pedido",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pedido",
+										"Carrinho",
+										"confirmar-pedido"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "atualizar item carrinho",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"903562cf-1368-4e93-9de3-93f88b1407be\",\n  \"nome\": \"Coca-Cola - Lata\",\n  \"valor\": 5,\n  \"quantidade\": 3\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/pedido/Carrinho/atualizar-item",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pedido",
+										"Carrinho",
+										"atualizar-item"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remover item carrinho",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/pedido/Carrinho/remover-item/903562cf-1368-4e93-9de3-93f88b1407be",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pedido",
+										"Carrinho",
+										"remover-item",
+										"903562cf-1368-4e93-9de3-93f88b1407be"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "meu carrinho",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/pedido/Carrinho/meu-carrinho",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pedido",
+										"Carrinho",
+										"meu-carrinho"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Produtos",
+					"item": [
+						{
+							"name": "Listar produtos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/lista_produtos",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"lista_produtos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Busco produto por Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/plain",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/busca_produto/6d835897-c095-41c6-b88c-20ca910b6513",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"busca_produto",
+										"6d835897-c095-41c6-b88c-20ca910b6513"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar categorias",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxZGE3OWFlYy1mOTAwLTQ1MjAtODhhMy1lZTA5NGY2MzZkZTMiLCJ1bmlxdWVfbmFtZSI6ImZpYXBVc2VyIiwicm9sZSI6Ikdlc3RvciIsIm5iZiI6MTcwNTYwMzg5NCwiZXhwIjoxNzA1NjA3NDk0LCJpYXQiOjE3MDU2MDM4OTR9.v2W5ZKE8iuqfGUPgO-HNBjTLd7DMLHwPPyS7AH8_lGc"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/lista_categorias",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"lista_categorias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Produto por categoria Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/busca_produto_por_categoria/1",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"busca_produto_por_categoria",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar produto",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"categoriaId\": \"45dd547f-5209-49c6-8cd1-ee5c384e93f2\",\n  \"nome\": \"X-Bacon com Cheddar duplo\",\n  \"descricao\": \"Hamburguer artesanal com 5 fatias de bacon e muito cheddar\",\n  \"ativo\": true,\n  \"valor\": 35.9,\n  \"imagem\": \"teste\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/cadastro_produto",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"cadastro_produto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar produto",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"6d835897-c095-41c6-b88c-20ca910b6513\",\n  \"categoriaId\": \"45dd547f-5209-49c6-8cd1-ee5c384e93f2\",\n  \"nome\": \"X-Bacon com Cheddar\",\n  \"descricao\": \"Hamburguer artesanal com 5 fatias de bacon e muito cheddar\",\n  \"ativo\": true,\n  \"valor\": 28.9,\n  \"imagem\": \"teste\"\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/editar_produto",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"editar_produto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir produto",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/produto/Catalogo/excluir_produto/6d835897-c095-41c6-b88c-20ca910b6513",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"produto",
+										"Catalogo",
+										"excluir_produto",
+										"6d835897-c095-41c6-b88c-20ca910b6513"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Producao",
+					"item": [
+						{
+							"name": "Consultar status do pedido",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									},
+									{
+										"key": "accept",
+										"value": "text/plain",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/consultar-status-pedido/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"consultar-status-pedido",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Consulta status do pedido a partir do Guid"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<string>\",\n  \"status\": null\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-status-pedido/:pedidoId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-status-pedido",
+												":pedidoId"
+											],
+											"variable": [
+												{
+													"key": "pedidoId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Consultar pedidos para fila de cliente",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/consultar-pedidos-fila-cliente",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"consultar-pedidos-fila-cliente"
+									]
+								},
+								"description": "Consulta os pedidos para fila de cliente"
+							},
+							"response": [
+								{
+									"name": "Retorna os pedidos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-cliente",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-cliente"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"pedidoId\": \"<string>\",\n    \"clientId\": \"<string>\",\n    \"status\": null\n  },\n  {\n    \"pedidoId\": \"<string>\",\n    \"clientId\": \"<string>\",\n    \"status\": null\n  }\n]"
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-cliente",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-cliente"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Consultar pedidos para fila de produção",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/consultar-pedidos-fila-producao",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"consultar-pedidos-fila-producao"
+									]
+								},
+								"description": "Consulta os pedidos para fila de produção"
+							},
+							"response": [
+								{
+									"name": "Retorna os pedidos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-producao",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-producao"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"pedidoId\": \"<uuid>\",\n    \"clienteId\": \"<uuid>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"pedidoStatus\": null,\n    \"items\": [\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      },\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"pedidoId\": \"<uuid>\",\n    \"clienteId\": \"<uuid>\",\n    \"dataCadastro\": \"<dateTime>\",\n    \"pedidoStatus\": null,\n    \"items\": [\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      },\n      {\n        \"produtoId\": \"<uuid>\",\n        \"produtoNome\": \"<string>\",\n        \"quantidade\": \"<integer>\"\n      }\n    ]\n  }\n]"
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/consultar-pedidos-fila-producao",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"consultar-pedidos-fila-producao"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido Em Preparacao",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/pedido-em-preparacao/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"pedido-em-preparacao",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Em Preparação"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-em-preparacao/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-em-preparacao",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido pronto",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/pedido-pronto/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"pedido-pronto",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Pronto"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-pronto/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-pronto",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Colocar o pedido como finalizado",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenAcesso}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/producao/Pedidos/pedido-finalizado/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"producao",
+										"Pedidos",
+										"pedido-finalizado",
+										"{{PedidoId}}"
+									]
+								},
+								"description": "Atualiza o status do pedido para Finalizado"
+							},
+							"response": [
+								{
+									"name": "Retorna o pedido atualizado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"pedidoId\": \"<uuid>\",\n  \"clienteId\": \"<uuid>\",\n  \"dataCadastro\": \"<dateTime>\",\n  \"pedidoStatus\": null,\n  \"items\": [\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    },\n    {\n      \"produtoId\": \"<uuid>\",\n      \"produtoNome\": \"<string>\",\n      \"quantidade\": \"<integer>\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Caso não encontre o pedido com o Id informado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Caso algo inesperado aconteça",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/Pedidos/pedido-finalizado/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Pedidos",
+												"pedido-finalizado",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Pagamento",
+					"item": [
+						{
+							"name": "Gerar QR Code",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"external_reference\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"expiration_date\": \"string\",\n  \"total_amount\": 0,\n  \"items\": [\n    {\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"unit_price\": 0,\n      \"quantity\": 0,\n      \"unit_measure\": \"string\",\n      \"total_amount\": 0\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{apigateway}}/pagamento/MercadoPago/GerarQR",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pagamento",
+										"MercadoPago",
+										"GerarQR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Webhook",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/pagamento/MercadoPago/Webhook?id=122312312&topic=expired",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pagamento",
+										"MercadoPago",
+										"Webhook"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "122312312"
+										},
+										{
+											"key": "topic",
+											"value": "expired"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "BuscaQR",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/pagamento/MercadoPago/BuscaQR/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pagamento",
+										"MercadoPago",
+										"BuscaQR",
+										"{{PedidoId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FakeWebhook",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiOWM0ZGUwYi00MWU3LTQwMzAtYTUzYi05N2EwZTQ0NGZmMjIiLCJ1bmlxdWVfbmFtZSI6Ikpvc8OpIFNpbHZhIiwicm9sZSI6IkNsaWVudGUiLCJlbWFpbCI6InRlc3RlQHByb3ZlZG9yLmNvbSIsIm5iZiI6MTcxMDYwNTAzMSwiZXhwIjoxNzEwNjA4NjMxLCJpYXQiOjE3MTA2MDUwMzF9.X_deXcZIelXTOMoua7HPy4x13tHzX6gfRH1D1odusGs"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/pagamento/MercadoPago/FakeWebhook?id={{PedidoId}}&topic=topicFake&status=closed",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"pagamento",
+										"MercadoPago",
+										"FakeWebhook"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{PedidoId}}"
+										},
+										{
+											"key": "topic",
+											"value": "topicFake"
+										},
+										{
+											"key": "status",
+											"value": "closed"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notificacao",
+					"item": [
+						{
+							"name": "consulta-notificacao",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{apigateway}}/notificacao/Notificacao/consultar-notificacao-pedido/{{PedidoId}}",
+									"host": [
+										"{{apigateway}}"
+									],
+									"path": [
+										"notificacao",
+										"Notificacao",
+										"consultar-notificacao-pedido",
+										"{{PedidoId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

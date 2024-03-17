@@ -104,6 +104,8 @@ Você pode baixar nossa Collection no link abaixo e testar todo o projeto:
 
 Nos projetos foi instalado o REDOC e pode ser acessado através do caminho http://localhost:[PORTA]/api-docs/index.html
 
+Caso queira testar utilizando o postman basta importar os arquivos presentes na pasta Documentos/Postman
+
 # Possíveis fluxos de status do pedido
 
 ![fluxo_status_pedido](</Documentos/Imagens/fluxo_status.png>)
